@@ -1,11 +1,15 @@
 # Sneaker Store
 
-## 1. Prerequisites
-Make sure the `tailwind.exe` file is present in the root directory. This executable is specific to Windows (x64).
+## 1. Download Tailwind CLI
 
-## 2. Run the Compiler
-To process your styles and watch for changes in real-time, run the following command in your terminal:
+Run in the project root:
 
-```bash
-./tailwind.exe -i ./src/input.css -o ./dist/output.css --watch
+```powershell
+curl -L -o tailwind.exe https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-windows-x64.exe
+```
+
+## 2. Run Tailwind to build CSS
+
+```powershell
+.\tailwind.exe -i ./src/styles.css -o ./dist/styles.css --watch
 ```

@@ -8,3 +8,4 @@ To process your styles and watch for changes in real-time, run the following com
 
 ```bash
 ./tailwind.exe -i ./src/input.css -o ./dist/output.css --watch
+```

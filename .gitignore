@@ -1,0 +1,7 @@
+tailwind.exe
+
+.vscode/
+
+*.log
+
+dist/

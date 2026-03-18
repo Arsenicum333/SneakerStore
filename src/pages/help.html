@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Help</title>
     <link href="../../dist/output.css" rel="stylesheet">
 </head>
 
-<body class="bg-white">
-    <header>    
-        <div>
-           <div class="h-8 bg-gray-100">
-            <div class="h-8 bg-gray-100 flex items-center justify-end px-[55px] text-xs">
-                <div class="flex gap-3 font-bold">
-                    <a href="/help" class="hover:underline">Help</a>
-                    <span class="text-black">|</span>
-                    <a href="sign-in.html" class="hover:underline">Join Us</a>
-                    <span class="text-black">|</span>
-                    <a href="log-in.html" class="hover:underline">Sign In</a>
-                </div>
+<body class="bg-white min-h-screen">
+
+    <header>
+        <div class="h-8 bg-gray-100 flex items-center justify-end px-6 text-xs">
+            <div class="flex gap-3 font-bold">
+                <a href="/help" class="hover:underline">Help</a>
+                <span class="text-black">|</span>
+                <a href="sign-in.html" class="hover:underline">Join Us</a>
+                <span class="text-black">|</span>
+                <a href="log-in.html" class="hover:underline">Sign In</a>
             </div>
-           </div>
         </div>
 
-        <div class="relative bg-white flex items-center justify-end px-[55px] h-20">
+        <div class="relative bg-white flex items-center justify-end px-6 h-20">
             <div class="absolute left-1/2 -translate-x-1/2 flex gap-5 font-bold text-base">
                 <a href="new" class="hover:underline">New</a>
                 <a href="men" class="hover:underline">Men</a>
@@ -33,11 +30,11 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div class="rounded-[15px] bg-gray-100 w-[162px] h-[34px] flex items-center pl-3 gap-2">
+                <div class="rounded-[15px] bg-gray-100 h-[34px] flex items-center pl-3 gap-2">
                     <span class="flex items-center justify-center">
                         <img src="../../assets/lucide/search.svg" class="w-5 h-5 block">
                     </span>
-                    <input type="text" placeholder="Search" class="outline-none text-base w-[100px] text-gray-500 font-semibold">
+                    <input type="text" placeholder="Search" class="outline-none text-base w-24 text-gray-500 font-semibold">
                 </div>
 
                 <button class="hover:bg-gray-300 p-2 rounded-full">
@@ -49,146 +46,141 @@
                 </button>
             </div>
         </div>
-
-        <div class="h-20 bg-gray-100 flex items-center justify-center">
-            <div class="text-4xl text-gray-500 font-semibold">
-                Where comfort meets style
-            </div>
-        </div>
     </header>
-
 
     <div class="max-w-[1200px] mx-auto px-6 py-12">
 
-  <h1 class="text-4xl font-bold mb-3">Quick Assists</h1>
-  <h2 class="text-xl font-normal mb-6">Answers to our most frequently asked questions are just one click away.</h2>
-  <hr class="border-t-4 border-gray-300">
+        <h1 class="text-4xl font-bold mb-3">Quick Assists</h1>
+        <h2 class="text-xl font-normal mb-6">Answers to our most frequently asked questions are just one click away.</h2>
+        <hr class="border-t-4 border-gray-300">
 
-  <div class="grid grid-cols-3 gap-8">
-    
-    <div class="bg-gray-50 p-6 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Returns</h2>
-      <div class="space-y-4 text-gray-600">
-        <div>
-          <p class="font-semibold">What is Iken's returns policy?</p>
-          <p class="text-sm">You can return any unused item within 30 days of delivery. The product must be in its original condition, with all tags and packaging included. Refunds are issued after the returned item is inspected.</p>
+        <div class="grid grid-cols-3 gap-8">
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">Returns</h2>
+                <div class="space-y-4 text-gray-600">
+                    <div>
+                        <p class="font-semibold">What is Iken's returns policy?</p>
+                        <p class="text-sm">You can return any unused item within 30 days of delivery. The product must be in its original condition, with all tags and packaging included. Refunds are issued after the returned item is inspected.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">How do I return my Iken order?</p>
+                        <p class="text-sm">To return an item, go to Your Orders, select the product you want to return, and follow the return instructions. Once your request is approved, you will receive return shipping details.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Where is my refund?</p>
+                        <p class="text-sm">Refunds are processed after we receive and inspect the returned item. It usually takes 5–10 business days for the refund to appear in your account depending on your payment provider.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">Orders & Payment</h2>
+                <div class="space-y-4 text-gray-600">
+                    <div>
+                        <p class="font-semibold">Where is my Iken order?</p>
+                        <p class="text-sm">After placing your order, you can track its status in Your Orders. Once shipped, you will receive a tracking number via email.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Can I cancel or change my Iken order?</p>
+                        <p class="text-sm">Orders can be canceled or modified before they are shipped. If your order has already been dispatched, you will need to return the item after delivery.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">What are Iken's payment options?</p>
+                        <p class="text-sm">We accept major credit and debit cards, as well as popular online payment methods such as PayPal or Apple Pay (depending on your region).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">Dispatch & Delivery</h2>
+                <div class="space-y-4 text-gray-600">
+                    <div>
+                        <p class="font-semibold">What are Iken's delivery options?</p>
+                        <p class="text-sm">We offer standard and express shipping. Delivery times and prices may vary depending on your location.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">How do I get free delivery on Iken orders?</p>
+                        <p class="text-sm">Free delivery is available for orders over a certain amount. You may also receive free shipping during special promotions or as part of a membership program.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Can my Iken order be dispatched internationally?</p>
+                        <p class="text-sm">Yes, we ship to many countries worldwide. Shipping costs and delivery times depend on the destination.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">Shopping</h2>
+                <div class="space-y-4 text-gray-600">
+                    <div>
+                        <p class="font-semibold">How do I find the right size and fit?</p>
+                        <p class="text-sm">Each product page includes a size guide to help you choose the correct size. If you are unsure, we recommend comparing the measurements with a pair of shoes you already own.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Does Iken offer product advice?</p>
+                        <p class="text-sm">Yes, our product pages include detailed descriptions, materials, and recommendations. You can also contact customer support for personalized advice.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">How do I use an Iken promo code?</p>
+                        <p class="text-sm">Enter your promo code at checkout in the promo code field. The discount will be applied automatically if the code is valid.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">Iken Membership & Apps</h2>
+                <div class="space-y-4 text-gray-600">
+                    <div>
+                        <p class="font-semibold">What is Iken Membership?</p>
+                        <p class="text-sm">Iken Membership is a free program that provides members with exclusive offers, early access to new releases, and special promotions.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">How do I get Iken's newest sneaker releases?</p>
+                        <p class="text-sm">Members receive notifications about new sneaker drops and limited releases through email or the mobile app.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">What are the birthday promo terms and conditions?</p>
+                        <p class="text-sm">Members may receive a birthday discount code during their birthday month. The offer is valid for a limited time and may apply only to selected products.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">Company Info</h2>
+                <div class="space-y-4 text-gray-600">
+                    <div>
+                        <p class="font-semibold">Do Iken shoes have a warranty?</p>
+                        <p class="text-sm">Yes, all products are covered by a limited warranty against manufacturing defects. Normal wear and tear is not covered.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">What is the Iken By You personalisation policy?</p>
+                        <p class="text-sm">Personalized products are made specifically for you and cannot be returned or exchanged, unless there is a manufacturing defect.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Where can I learn more about Iken, Inc.?</p>
+                        <p class="text-sm">You can learn more about our company on the About Us page, where we share our story, mission, and values.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div>
-          <p class="font-semibold">How do I return my Iken order?</p>
-          <p class="text-sm">To return an item, go to Your Orders, select the product you want to return, and follow the return instructions. Once your request is approved, you will receive return shipping details.</p>
-        </div>
-        <div>
-          <p class="font-semibold">Where is my refund?</p>
-          <p class="text-sm">Refunds are processed after we receive and inspect the returned item. It usually takes 5–10 business days for the refund to appear in your account depending on your payment provider.</p>
-        </div>
-      </div>
     </div>
-    
-    <div class="bg-gray-50 p-6 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Orders & Payment</h2>
-      <div class="space-y-4 text-gray-600">
-        <div>
-          <p class="font-semibold">Where is my Iken order?</p>
-          <p class="text-sm">After placing your order, you can track its status in Your Orders. Once shipped, you will receive a tracking number via email.</p>
-        </div>
-        <div>
-          <p class="font-semibold">Can I cancel or change my Iken order?</p>
-          <p class="text-sm">Orders can be canceled or modified before they are shipped. If your order has already been dispatched, you will need to return the item after delivery.</p>
-        </div>
-        <div>
-          <p class="font-semibold">What are Iken's payment options?</p>
-          <p class="text-sm">We accept major credit and debit cards, as well as popular online payment methods such as PayPal or Apple Pay (depending on your region).</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-gray-50 p-6 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Dispatch & Delivery</h2>
-      <div class="space-y-4 text-gray-600">
-        <div>
-          <p class="font-semibold">What are Iken's delivery options?</p>
-          <p class="text-sm">We offer standard and express shipping. Delivery times and prices may vary depending on your location.</p>
-        </div>
-        <div>
-          <p class="font-semibold">How do I get free delivery on Iken orders?</p>
-          <p class="text-sm">Free delivery is available for orders over a certain amount. You may also receive free shipping during special promotions or as part of a membership program.</p>
-        </div>
-        <div>
-          <p class="font-semibold">Can my Iken order be dispatched internationally?</p>
-          <p class="text-sm">Yes, we ship to many countries worldwide. Shipping costs and delivery times depend on the destination.</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-gray-50 p-6 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Shopping</h2>
-      <div class="space-y-4 text-gray-600">
-        <div>
-          <p class="font-semibold">How do I find the right size and fit?</p>
-          <p class="text-sm">Each product page includes a size guide to help you choose the correct size. If you are unsure, we recommend comparing the measurements with a pair of shoes you already own.</p>
-        </div>
-        <div>
-          <p class="font-semibold">Does Iken offer product advice?</p>
-          <p class="text-sm">Yes, our product pages include detailed descriptions, materials, and recommendations. You can also contact customer support for personalized advice.</p>
-        </div>
-        <div>
-          <p class="font-semibold">How do I use an Iken promo code?</p>
-          <p class="text-sm">Enter your promo code at checkout in the promo code field. The discount will be applied automatically if the code is valid.</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-gray-50 p-6 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Iken Membership & Apps</h2>
-      <div class="space-y-4 text-gray-600">
-        <div>
-          <p class="font-semibold">What is Iken Membership?</p>
-          <p class="text-sm">Iken Membership is a free program that provides members with exclusive offers, early access to new releases, and special promotions.</p>
-        </div>
-        <div>
-          <p class="font-semibold">How do I get Iken's newest sneaker releases?</p>
-          <p class="text-sm">Members receive notifications about new sneaker drops and limited releases through email or the mobile app.</p>
-        </div>
-        <div>
-          <p class="font-semibold">What are the birthday promo terms and conditions?</p>
-          <p class="text-sm">Members may receive a birthday discount code during their birthday month. The offer is valid for a limited time and may apply only to selected products.</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-gray-50 p-6 rounded-lg">
-      <h2 class="text-2xl font-bold mb-4">Company Info</h2>
-      <div class="space-y-4 text-gray-600">
-        <div>
-          <p class="font-semibold">Do Iken shoes have a warranty?</p>
-          <p class="text-sm">Yes, all products are covered by a limited warranty against manufacturing defects. Normal wear and tear is not covered.</p>
-        </div>
-        <div>
-          <p class="font-semibold">What is the Iken By You personalisation policy?</p>
-          <p class="text-sm">Personalized products are made specifically for you and cannot be returned or exchanged, unless there is a manufacturing defect.</p>
-        </div>
-        <div>
-          <p class="font-semibold">Where can I learn more about Iken, Inc.?</p>
-          <p class="text-sm">You can learn more about our company on the About Us page, where we share our story, mission, and values.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
 
     <footer>
-        <div class="mx-[49px] mt-[200px]">
+        <div class="px-6 mt-[200px] max-w-[1200px] mx-auto">
             <hr class="border-t-4 border-gray-300">
             <div class="flex items-center justify-end gap-3 w-full mt-5">
                 <span class="flex items-center justify-center">
-                        <img src="../../assets/lucide/planet.svg" class="w-5 h-5 block">
-                    </span>
-                    <div class="text-gray-400">Slovakia (Slovak republik)</div>
+                    <img src="../../assets/lucide/planet.svg" class="w-5 h-5 block">
+                </span>
+                <div class="text-gray-400">Slovakia (Slovak republik)</div>
             </div>
             <div class="flex items-center justify-start gap-3 w-full mt-5">
-                <div class="text-black">© 2026 Iken, Inc. All rights reserved</div>
+                <div class="text-black">© 2026 Iken, Inc. All rights reserved</div>
             </div>
         </div>
     </footer>
 
 </body>
+</html>

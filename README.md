@@ -1,15 +1,15 @@
 # Sneaker Store
 
-## 1. Download Tailwind CLI
+## 1. Install dependencies (only once)
 
-Run in the project root:
-
-```powershell
-curl -L -o tailwind.exe https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-windows-x64.exe
+```bash
+npm install
 ```
 
-## 2. Run Tailwind to build CSS
+## 2. Run Tailwind build
 
-```powershell
-.\tailwind.exe -i ./src/styles.css -o ./dist/styles.css --watch
+```bash
+npm run dev
 ```
+
+Keep this running while working on the project.

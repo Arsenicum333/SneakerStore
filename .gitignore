@@ -1,7 +1,4 @@
-*.exe
-
-.vscode/
-
-*.log
-
+node_modules/
 dist/
+.vscode/
+*.log

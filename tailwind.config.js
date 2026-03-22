@@ -1,14 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+const { default: fluid, extract, screens, fontSize } = require('fluid-tailwind')
+
 module.exports = {
-  content: [
-    "./*.html",
-    "./src/**/*.html",
-  ],
+  content: {
+    files: [
+      "./*.html",
+      "./src/**/*.html",
+    ],
+    extract,
+  },
   theme: {
+    screens,
     extend: {},
   },
   plugins: [
-    require('fluid-tailwind'),
+    fluid,
   ],
 }
-

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <link href="../../dist/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-white min-h-screen">
+
+    <header class="w-full">
+        <div class="~h-4/8 bg-gray-100 flex items-center justify-end ~p-4/6 text-xs">
+            <div class="flex ~gap-2/3 font-bold">
+                <a href="src/pages/help.html" class="hover:underline">Help</a>
+                <span class="text-black">|</span>
+                <a href="src/pages/log-in.html" class="hover:underline">Join Us</a>
+                <span class="text-black">|</span>
+                <a href="src/pages/sign-in.html" class="hover:underline">Sign In</a>
+            </div>
+        </div>
+
+        <div class="relative w-full bg-white flex items-center justify-end ~p-3/6 ~h-10/20">
+            <div class="hidden md:block flex-1"></div>
+
+            <div class="flex left-1/2 ~gap-2/5 font-bold ~text-sm/base">
+                <a href="new" class="hover:underline">New</a>
+                <a href="men" class="hover:underline">Men</a>
+                <a href="women" class="hover:underline">Women</a>
+                <a href="kids" class="hover:underline">Kids</a>
+                <a href="sport" class="hover:underline">Sport</a>
+            </div>
+
+            <div class="flex-1 flex items-center justify-end ~gap-1/3">
+                <div class="rounded-full bg-gray-100 ~h-5/10 flex items-center ~pl-2/3 ~gap-1/2">
+                    <div class="flex items-center justify-center">
+                        <img src="../../assets/lucide/search.svg" class="~w-4/5 ~h-4/5 block">
+                    </div>
+                    <input type="text" placeholder="Search" class="outline-none ~text-sm/base ~w-12/24 text-gray-500 font-semibold bg-transparent">
+                </div>
+
+                <button class="hover:bg-gray-300 p-2 rounded-full">
+                    <img src="../../assets/lucide/heart.svg" class="~w-4/5 ~h-4/5">
+                </button>
+
+                <button class="hover:bg-gray-300 p-2 rounded-full">
+                    <img src="../../assets/lucide/handbag.svg" class="~w-4/5 ~h-4/5">
+                </button>
+            </div>
+
+        </div>
+
+        <div class="~h-12/20 ~p-3/6 bg-gray-100 flex items-center justify-center">
+            <div class="~text-xl/2xl text-gray-500 font-semibold">Where comfort meets style</div>
+        </div>
+
+    </header>
+
+    <div class="max-w-[1000px] mx-auto ~mt-5/8">
+
+        <div class="grid grid-cols-1 md:grid-cols-[60%_40%]">
+
+            <!-- Left Part: Images -->
+            <div class="flex gap-4 ~p-4/6 md:sticky md:top-0 md:h-screen">
+
+                <!-- Thumbnails -->
+                <div class="flex flex-col gap-2">
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                </div>
+
+                <!-- Main Image -->
+                <div class="relative flex-1 max-h-[600px] bg-gray-200 rounded-lg flex items-center justify-center">
+
+                    <!-- Arrows Container -->
+                    <div class="absolute bottom-4 right-4 flex gap-2">
+
+                        <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow hover:bg-gray-100 transition">
+                            <img src="../../assets/lucide/chevron-left.svg" class="~w-4/5 ~h-4/5">
+                        </button>
+
+                        <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow hover:bg-gray-100 transition">
+                            <img src="../../assets/lucide/chevron-right.svg" class="~w-4/5 ~h-4/5">
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Part: Product Info -->
+            <div class="flex flex-col ~gap-3/5 ~p-4/6">
+
+                <div class="mb-4">
+                    <h1 class="~text-lg/xl font-semibold">
+                    Nike Mercurial Vapor 16 Elite "Kylian Mbappé"
+                    </h1>
+                    <p class="text-gray-500 ~text-sm/base">
+                    Firm-Ground Low-Top Football Boot
+                    </p>
+                    <p class="font-semibold ~text-base/lg mt-2">
+                    269,99 $
+                    </p>
+                </div>
+
+                <!-- Color Buttons -->
+                <div class="flex items-center gap-1.5">
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                    <button class="bg-gray-200 rounded-md ~w-12/16 ~h-12/16 border border-transparent hover:border-black focus:border-black"></button>
+                </div>
+
+                <!-- Sizes -->
+                <div class="my-6">
+                    <p class="font-semibold ~text-sm/base mb-2">Select Size</p>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 35</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 36</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 37</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 38</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 39</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 40</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 41</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 42</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 43</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 44</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 45</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 46</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 47</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 48</button>
+                        <button class="border rounded-md py-2 hover:border-black focus:border-black">EU 49</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <button class="w-full bg-black text-white py-4 rounded-full font-semibold hover:bg-zinc-800 transition-colors duration-200">
+                    Add to Bag
+                </button>
+
+                <button class="w-full border py-4 rounded-full font-semibold transition flex items-center justify-center gap-2 hover:border-black">
+                    Favourite
+                    <img src="../../assets/lucide/heart.svg" class="~w-4/5 ~h-4/5">
+                </button>
+
+                <!-- Product Description -->
+                <div class="text-gray-600 text-sm mt-6 flex flex-col gap-4 leading-relaxed">
+
+                    <p>
+                        Built for explosive speed and precision, the Nike Mercurial Vapor 16 Elite
+                        is designed to help you dominate every moment on the pitch. Inspired by
+                        Kylian Mbappé's relentless playing style, this boot delivers unmatched
+                        responsiveness and control.
+                    </p>
+
+                    <p>
+                        The updated 3/4-length Air Zoom unit provides a propulsive sensation with
+                        every step, helping you accelerate faster and stay ahead of defenders.
+                        A lightweight, second-skin upper enhances ball touch, giving you confidence
+                        at high speeds.
+                    </p>
+
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Air Zoom unit for explosive acceleration</li>
+                        <li>Lightweight upper for enhanced ball control</li>
+                        <li>Designed for firm-ground pitches</li>
+                        <li>Secure fit for maximum stability</li>
+                    </ul>
+
+                    <p>
+                        Whether you're making quick cuts, sprinting down the wing, or finishing
+                        with precision, the Mercurial Vapor 16 Elite is built to keep up with
+                        your game at every level.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="~p-4/6 max-w-[1200px] mx-auto">
+            <hr class="border-t-4 border-gray-300">
+            <div class="flex items-center justify-start w-full">
+
+                <div class="flex items-center justify-start w-1/2 ~mt-3/5">
+                    <span class="text-black ~text-xs/sm">© 2026 Iken, Inc. All rights reserved</span>
+                </div>
+
+                <div class="flex items-center justify-end ~gap-2/3 w-1/2 ~mt-3/5">
+                    <div class="flex items-center justify-center">
+                        <img src="../../assets/lucide/planet.svg" class="~w-4/5 ~h-4/5 block">
+                    </div>
+                    <span class="text-gray-400 ~text-xs/sm">Slovakia (Slovak republik)</span>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

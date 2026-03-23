@@ -58,6 +58,11 @@
 
     <main class="max-w-[1100px] mx-auto ~mt-5/8 px-4">
 
+        <!-- Page Title -->
+        <div class="~mb-5/8">
+            <h1 class="text-3xl font-semibold">Bag</h1>
+        </div>
+
         <!-- Bag + Summary -->
         <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
 
@@ -65,71 +70,111 @@
             <div class="flex flex-col gap-6">
 
                 <!-- Item -->
-                <div class="flex items-center gap-4">
-                    <div class="w-36 h-36 bg-gray-200 rounded-lg flex-shrink-0"></div>
-                    <div class="flex-1 flex flex-col">
-                        <h2 class="font-semibold">Nike Air Force 1 '07 LV8</h2>
-                        <p class="text-gray-500 text-sm">Men's Shoes</p>
-                        <p class="text-gray-500 text-sm">Plum Eclipse/Metallic Silver</p>
-                        <a href="#" class="text-gray-500 text-sm font-semibold underline mt-1">Size 43</a>
-                        <div class="flex items-center gap-2">
-                            <div class="border rounded-full">
-                                <button class="rounded-full p-2.5 hover:bg-gray-100">
-                                    <img src="../../assets/lucide/minus.svg">
+                <div class="flex gap-4">
+
+                    <!-- Left: Image + Buttons -->
+                    <div class="flex flex-col items-center gap-1">
+                        <div class="w-40 h-40 bg-gray-200 rounded-lg"></div>
+
+                        <div class="flex items-center gap-2 mt-2">
+                            <button class="p-2 border rounded-full hover:bg-gray-100">
+                                <img src="../../assets/lucide/trash.svg" class="w-4 h-4">
+                            </button>
+
+                            <div class="border rounded-full flex items-center">
+                                <button class="p-2 rounded-full hover:bg-gray-100">
+                                    <img src="../../assets/lucide/minus.svg" class="w-4 h-4">
                                 </button>
-                                <span class="px-5">1</span>
-                                <button class="rounded-full p-2.5 hover:bg-gray-100">
-                                    <img src="../../assets/lucide/plus.svg">
+                                <span class="font-semibold px-2">1</span>
+                                <button class="p-2 rounded-full hover:bg-gray-100">
+                                    <img src="../../assets/lucide/plus.svg" class="w-4 h-4">
                                 </button>
                             </div>
-                            <button class="ml-2 p-2.5 border rounded-full hover:bg-gray-100">
-                                <img src="../../assets/lucide/trash.svg" class="~w-4/5 ~h-4/5">
-                            </button>
-                            <button class="ml-2 p-2.5 border rounded-full hover:bg-gray-100">
-                                <img src="../../assets/lucide/heart.svg" class="~w-4/5 ~h-4/5">
+
+                            <button class="p-2 border rounded-full hover:bg-gray-100">
+                                <img src="../../assets/lucide/heart.svg" class="w-4 h-4">
                             </button>
                         </div>
                     </div>
-                    <div class="font-semibold">119,99 $</div>
+
+                    <!-- Right: Description + Price -->
+                    <div class="flex-1 flex flex-col-reverse sm:flex-row sm:items-start gap-1 sm:gap-4">
+
+                        <div class="flex-1 flex flex-col">
+                            <h2 class="font-semibold text-lg">Nike Air Force 1 '07 LV8</h2>
+                            <p class="text-gray-500 text-base">Men's Shoes</p>
+                            <p class="text-gray-500 text-base">Plum Eclipse/Metallic Silver</p>
+                            <a href="#" class="text-gray-500 text-lg font-semibold underline underline-offset-4 decoration-2">Size 43</a>
+                        </div>
+
+                        <div class="font-semibold text-lg whitespace-nowrap">
+                            119,99 $
+                        </div>
+
+                    </div>
                 </div>
 
+                <hr class="my-2">
+
                 <!-- Item -->
-                <div class="flex items-center gap-4">
-                    <div class="w-36 h-36 bg-gray-200 rounded-lg flex-shrink-0"></div>
-                    <div class="flex-1 flex flex-col">
-                        <h2 class="font-semibold">Nike Air Max 95 Big Bubble</h2>
-                        <p class="text-gray-500 text-sm">Men's Shoes</p>
-                        <a href="#" class="text-gray-500 text-sm font-semibold underline mt-1">Size 43</a>
+                <div class="flex gap-4">
+
+                    <!-- Left: Image + Buttons -->
+                    <div class="flex flex-col items-center gap-1">
+                        <div class="w-40 h-40 bg-gray-200 rounded-lg"></div>
+
                         <div class="flex items-center gap-2 mt-2">
-                            <button class="border rounded px-2 py-1 hover:bg-gray-100">-</button>
-                            <span>1</span>
-                            <button class="border rounded px-2 py-1 hover:bg-gray-100">+</button>
-                            <button class="ml-4 p-2 rounded hover:bg-gray-100">
-                                <img src="../../assets/lucide/trash.svg" class="~w-4/5 ~h-4/5">
+                            <button class="p-2 border rounded-full hover:bg-gray-100">
+                                <img src="../../assets/lucide/trash.svg" class="w-4 h-4">
                             </button>
-                            <button class="ml-2 p-2 rounded hover:bg-gray-100">
-                                <img src="../../assets/lucide/heart.svg" class="~w-4/5 ~h-4/5">
+
+                            <div class="border rounded-full flex items-center">
+                                <button class="p-2 rounded-full hover:bg-gray-100">
+                                    <img src="../../assets/lucide/minus.svg" class="w-4 h-4">
+                                </button>
+                                <span class="font-semibold px-2">2</span>
+                                <button class="p-2 rounded-full hover:bg-gray-100">
+                                    <img src="../../assets/lucide/plus.svg" class="w-4 h-4">
+                                </button>
+                            </div>
+
+                            <button class="p-2 border rounded-full hover:bg-gray-100">
+                                <img src="../../assets/lucide/heart.svg" class="w-4 h-4">
                             </button>
                         </div>
                     </div>
-                    <div class="font-semibold">189,99 $</div>
+
+                    <!-- Right: Description + Price -->
+                    <div class="flex-1 flex flex-col-reverse sm:flex-row sm:items-start gap-1 sm:gap-4">
+
+                        <div class="flex-1 flex flex-col">
+                            <h2 class="font-semibold text-lg">Nike Air Max 95 Big Bubble</h2>
+                            <p class="text-gray-500 text-base">Men's Shoes</p>
+                            <a href="#" class="text-gray-500 text-lg font-semibold underline underline-offset-4 decoration-2">Size 43</a>
+                        </div>
+
+                        <div class="font-semibold text-lg whitespace-nowrap">
+                            119,99 $
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
 
             <!-- Summary -->
             <div class="border p-6 rounded-lg flex flex-col gap-4 h-fit">
-                <h2 class="font-semibold text-lg mb-4">Summary</h2>
-                <div class="flex justify-between text-gray-500">
+                <h2 class="font-semibold text-2xl mb-4">Summary</h2>
+                <div class="flex justify-between text-gray-500 gap-6">
                     <span>Subtotal</span>
                     <span>309,98 $</span>
                 </div>
-                <div class="flex justify-between text-gray-500">
+                <div class="flex justify-between text-gray-500 gap-6">
                     <span>Estimated Delivery & Handling</span>
                     <span>Free</span>
                 </div>
                 <hr class="my-2">
-                <div class="flex justify-between font-semibold text-lg">
+                <div class="flex justify-between font-semibold text-lg gap-6">
                     <span>Total</span>
                     <span>309,98 $</span>
                 </div>

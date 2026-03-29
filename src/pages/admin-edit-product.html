@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin – Create Product</title>
+    <title>Edit Product</title>
     <link href="../../dist/output.css" rel="stylesheet">
 </head>
 
@@ -41,16 +41,16 @@
 
         <div class="flex-1 flex flex-col ~gap-8/10">
                 <div>
-                    <h2 class="~text-lg/2xl font-bold text-gray-900 ~mb-3/5">Add New Product</h2>
+                    <h2 class="~text-lg/2xl font-bold text-gray-900 ~mb-3/5">Edit Product</h2>
                     <div class="flex flex-col ~gap-2/3">
                         <div class="relative">
-                        <input type="email" id="email" placeholder="Email*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                        <input type="email" id="email" value="Nike Structure Plus" placeholder="Email*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                         <label for="email" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
                             Add Name*
                         </label>
                         </div>
                     <div class="relative flex-1">
-                        <input type="text" id="lastName" placeholder="Add Tag*"
+                        <input type="text" id="lastName" value="Men's Road Running Shoes" placeholder="Add Tag*"
                             class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                         <label for="lastName"
                             class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
@@ -58,7 +58,7 @@
                         </label>
                     </div>
                     <div class="relative flex-1">
-                        <input type="text" id="price" placeholder="Add Price*"
+                        <input type="text" id="price"value="119.99" placeholder="Add Price*"
                             class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                         <label for="price"
                             class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
@@ -85,14 +85,15 @@
                     </div>
                     <div class="relative flex-1">
                         <textarea id="description" rows="6" placeholder="Add Description*"
-                            class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent resize-none min-h-[200px]"></textarea>
+                            class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent resize-none min-h-[200px]">Built for comfort and stability on every run, the Nike Structure Plus is designed to support you from your first step to your last mile. Whether you're training daily or going for longer distances, these shoes provide a smooth and reliable ride.
+A responsive cushioning system helps absorb impact while maintaining energy return, keeping your stride efficient and comfortable. The engineered upper offers breathability and a secure fit, adapting naturally to your foot as you move.</textarea>
                         <label for="description"
                             class="absolute left-4 -top-2.5 bg-white px-1 text-xs text-gray-500">
                             Add Description (minimum 250 symbols)*
                         </label>
                     </div>
                     <div class="relative flex-1">
-                        <input type="text" id="description" placeholder="Add Description*"
+                        <input type="text" id="description" value="35" placeholder="Add Description*"
                             class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                         <label for="description"
                             class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
@@ -102,24 +103,12 @@
                     <p class="~text-xs/sm text-gray-400 ~mt-1/2">Add Photos (minimum 2 photos)</p>
                     <div class="grid grid-cols-3 ~gap-2/3">
 
-                        <label class="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-900 transition-colors group">
-                            <input type="file" accept="image/*" class="hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 group-hover:text-gray-600 transition-colors mb-1">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" x2="12" y1="3" y2="15"/>
-                            </svg>
-                            <span class="text-xs text-gray-300 group-hover:text-gray-600 transition-colors">Add new Photo</span>
+                        <label class="aspect-square border-2 border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer hover:border-gray-900 transition-colors group">
+                            <img src="../../assets/sneakers/sneakers9.avif" class="w-full h-full object-cover">
                         </label>
 
-                        <label class="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-900 transition-colors group">
-                            <input type="file" accept="image/*" class="hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 group-hover:text-gray-600 transition-colors mb-1">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" x2="12" y1="3" y2="15"/>
-                            </svg>
-                            <span class="text-xs text-gray-300 group-hover:text-gray-600 transition-colors">Add new Photo</span>
+                        <label class="aspect-square border-2 border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer hover:border-gray-900 transition-colors group">
+                            <img src="../../assets/sneakers/productsneakers5.avif" class="w-full h-full object-cover">
                         </label>
 
                         <label class="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-900 transition-colors group">
@@ -127,11 +116,11 @@
                             <img src="../../assets/lucide/plus.svg">
                         </label>
                     </div>
-                    <button type="admin-add-product.html" class="w-full flex justify-center border px-6 ~py-4/3 rounded-full font-semibold transition items-center gap-2 hover:border-black">
+                    <button type="admin-add-product.html" class="w-full border px-6 ~py-4/3 rounded-full font-semibold transition flex items-center justify-center gap-2 hover:border-black">
                         Add New Variant
                     </button>
                     <a href="admin-product.html" type="submit" class="w-full flex justify-center bg-black text-white px-6 ~py-4/3 rounded-full font-medium hover:bg-zinc-800 transition-colors duration-200">
-                        Save New Product
+                        Save Changes
                     </a href>
 
     </main>

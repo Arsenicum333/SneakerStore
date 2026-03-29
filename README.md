@@ -1,5 +1,9 @@
 # Sneaker Store
 
+## Requirements
+
+Make sure you have **Node.js (version 16 or higher)** installed.
+
 ## 1. Install dependencies (only once)
 
 ```bash

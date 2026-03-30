@@ -1,19 +1,22 @@
-# Sneaker Store
+# SneakerStore
 
-## Requirements
+This repository uses a Laravel application placed in the `sneaker-store` directory.
 
-Make sure you have **Node.js (version 16 or higher)** installed.
+## Project structure
 
-## 1. Install dependencies (only once)
+- `sneaker-store/` - main Laravel application (Blade, routes, assets, Tailwind, Vite)
+- root folder - repository metadata only (`LICENSE`, `.gitignore`, this `README`)
+
+## Run locally
+
+From repository root:
 
 ```bash
+cd sneaker-store
+composer install
 npm install
-```
-
-## 2. Run Tailwind build
-
-```bash
+php artisan serve
 npm run dev
 ```
 
-Keep this running while working on the project.
+Open http://127.0.0.1:8000.

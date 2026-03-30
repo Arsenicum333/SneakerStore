@@ -1,22 +1,66 @@
 # SneakerStore
 
-This repository uses a Laravel application placed in the `sneaker-store` directory.
+Laravel 13 + Tailwind + Vite.
 
-## Project structure
+## Requirements
 
-- `sneaker-store/` - main Laravel application (Blade, routes, assets, Tailwind, Vite)
-- root folder - repository metadata only (`LICENSE`, `.gitignore`, this `README`)
+1. PHP 8.3+
+2. Composer 2+
+3. Node.js 20+ and npm
+4. Git
 
-## Run locally
-
-From repository root:
+### Version check:
 
 ```bash
-cd sneaker-store
+php -v
+composer -V
+node -v
+npm -v
+git --version
+```
+
+## First run
+
+Run in the project root:
+
+```bash
 composer install
 npm install
+copy .env.example .env
+php artisan key:generate
+php artisan migrate
+```
+
+## Run in dev mode
+
+### Option 1 (two terminals):
+
+**Terminal 1:**
+```bash
 php artisan serve
+```
+
+**Terminal 2:**
+```bash
 npm run dev
 ```
 
-Open http://127.0.0.1:8000.
+Open: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+### Option 2 (single command, all in one):
+
+```bash
+composer run dev
+```
+
+## Useful commands
+
+### Tests
+```bash
+php artisan test
+```
+
+### Production frontend build
+```bash
+npm run build
+```

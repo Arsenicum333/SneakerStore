@@ -1,4 +1,48 @@
-node_modules/
-dist/
-.vscode/
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+/vendor
+/node_modules
+
+# Build artifacts
+/public/build
+/public/hot
+/dist
+
+# Runtime storage
+/public/storage
+/storage/*.key
+/storage/pail
+
+# Framework caches
+/bootstrap/cache/*.php
+/bootstrap/cache/*.json
+!/bootstrap/cache/.gitignore
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE and editor files
+/.idea
+/.vscode
+/.fleet
+/.zed
+/.nova
+.phpactor.json
+.phpunit.result.cache
+/.phpunit.cache
+
+# Auth and local tooling
+/auth.json
+Homestead.json
+Homestead.yaml
+
+# OS files
+.DS_Store
+Thumbs.db

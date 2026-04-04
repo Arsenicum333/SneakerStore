@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('shipping_details', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('order_id')
+                ->unique()
+                ->constrained()
+                ->cascadeOnDelete();
 
             $table->string('first_name', 20);
             $table->string('last_name', 20);
-            $table->string('email')->unique();
-            $table->string('password_hash');
-            $table->date('date_of_birth');
-            $table->string('address')->nullable();
-            $table->boolean('is_admin')->default(false);
-
-            $table->timestamps();
+            $table->text('address');
+            $table->string('phone_number', 13);
+            $table->string('shipping_method', 50);
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('shipping_details');
     }
 };

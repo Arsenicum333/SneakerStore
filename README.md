@@ -31,6 +31,32 @@ php artisan key:generate
 php artisan migrate
 ```
 
+## Database connection (PostgreSQL)
+
+This project uses PostgreSQL.
+
+### Connection settings (`.env`)
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=db
+DB_PORT=5432
+DB_DATABASE=iken
+DB_USERNAME=user
+DB_PASSWORD=password
+```
+
+### If you run with Docker Compose
+
+The `db` service name in `docker-compose.yaml` is used as host (`DB_HOST=db`).
+
+Run DB-related Artisan commands inside the app container:
+
+```bash
+docker compose exec app php artisan migrate
+docker compose exec app php artisan migrate:fresh
+```
+
 ## Run in dev mode
 
 ### Option 1 (two terminals):

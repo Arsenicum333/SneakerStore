@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Головна — SneakerStore')
+@section('title', 'SneakerStore')
 
 @section('content')
 <main class="~p-0/6 mt-5 max-w-[1200px] mx-auto">

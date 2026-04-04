@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: IkenApp
+    volumes:
+      - .:/var/www
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
+
+  db:
+    image: postgres:15
+    container_name: IkenDB
+    restart: always
+    environment:
+      POSTGRES_DB: iken
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

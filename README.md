@@ -8,6 +8,7 @@ Laravel 13 + Tailwind + Vite.
 2. Composer 2+
 3. Node.js 20+ and npm
 4. Git
+5. Docker + Docker Compose
 
 ### Version check:
 
@@ -27,6 +28,7 @@ Run in the project root:
 composer install
 npm install
 copy .env.example .env
+docker compose up -d
 php artisan key:generate
 php artisan migrate
 ```
@@ -39,54 +41,19 @@ This project uses PostgreSQL.
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=db
+DB_HOST=127.0.0.1
 DB_PORT=5432
 DB_DATABASE=iken
 DB_USERNAME=user
 DB_PASSWORD=password
 ```
 
-### If you run with Docker Compose
-
-The `db` service name in `docker-compose.yaml` is used as host (`DB_HOST=db`).
-
-Run DB-related Artisan commands inside the app container:
-
-```bash
-docker compose exec app php artisan migrate
-docker compose exec app php artisan migrate:fresh
-```
-
 ## Run in dev mode
 
-### Option 1 (two terminals):
-
-**Terminal 1:**
-```bash
-php artisan serve
-```
-
-**Terminal 2:**
-```bash
-npm run dev
-```
-
-Open: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-
-### Option 2 (single command, all in one):
+Start the app with one command:
 
 ```bash
 composer run dev
 ```
 
-## Useful commands
-
-### Tests
-```bash
-php artisan test
-```
-
-### Production frontend build
-```bash
-npm run build
-```
+This runs the Laravel server, queue listener, and Vite together. PostgreSQL should already be running with `docker compose up -d`.

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,10 +14,15 @@ Route::view('/favourites', 'favourites')->name('favourites');
 Route::view('/payment', 'payment')->name('payment');
 Route::view('/help', 'help')->name('help');
 
-Route::view('/login', 'sign-in')->name('login');
-Route::view('/register', 'log-in')->name('register');
-Route::view('/logout', 'log-out')->name('logout');
-Route::view('/profile', 'profile')->name('profile');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/logout', function () {
+    return view('log-out');
+})->middleware('auth')->name('logout.confirm');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout.perform');
+Route::view('/profile', 'profile')->middleware('auth')->name('profile');
 
 Route::view('/admin/products', 'admin-product')->name('admin.products');
 Route::view('/admin/products/create', 'admin-add-product')->name('admin.products.create');

@@ -11,12 +11,13 @@
         Log out from your account.
       </h1>
 
-      <span class="text-gray-500 ~text-xs/sm font-medium">youremail@example.com</span>
+      <span class="text-gray-500 ~text-xs/sm font-medium">@auth{{ Auth::user()->email }}@else Guest @endauth</span>
     </header>
 
     <div class="w-full">
 
-      <form action="/" class="flex flex-col gap-7">
+      <form action="{{ route('logout.perform') }}" method="POST" class="flex flex-col gap-7">
+        @csrf
         <div class="flex justify-center">
           <button type="submit" class="w-full bg-black text-white px-6 ~py-4/3 rounded-full font-medium hover:bg-zinc-800 transition-colors duration-200">
             Log Out

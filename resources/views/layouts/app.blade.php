@@ -14,9 +14,18 @@
             <div class="flex ~gap-2/3 font-bold">
                 <a href="/help" class="hover:underline">Help</a>
                 <span class="text-black">|</span>
-                <a href="/register" class="hover:underline">Join Us</a>
-                <span class="text-black">|</span>
-                <a href="/login" class="hover:underline">Sign In</a>
+                @auth
+                    <a href="{{ route('profile') }}" class="hover:underline">Profile</a>
+                    <span class="text-black">|</span>
+                    <form action="{{ route('logout.perform') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="hover:underline">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('register') }}" class="hover:underline">Join Us</a>
+                    <span class="text-black">|</span>
+                    <a href="{{ route('login') }}" class="hover:underline">Sign In</a>
+                @endauth
             </div>
         </div>
 

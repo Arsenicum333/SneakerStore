@@ -16,16 +16,24 @@
 
     <div class="w-full">
 
-      <form action="/" class="flex flex-col gap-7">
+      <form action="{{ route('login') }}" method="POST" class="flex flex-col gap-7">
+        @csrf
+
+        @if($errors->any())
+            <div class="p-4 rounded-lg bg-red-50 text-red-700 border border-red-200">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
         <div class="relative">
-          <input type="email" id="email" placeholder="Email*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg text-lg focus:border-black outline-none transition-all peer placeholder-transparent">
+          <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="Email*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg text-lg focus:border-black outline-none transition-all peer placeholder-transparent">
           <label for="email" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
             Email*
           </label>
         </div>
 
         <div class="relative">
-          <input type="password" id="password" placeholder="Password*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg text-lg focus:border-black outline-none transition-all peer placeholder-transparent">
+          <input type="password" name="password" id="password" placeholder="Password*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg text-lg focus:border-black outline-none transition-all peer placeholder-transparent">
           <label for="password" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
             Password*
           </label>

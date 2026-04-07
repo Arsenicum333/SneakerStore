@@ -74,9 +74,12 @@
                             </a>
                         </div>
                  </div>
-                 <button type="submit" class="w-full bg-black text-white px-6 ~py-4/3 rounded-full font-medium hover:bg-zinc-800 transition-colors duration-200">
-                    Log Out
-                </button>
+                 <form action="{{ route('logout.perform') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full bg-black text-white px-6 ~py-4/3 rounded-full font-medium hover:bg-zinc-800 transition-colors duration-200">
+                        Log Out
+                    </button>
+                </form>
             </div>
 
             <div class="lg:w-80 flex-shrink-0">

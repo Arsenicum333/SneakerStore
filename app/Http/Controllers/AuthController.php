@@ -48,19 +48,18 @@ class AuthController extends Controller
         ]);
 
         $dateOfBirth = sprintf('%04d-%02d-%02d', $request->dob_year, $request->dob_month, $request->dob_day);
+        $isFirstUser = !User::query()->exists();
 
-        User::create([
+        $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password_hash' => Hash::make($request->password),
             'date_of_birth' => $dateOfBirth,
+            'is_admin' => $isFirstUser,
         ]);
 
-        Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+        Auth::login($user);
 
         $request->session()->regenerate();
 

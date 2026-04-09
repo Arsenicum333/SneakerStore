@@ -4,6 +4,9 @@
 
 @section('content')
 <main class="max-w-[1200px] mx-auto ~mt-4/8 ~p-4/6">
+    @php
+        $user = auth()->user();
+    @endphp
 
         <div class="flex flex-col lg:flex-row ~gap-8/16">
             <div class="flex-1 flex flex-col ~gap-4/6">
@@ -18,8 +21,8 @@
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
                         </button>
-                        <p class="~text-lg/2xl font-bold text-gray-900">Vitalii Diurd</p>
-                        <p class="~text-xs/sm text-gray-400">Iken Member Since March 2026</p>
+                        <p class="~text-lg/2xl font-bold text-gray-900">{{ $user->first_name }} {{ $user->last_name }}</p>
+                        <p class="~text-xs/sm text-gray-400">Iken Member Since {{ $user->created_at?->format('F Y') }}</p>
                     </div>
                 </div>
 
@@ -27,7 +30,7 @@
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center ~gap-2/3">
                             <img src="{{ asset('assets/lucide/letter.svg') }}" class="~w-4/5 ~h-4/5 block">
-                            <span class="~text-xs/sm text-gray-700">youremail@gmail.com</span>
+                            <span class="~text-xs/sm text-gray-700">{{ $user->email }}</span>
                         </div>
                         <a href="#" class="~text-xs/sm text-gray-700 font-medium flex items-center gap-0.5 hover:text-gray-900">
                             Edit
@@ -66,7 +69,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center ~gap-2/3">
                                 <img src="{{ asset('assets/lucide/calender.svg') }}" class="~w-4/5 ~h-4/5 block">
-                                <span class="~text-xs/sm text-gray-700">2007 - 01 - 30</span>
+                                    <span class="~text-xs/sm text-gray-700">{{ $user->date_of_birth?->format('Y - m - d') }}</span>
                             </div>
                             <a href="#" class="~text-xs/sm text-gray-700 font-medium flex items-center gap-0.5 hover:text-gray-900">
                                 Edit

@@ -55,6 +55,30 @@
                 </div>
             </div>
 
+            <div class="mb-2">
+                <p class="font-semibold ~text-sm/base mb-2">Quantity</p>
+                <div class="border rounded-full inline-flex items-center" data-quantity-control>
+                    <button type="button" class="p-2 rounded-full hover:bg-gray-100" data-quantity-action="decrease" aria-label="Decrease quantity">
+                        <img src="{{ asset('assets/lucide/minus.svg') }}" class="w-4 h-4" alt="Minus">
+                    </button>
+
+                    <input
+                        type="number"
+                        min="1"
+                        step="1"
+                        value="1"
+                        inputmode="numeric"
+                        class="no-spinner w-14 text-center font-semibold outline-none bg-transparent"
+                        data-quantity-input
+                        aria-label="Quantity"
+                    >
+
+                    <button type="button" class="p-2 rounded-full hover:bg-gray-100" data-quantity-action="increase" aria-label="Increase quantity">
+                        <img src="{{ asset('assets/lucide/plus.svg') }}" class="w-4 h-4" alt="Plus">
+                    </button>
+                </div>
+            </div>
+
             <button class="w-full bg-black text-white py-4 rounded-full font-semibold hover:bg-zinc-800 transition-colors duration-200">
                 Add to Bag
             </button>
@@ -80,4 +104,49 @@
         </div>
     </div>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const wrapper = document.querySelector('[data-quantity-control]');
+        if (!wrapper) {
+            return;
+        }
+
+        const input = wrapper.querySelector('[data-quantity-input]');
+        const min = 1;
+        const max = 99;
+
+        const normalize = (value) => {
+            const numericValue = Number.parseInt(value, 10);
+
+            if (Number.isNaN(numericValue)) {
+                return min;
+            }
+
+            return Math.min(max, Math.max(min, numericValue));
+        };
+
+        wrapper.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-quantity-action]');
+            if (!button) {
+                return;
+            }
+
+            const currentValue = normalize(input.value);
+            const nextValue = button.dataset.quantityAction === 'increase'
+                ? currentValue + 1
+                : currentValue - 1;
+
+            input.value = normalize(nextValue);
+        });
+
+        input.addEventListener('input', () => {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        });
+
+        input.addEventListener('blur', () => {
+            input.value = normalize(input.value);
+        });
+    });
+</script>
 @endsection

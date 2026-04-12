@@ -69,153 +69,170 @@ class ProductCatalogSeeder extends Seeder
 
         $products = [
             [
-                'name' => 'Nike Air Zoom Pegasus 41',
+                'name' => 'Nike Air Max Plus',
                 'gender' => 'Men',
                 'sport' => 'Running',
                 'description' => $this->formatDescription(
-                    'Built for comfort and rhythm on daily runs, the Nike Air Zoom Pegasus 41 supports you from your warm-up to your final kilometer with stable cushioning and smooth transitions.',
-                    'Its responsive platform helps absorb impact while returning energy, and the breathable engineered upper keeps the fit secure without feeling heavy during long sessions.',
+                    'Nike Air Max Plus is a bold runner with a tuned cushioning system and aggressive upper lines that make it feel fast even when you are wearing it casually.',
+                    'The mesh build helps with airflow, while the sculpted sole keeps the ride responsive for everyday city movement and longer walks.',
                     [
-                        'Balanced cushioning for everyday road training',
-                        'Breathable upper with adaptive support',
-                        'Durable outsole for steady traction',
-                        'Smooth heel-to-toe transition',
+                        'Tuned cushioning for day-long comfort',
+                        'Breathable upper for better airflow',
+                        'Stable outsole for city surfaces',
+                        'Iconic silhouette with strong street presence',
                     ],
-                    'From short recovery runs to weekend distance work, Pegasus 41 gives you reliable comfort so you can stay focused on pace and form.'
+                    'It is a good fit for someone who wants a sneaker that can handle daily wear without losing its running DNA.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         1,
-                        139.99,
-                        'Black/White',
+                        189.99,
+                        'Pink/Gray',
                         [
-                            ['size' => '41', 'stock_quantity' => 7],
-                            ['size' => '42', 'stock_quantity' => 9],
-                            ['size' => '43', 'stock_quantity' => 6],
+                            ['size' => '40', 'stock_quantity' => 24],
+                            ['size' => '40.5', 'stock_quantity' => 20],
+                            ['size' => '41', 'stock_quantity' => 22],
+                            ['size' => '42', 'stock_quantity' => 18],
+                            ['size' => '42.5', 'stock_quantity' => 16],
+                            ['size' => '43', 'stock_quantity' => 14],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike Revolution 8',
-                'gender' => 'Women',
-                'sport' => 'Running',
-                'description' => $this->formatDescription(
-                    'The Nike Revolution 8 is made for easy, comfortable miles with a lightweight build that feels natural from the first step.',
-                    'Soft underfoot foam and an airy upper work together to reduce fatigue, while the supportive shape keeps your stride controlled through everyday training.',
-                    [
-                        'Lightweight construction for effortless movement',
-                        'Soft cushioning for daily comfort',
-                        'Breathable mesh upper for ventilation',
-                        'Reliable grip for city surfaces',
-                    ],
-                    'Whether you are starting a running routine or adding extra mileage, Revolution 8 delivers comfort you can count on day after day.'
-                ),
-                'variants' => [
-                    $this->makeSingleVariant(
-                        2,
-                        89.99,
-                        'White/Pink',
-                        [
-                            ['size' => '37', 'stock_quantity' => 8],
-                            ['size' => '38', 'stock_quantity' => 10],
-                            ['size' => '39', 'stock_quantity' => 8],
-                        ]
-                    ),
-                ],
-            ],
-            [
-                'name' => 'Nike Metcon 10',
-                'gender' => 'Unisex',
-                'sport' => 'Training',
-                'description' => $this->formatDescription(
-                    'Nike Metcon 10 is tuned for high-intensity gym work, giving you a stable base for lifts and enough flexibility for explosive movement.',
-                    'The responsive setup keeps transitions quick between exercises, while the grippy outsole helps you stay planted during lunges, pushes, and lateral drills.',
-                    [
-                        'Stable platform for strength sessions',
-                        'Responsive feel for fast transitions',
-                        'Grippy outsole for multidirectional control',
-                        'Durable upper for repeated training',
-                    ],
-                    'From circuit training to heavy sets, Metcon 10 supports the versatility you need to train harder with confidence.'
-                ),
-                'variants' => [
-                    $this->makeVariant(
-                        3,
-                        1,
-                        129.99,
-                        'Volt/Black',
-                        [
-                            ['size' => '41', 'stock_quantity' => 6],
-                            ['size' => '42', 'stock_quantity' => 7],
-                            ['size' => '43', 'stock_quantity' => 5],
-                        ]
-                    ),
-                    $this->makeVariant(
-                        3,
-                        2,
-                        129.99,
-                        'Black/Orange',
-                        [
-                            ['size' => '41', 'stock_quantity' => 4],
-                            ['size' => '42', 'stock_quantity' => 6],
-                            ['size' => '43', 'stock_quantity' => 4],
-                        ]
-                    ),
-                ],
-            ],
-            [
-                'name' => 'Nike Court Vision Low',
+                'name' => 'Nike Air Max 90',
                 'gender' => 'Men',
                 'sport' => 'Lifestyle',
                 'description' => $this->formatDescription(
-                    'Inspired by classic basketball style, Nike Court Vision Low blends retro lines with everyday comfort for a clean street-ready look.',
-                    'The structured upper adds durability and support, while the low-cut profile keeps the shoe easy to wear across long days in the city.',
+                    'Nike Air Max 90 keeps the classic silhouette that works with almost anything, from loose denim to sharp casual looks.',
+                    'The layered upper gives structure, while the visible cushioning adds a soft underfoot feel that is easy to wear all day.',
                     [
-                        'Retro basketball-inspired silhouette',
-                        'Durable upper for daily wear',
-                        'Low-cut collar for comfortable mobility',
-                        'Versatile style for casual outfits',
+                        'Classic lifestyle profile',
+                        'Soft cushioning underfoot',
+                        'Durable layered upper',
+                        'Easy-to-style color blocking',
                     ],
-                    'If you want a timeless sneaker that works with almost anything, Court Vision Low is a dependable lifestyle choice.'
+                    'This is a dependable everyday sneaker for people who want a timeless shape with enough comfort to wear it frequently.'
+                ),
+                'variants' => [
+                    $this->makeSingleVariant(
+                        2,
+                        149.99,
+                        'Gray/Black',
+                        [
+                            ['size' => '38.5', 'stock_quantity' => 18],
+                            ['size' => '39', 'stock_quantity' => 20],
+                            ['size' => '40', 'stock_quantity' => 22],
+                            ['size' => '41', 'stock_quantity' => 24],
+                            ['size' => '42', 'stock_quantity' => 18],
+                            ['size' => '43', 'stock_quantity' => 16],
+                            ['size' => '44', 'stock_quantity' => 12],
+                        ]
+                    ),
+                ],
+            ],
+            [
+                'name' => 'Nike P-6000',
+                'gender' => 'Unisex',
+                'sport' => 'Training',
+                'description' => $this->formatDescription(
+                    'Nike P-6000 mixes retro running energy with modern comfort, making it work both for training days and casual wear.',
+                    'Its layered mesh-and-overlay construction keeps the shape structured without feeling too heavy, while the sole remains flexible enough for everyday movement.',
+                    [
+                        'Retro runner with modern comfort',
+                        'Structured but lightweight upper',
+                        'Flexible sole for daily wear',
+                        'Two colorways for different moods',
+                    ],
+                    'It is a versatile option for someone who wants a sneaker that looks sporty without being limited to workouts.'
+                ),
+                'variants' => [
+                    $this->makeVariant(
+                        3,
+                        1,
+                        89.99,
+                        'White',
+                        [
+                            ['size' => '40', 'stock_quantity' => 20],
+                            ['size' => '41', 'stock_quantity' => 24],
+                            ['size' => '42', 'stock_quantity' => 26],
+                            ['size' => '43', 'stock_quantity' => 24],
+                            ['size' => '44', 'stock_quantity' => 18],
+                        ]
+                    ),
+                    $this->makeVariant(
+                        3,
+                        2,
+                        99.99,
+                        'Gray',
+                        [
+                            ['size' => '40', 'stock_quantity' => 18],
+                            ['size' => '41', 'stock_quantity' => 22],
+                            ['size' => '42', 'stock_quantity' => 24],
+                            ['size' => '43', 'stock_quantity' => 20],
+                            ['size' => '44', 'stock_quantity' => 16],
+                        ]
+                    ),
+                ],
+            ],
+            [
+                'name' => 'NikeCourt Lite 4',
+                'gender' => 'Women',
+                'sport' => 'Tennis',
+                'description' => $this->formatDescription(
+                    'NikeCourt Lite 4 is built for quick footwork and court stability, with a shape that supports fast movement and confident stops.',
+                    'The lightweight upper makes it comfortable for long practice sessions, while the outsole is designed to handle repeated court impact.',
+                    [
+                        'Court-ready traction',
+                        'Lightweight upper for long sessions',
+                        'Supportive fit for quick stops',
+                        'Clean tennis-inspired styling',
+                    ],
+                    'It is a practical tennis option that also looks clean enough for everyday wear off the court.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         4,
-                        99.99,
-                        'White/Navy',
+                        74.99,
+                        'Brown/White',
                         [
-                            ['size' => '40', 'stock_quantity' => 9],
-                            ['size' => '41', 'stock_quantity' => 9],
-                            ['size' => '42', 'stock_quantity' => 7],
+                            ['size' => '37', 'stock_quantity' => 18],
+                            ['size' => '38', 'stock_quantity' => 24],
+                            ['size' => '39', 'stock_quantity' => 26],
+                            ['size' => '40', 'stock_quantity' => 22],
+                            ['size' => '41', 'stock_quantity' => 18],
+                            ['size' => '42', 'stock_quantity' => 16],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike Blazer Mid 77',
-                'gender' => 'Women',
+                'name' => 'Air Jordan 1 Low',
+                'gender' => 'Men',
                 'sport' => 'Lifestyle',
                 'description' => $this->formatDescription(
-                    'Nike Blazer Mid 77 brings an iconic mid-top profile with heritage details that stand out without feeling overdone.',
-                    'Suede overlays add texture and structure, and the classic cupsole construction provides solid everyday comfort with a familiar vintage feel.',
+                    'Air Jordan 1 Low keeps the iconic basketball heritage in a lower profile that feels easy to wear every day.',
+                    'The padded collar and clean panel construction give it a familiar Jordan look, while the low cut keeps it versatile for casual styling.',
                     [
-                        'Iconic mid-top silhouette',
-                        'Suede accents for premium texture',
-                        'Comfortable cupsole support',
-                        'Timeless streetwear styling',
+                        'Iconic Jordan silhouette',
+                        'Padded collar for comfort',
+                        'Easy-to-style low profile',
+                        'Streetwear-friendly colorway',
                     ],
-                    'Perfect for casual rotation, Blazer Mid 77 combines old-school character with practical all-day wearability.'
+                    'This is one of those sneakers that can rotate through a lot of outfits without feeling out of place.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         5,
-                        114.99,
-                        'Sail/Orange',
+                        129.99,
+                        'Blue',
                         [
-                            ['size' => '37', 'stock_quantity' => 4],
-                            ['size' => '38', 'stock_quantity' => 6],
-                            ['size' => '39', 'stock_quantity' => 5],
+                            ['size' => '39.5', 'stock_quantity' => 16],
+                            ['size' => '40', 'stock_quantity' => 18],
+                            ['size' => '41', 'stock_quantity' => 20],
+                            ['size' => '42', 'stock_quantity' => 22],
+                            ['size' => '43', 'stock_quantity' => 18],
+                            ['size' => '44', 'stock_quantity' => 14],
                         ]
                     ),
                 ],
@@ -225,217 +242,238 @@ class ProductCatalogSeeder extends Seeder
                 'gender' => 'Men',
                 'sport' => 'Football',
                 'description' => $this->formatDescription(
-                    'Nike Tiempo Legend 10 is built for players who value touch, control, and composure under pressure on the pitch.',
-                    'Its upper helps keep close contact with the ball, while the traction layout supports fast cuts and confident acceleration in key moments.',
+                    'Nike Tiempo Legend 10 is made for touch and control, giving football players a dependable boot for passing, positioning, and clean contact.',
+                    'The upper keeps the ball feel natural, while the outsole adds the grip needed for quick changes in direction on match day.',
                     [
-                        'Enhanced touch for precise control',
-                        'Secure fit for match stability',
-                        'Reliable traction for direction changes',
-                        'Durable construction for regular play',
+                        'Touch-focused upper',
+                        'Reliable match traction',
+                        'Secure fit for sharp movement',
+                        'Built for regular football use',
                     ],
-                    'From possession play to final-third actions, Tiempo Legend 10 helps you stay sharp and in control through the full match.'
+                    'It is a strong all-round football option for players who care more about control than flashy distractions.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         6,
-                        149.99,
-                        'Blue/White',
+                        189.99,
+                        'Gray',
                         [
-                            ['size' => '42', 'stock_quantity' => 3],
-                            ['size' => '43', 'stock_quantity' => 7],
-                            ['size' => '44', 'stock_quantity' => 6],
+                            ['size' => '41', 'stock_quantity' => 20],
+                            ['size' => '41.5', 'stock_quantity' => 22],
+                            ['size' => '42', 'stock_quantity' => 24],
+                            ['size' => '42.5', 'stock_quantity' => 24],
+                            ['size' => '43', 'stock_quantity' => 22],
+                            ['size' => '44', 'stock_quantity' => 18],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike Phantom GX Academy',
+                'name' => 'Air Jordan 1 Low G',
                 'gender' => 'Unisex',
-                'sport' => 'Football',
+                'sport' => 'Golf',
                 'description' => $this->formatDescription(
-                    'Nike Phantom GX Academy is made for agile movement and confident attacking play, giving you control when space is tight.',
-                    'The boot shape supports quick footwork and clean contact, while the outsole helps maintain traction during sudden turns and bursts forward.',
+                    'Air Jordan 1 Low G brings Jordan styling to the golf course with a construction that looks familiar but is adapted for playing 18 holes.',
+                    'The upper keeps the clean AJ1 feel, while the outsole pattern is designed for stability through the swing and traction on turf.',
                     [
-                        'Agility-driven profile for quick movements',
-                        'Improved ball contact for cleaner touches',
-                        'Traction pattern for fast directional changes',
-                        'Comfortable fit for full-session play',
+                        'Jordan look for golf',
+                        'Stability during the swing',
+                        'Golf-specific traction',
+                        'Two colorways for choice',
                     ],
-                    'If your game depends on precision and tempo, Phantom GX Academy is built to help you create and finish chances.'
+                    'It gives golfers a way to keep their look sharp without giving up comfort or practical performance.'
                 ),
                 'variants' => [
                     $this->makeVariant(
                         7,
                         1,
-                        124.99,
-                        'Purple/Black',
+                        149.99,
+                        'White/Blue',
                         [
-                            ['size' => '41', 'stock_quantity' => 4],
-                            ['size' => '42', 'stock_quantity' => 6],
-                            ['size' => '42.5', 'stock_quantity' => 4],
+                            ['size' => '40', 'stock_quantity' => 18],
+                            ['size' => '41', 'stock_quantity' => 20],
+                            ['size' => '42', 'stock_quantity' => 22],
+                            ['size' => '43', 'stock_quantity' => 20],
+                            ['size' => '44', 'stock_quantity' => 16],
                         ]
                     ),
                     $this->makeVariant(
                         7,
                         2,
-                        124.99,
-                        'White/Lime',
+                        149.99,
+                        'Green/White',
                         [
-                            ['size' => '41', 'stock_quantity' => 3],
-                            ['size' => '42', 'stock_quantity' => 5],
-                            ['size' => '42.5', 'stock_quantity' => 3],
+                            ['size' => '40', 'stock_quantity' => 16],
+                            ['size' => '41', 'stock_quantity' => 18],
+                            ['size' => '42', 'stock_quantity' => 20],
+                            ['size' => '43', 'stock_quantity' => 18],
+                            ['size' => '44', 'stock_quantity' => 14],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike Air Max Pulse',
-                'gender' => 'Men',
-                'sport' => 'Lifestyle',
+                'name' => 'Nike Maxfly 2',
+                'gender' => 'Unisex',
+                'sport' => 'Athletics',
                 'description' => $this->formatDescription(
-                    'Nike Air Max Pulse delivers modern street style with visible cushioning designed to keep every step soft and smooth.',
-                    'A supportive upper and cushioned midsole combine for comfort during long city days, while the silhouette keeps your look clean and contemporary.',
+                    'Nike Maxfly 2 is a track-focused spike built for speed, with a lightweight feel that suits short-distance racing.',
+                    'The upper keeps the fit locked in, while the sole is tuned to help with explosive takeoffs and efficient forward drive.',
                     [
-                        'Visible Air cushioning for impact comfort',
-                        'Supportive upper for daily wear',
-                        'Modern design language for street looks',
-                        'Durable outsole for urban traction',
+                        'Lightweight race feel',
+                        'Locked-in fit for sprinting',
+                        'Explosive toe-off support',
+                        'Track-ready design language',
                     ],
-                    'From commuting to evening plans, Air Max Pulse gives you all-day comfort with standout Nike identity.'
+                    'This one is aimed at runners who want something race-specific rather than a general training shoe.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         8,
-                        159.99,
-                        'Grey/Black',
+                        219.99,
+                        'Orange/Green',
                         [
-                            ['size' => '42', 'stock_quantity' => 4],
-                            ['size' => '43', 'stock_quantity' => 5],
-                            ['size' => '44', 'stock_quantity' => 5],
+                            ['size' => '41', 'stock_quantity' => 12],
+                            ['size' => '41.5', 'stock_quantity' => 14],
+                            ['size' => '42', 'stock_quantity' => 16],
+                            ['size' => '42.5', 'stock_quantity' => 16],
+                            ['size' => '43', 'stock_quantity' => 14],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike Structure 25',
-                'gender' => 'Women',
-                'sport' => 'Running',
+                'name' => 'Nike Wildhorse 10',
+                'gender' => 'Men',
+                'sport' => 'Trail-Running',
                 'description' => $this->formatDescription(
-                    'Built for comfort and stability on every run, Nike Structure 25 supports your stride from the first step to the final kilometer.',
-                    'Its responsive cushioning helps absorb impact while maintaining energy return, and the breathable upper keeps the fit secure and natural as you move.',
+                    'Nike Wildhorse 10 is designed for uneven ground and longer trail sessions, with a build that feels protective without becoming too heavy.',
+                    'The outsole helps with grip on loose terrain, while the upper keeps the fit secure enough for technical routes.',
                     [
-                        'Supportive design for stable road running',
-                        'Responsive cushioning for all-day comfort',
-                        'Breathable upper for improved airflow',
-                        'Durable outsole for reliable traction',
+                        'Trail grip on loose ground',
+                        'Protective feel for longer runs',
+                        'Secure upper for technical trails',
+                        'Comfortable for mixed terrain',
                     ],
-                    'From short runs to longer sessions, Structure 25 helps you stay focused on your pace while delivering dependable support.'
+                    'It works well for runners who want to get off-road without feeling underprepared.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         9,
-                        144.99,
+                        149.99,
                         'Coral/White',
                         [
-                            ['size' => '38', 'stock_quantity' => 5],
-                            ['size' => '39', 'stock_quantity' => 7],
-                            ['size' => '40', 'stock_quantity' => 8],
+                            ['size' => '38', 'stock_quantity' => 18],
+                            ['size' => '39', 'stock_quantity' => 20],
+                            ['size' => '40', 'stock_quantity' => 22],
+                            ['size' => '41', 'stock_quantity' => 20],
+                            ['size' => '42', 'stock_quantity' => 16],
+                            ['size' => '43', 'stock_quantity' => 14],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike Dunk Low Retro',
+                'name' => 'Air Jordan 1 Mid',
                 'gender' => 'Unisex',
                 'sport' => 'Lifestyle',
                 'description' => $this->formatDescription(
-                    'Nike Dunk Low Retro keeps the classic court-inspired shape that became a streetwear staple across generations.',
-                    'Premium paneling and a padded collar create a secure, comfortable fit, while the low-cut profile makes it easy to style for everyday use.',
+                    'Air Jordan 1 Mid gives you the classic Jordan look in a mid-cut shape that feels balanced between bold and everyday-friendly.',
+                    'The profile is strong enough to stand out, but still easy to pair with casual outfits and regular streetwear rotation.',
                     [
-                        'Classic low-top basketball heritage',
-                        'Padded collar for added comfort',
-                        'Durable leather-like panel structure',
-                        'Easy-to-style everyday silhouette',
+                        'Classic Jordan heritage',
+                        'Balanced mid-cut profile',
+                        'Works with everyday outfits',
+                        'Bold but wearable design',
                     ],
-                    'If you want a sneaker with iconic DNA and versatile wearability, Dunk Low Retro stays relevant season after season.'
+                    'It is a dependable Jordan option when you want something familiar but not too tall on the ankle.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         10,
-                        119.99,
-                        'Red/White',
+                        139.99,
+                        'Red',
                         [
-                            ['size' => '40', 'stock_quantity' => 7],
-                            ['size' => '41', 'stock_quantity' => 8],
-                            ['size' => '42', 'stock_quantity' => 7],
+                            ['size' => '40', 'stock_quantity' => 16],
+                            ['size' => '41', 'stock_quantity' => 18],
+                            ['size' => '42', 'stock_quantity' => 20],
+                            ['size' => '43', 'stock_quantity' => 20],
+                            ['size' => '44', 'stock_quantity' => 16],
+                            ['size' => '45', 'stock_quantity' => 12],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike React Infinity Run',
+                'name' => "Nike Mercurial Vapor 16 Pro 'Vini Jr.'",
                 'gender' => 'Men',
-                'sport' => 'Running',
+                'sport' => 'Football',
                 'description' => $this->formatDescription(
-                    'Nike React Infinity Run is designed for runners who want a smooth, protected ride during everyday training.',
-                    'Its responsive foam setup balances soft landings with efficient energy return, helping you maintain rhythm over longer distances.',
+                    'Nike Mercurial Vapor 16 Pro is built for sharp acceleration and attacking play, giving footballers a very fast, very direct feel underfoot.',
+                    'The boot is designed to lock in the foot and keep movement responsive, especially when you are sprinting into space or changing direction quickly.',
                     [
-                        'Responsive cushioning for steady pacing',
-                        'Comfort-focused geometry for daily runs',
-                        'Supportive upper for secure lockdown',
-                        'Durable outsole for repeat mileage',
+                        'Built for acceleration',
+                        'Responsive and locked-in fit',
+                        'Fast feel for attacking play',
+                        'Signature player edition style',
                     ],
-                    'Whether you are building volume or recovering between harder workouts, React Infinity Run keeps each run consistent and comfortable.'
+                    'This is a boot for players who want speed-first performance with a standout visual identity.'
                 ),
                 'variants' => [
                     $this->makeSingleVariant(
                         11,
                         169.99,
-                        'Blue/Volt',
+                        'Pink',
                         [
-                            ['size' => '43', 'stock_quantity' => 4],
-                            ['size' => '44', 'stock_quantity' => 6],
-                            ['size' => '45', 'stock_quantity' => 6],
+                            ['size' => '42', 'stock_quantity' => 12],
+                            ['size' => '42.5', 'stock_quantity' => 14],
+                            ['size' => '43', 'stock_quantity' => 16],
+                            ['size' => '44', 'stock_quantity' => 16],
+                            ['size' => '45', 'stock_quantity' => 12],
                         ]
                     ),
                 ],
             ],
             [
-                'name' => 'Nike ZoomX Zegama 2',
-                'gender' => 'Women',
-                'sport' => 'Trail',
+                'name' => 'Air Force 1 GORE-TEX Vibram',
+                'gender' => 'Men',
+                'sport' => 'Lifestyle',
                 'description' => $this->formatDescription(
-                    'Nike ZoomX Zegama 2 is built for trail runners who need cushioning confidence and secure traction on mixed terrain.',
-                    'The high-comfort foam platform smooths out rough sections, while the outsole pattern grips reliably when trails turn loose, wet, or uneven.',
+                    'Air Force 1 GORE-TEX Vibram brings a weather-ready version of the classic AF1, adding a more rugged finish for mixed conditions.',
+                    'The materials feel protective and the outsole is built to give a more secure step, making it a strong option for regular city wear.',
                     [
-                        'Trail-tuned grip for varied surfaces',
-                        'Plush cushioning for longer outings',
-                        'Stable platform for technical sections',
-                        'Protective upper for outdoor durability',
+                        'Weather-ready build',
+                        'Rugged everyday durability',
+                        'Classic AF1 shape with upgrade',
+                        'Secure grip underfoot',
                     ],
-                    'From rolling forest routes to steep climbs, ZoomX Zegama 2 helps you move further with control and confidence.'
+                    'It keeps the familiar Air Force 1 look but gives it a more functional edge for the kind of weather you cannot control.'
                 ),
                 'variants' => [
                     $this->makeVariant(
                         12,
                         1,
-                        179.99,
-                        'Teal/Black',
+                        159.99,
+                        'Green/Black',
                         [
-                            ['size' => '38.5', 'stock_quantity' => 3],
-                            ['size' => '39.5', 'stock_quantity' => 5],
-                            ['size' => '40.5', 'stock_quantity' => 4],
+                            ['size' => '38.5', 'stock_quantity' => 16],
+                            ['size' => '39', 'stock_quantity' => 18],
+                            ['size' => '39.5', 'stock_quantity' => 18],
+                            ['size' => '40.5', 'stock_quantity' => 20],
+                            ['size' => '41.5', 'stock_quantity' => 16],
                         ]
                     ),
                     $this->makeVariant(
                         12,
                         2,
                         179.99,
-                        'Orange/Black',
+                        'Black',
                         [
-                            ['size' => '38.5', 'stock_quantity' => 2],
-                            ['size' => '39.5', 'stock_quantity' => 4],
-                            ['size' => '40.5', 'stock_quantity' => 3],
+                            ['size' => '38.5', 'stock_quantity' => 14],
+                            ['size' => '39', 'stock_quantity' => 16],
+                            ['size' => '39.5', 'stock_quantity' => 16],
+                            ['size' => '40.5', 'stock_quantity' => 18],
+                            ['size' => '41.5', 'stock_quantity' => 14],
                         ]
                     ),
                 ],

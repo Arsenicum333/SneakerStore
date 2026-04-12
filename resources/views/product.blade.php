@@ -43,45 +43,62 @@
                 @endforeach
             </div>
 
-            <div class="my-6">
-                <p class="font-semibold ~text-sm/base mb-2">Select Size</p>
+            <form action="{{ route('bag.items.add') }}" method="POST" class="flex flex-col gap-4">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <input type="hidden" name="variant_id" value="{{ $selectedVariant->id }}">
 
-                <div class="grid grid-cols-3 gap-2">
-                    @foreach ($selectedVariant->sizes as $size)
-                        <button class="border rounded-md py-2 hover:border-black focus:border-black">
-                            EU {{ $size->size }}
+                <div class="my-2">
+                    <p class="font-semibold ~text-sm/base mb-2">Select Size</p>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        @foreach ($selectedVariant->sizes as $size)
+                            <label class="block cursor-pointer">
+                                <input
+                                    type="radio"
+                                    name="variant_size_id"
+                                    value="{{ $size->id }}"
+                                    class="sr-only peer"
+                                    {{ $loop->first ? 'checked' : '' }}
+                                    required
+                                >
+                                <span class="block border rounded-md py-2 text-center hover:border-black peer-checked:border-black peer-checked:font-semibold">
+                                    EU {{ $size->size }}
+                                </span>
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <p class="font-semibold ~text-sm/base mb-2">Quantity</p>
+                    <div class="border rounded-full inline-flex items-center" data-quantity-control>
+                        <button type="button" class="p-2 rounded-full hover:bg-gray-100" data-quantity-action="decrease" aria-label="Decrease quantity">
+                            <img src="{{ asset('assets/lucide/minus.svg') }}" class="w-4 h-4" alt="Minus">
                         </button>
-                    @endforeach
+
+                        <input
+                            type="number"
+                            name="quantity"
+                            min="1"
+                            step="1"
+                            value="1"
+                            inputmode="numeric"
+                            class="no-spinner w-14 text-center font-semibold outline-none bg-transparent"
+                            data-quantity-input
+                            aria-label="Quantity"
+                        >
+
+                        <button type="button" class="p-2 rounded-full hover:bg-gray-100" data-quantity-action="increase" aria-label="Increase quantity">
+                            <img src="{{ asset('assets/lucide/plus.svg') }}" class="w-4 h-4" alt="Plus">
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-2">
-                <p class="font-semibold ~text-sm/base mb-2">Quantity</p>
-                <div class="border rounded-full inline-flex items-center" data-quantity-control>
-                    <button type="button" class="p-2 rounded-full hover:bg-gray-100" data-quantity-action="decrease" aria-label="Decrease quantity">
-                        <img src="{{ asset('assets/lucide/minus.svg') }}" class="w-4 h-4" alt="Minus">
-                    </button>
-
-                    <input
-                        type="number"
-                        min="1"
-                        step="1"
-                        value="1"
-                        inputmode="numeric"
-                        class="no-spinner w-14 text-center font-semibold outline-none bg-transparent"
-                        data-quantity-input
-                        aria-label="Quantity"
-                    >
-
-                    <button type="button" class="p-2 rounded-full hover:bg-gray-100" data-quantity-action="increase" aria-label="Increase quantity">
-                        <img src="{{ asset('assets/lucide/plus.svg') }}" class="w-4 h-4" alt="Plus">
-                    </button>
-                </div>
-            </div>
-
-            <button class="w-full bg-black text-white py-4 rounded-full font-semibold hover:bg-zinc-800 transition-colors duration-200">
-                Add to Bag
-            </button>
+                <button type="submit" class="w-full bg-black text-white py-4 rounded-full font-semibold hover:bg-zinc-800 transition-colors duration-200">
+                    Add to Bag
+                </button>
+            </form>
 
             <button class="w-full border py-4 rounded-full font-semibold transition flex items-center justify-center gap-2 hover:border-black">
                 Favourite
@@ -104,6 +121,23 @@
         </div>
     </div>
 </main>
+
+@if (session('bag_status'))
+    <div id="bag-success-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+        <div class="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+            <h3 class="text-lg font-bold text-gray-900">Bag Update</h3>
+            <p class="mt-2 text-sm text-gray-500">{{ session('bag_status') }}</p>
+            <div class="mt-5 flex items-center justify-center gap-3">
+                <button type="button" id="bag-success-close" class="inline-flex items-center justify-center rounded-full border border-gray-300 px-5 py-2 font-semibold text-gray-700 hover:border-black hover:text-black transition-colors duration-200">
+                    Continue Shopping
+                </button>
+                <a href="{{ route('bag') }}" class="inline-flex items-center justify-center rounded-full bg-black px-5 py-2 font-semibold text-white hover:bg-zinc-800 transition-colors duration-200">
+                    Open Bag
+                </a>
+            </div>
+        </div>
+    </div>
+@endif
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -147,6 +181,22 @@
         input.addEventListener('blur', () => {
             input.value = normalize(input.value);
         });
+
+        const successOverlay = document.getElementById('bag-success-overlay');
+        const successCloseButton = document.getElementById('bag-success-close');
+
+        if (successOverlay && successCloseButton) {
+            const closeOverlay = () => {
+                successOverlay.classList.add('hidden');
+            };
+
+            successCloseButton.addEventListener('click', closeOverlay);
+            successOverlay.addEventListener('click', (event) => {
+                if (event.target === successOverlay) {
+                    closeOverlay();
+                }
+            });
+        }
     });
 </script>
 @endsection

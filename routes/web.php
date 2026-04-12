@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BagController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +12,10 @@ Route::get('/', function () {
 Route::get('/catalog', [ProductController::class, 'index'])->name('catalog');
 Route::get('/product', [ProductController::class, 'showFirst'])->name('product');
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
-Route::view('/bag', 'bag')->name('bag');
+Route::get('/bag', [BagController::class, 'index'])->name('bag');
+Route::post('/bag/items', [BagController::class, 'add'])->name('bag.items.add');
+Route::patch('/bag/items/{sizeId}', [BagController::class, 'update'])->name('bag.items.update');
+Route::delete('/bag/items/{sizeId}', [BagController::class, 'remove'])->name('bag.items.remove');
 Route::view('/favourites', 'favourites')->name('favourites');
 Route::view('/payment', 'payment')->name('payment');
 Route::view('/help', 'help')->name('help');

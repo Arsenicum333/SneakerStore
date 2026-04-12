@@ -26,6 +26,36 @@ class ProductCatalogSeeder extends Seeder
             . trim($closingParagraph);
     }
 
+    private function makeImages(int $productIndex, ?int $variantNumber = null): array
+    {
+        return array_map(
+            fn (int $photoNumber) => $variantNumber === null
+                ? sprintf('assets/sneakers/sneakers%d_%d.avif', $productIndex, $photoNumber)
+                : sprintf('assets/sneakers/sneakers%d_%d_%d.avif', $productIndex, $photoNumber, $variantNumber),
+            range(1, 8)
+        );
+    }
+
+    private function makeSingleVariant(int $productIndex, float $price, string $color, array $sizes): array
+    {
+        return [
+            'price' => $price,
+            'color' => $color,
+            'images' => $this->makeImages($productIndex),
+            'sizes' => $sizes,
+        ];
+    }
+
+    private function makeVariant(int $productIndex, int $variantNumber, float $price, string $color, array $sizes): array
+    {
+        return [
+            'price' => $price,
+            'color' => $color,
+            'images' => $this->makeImages($productIndex, $variantNumber),
+            'sizes' => $sizes,
+        ];
+    }
+
     /**
      * Seed product catalog with base demo data.
      */
@@ -54,25 +84,16 @@ class ProductCatalogSeeder extends Seeder
                     'From short recovery runs to weekend distance work, Pegasus 41 gives you reliable comfort so you can stay focused on pace and form.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 139.99,
-                        'color' => 'Black/White',
-                        'image_url' => 'assets/sneakers/sneakers1.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        1,
+                        139.99,
+                        'Black/White',
+                        [
                             ['size' => '41', 'stock_quantity' => 7],
                             ['size' => '42', 'stock_quantity' => 9],
                             ['size' => '43', 'stock_quantity' => 6],
-                        ],
-                    ],
-                    [
-                        'price' => 139.99,
-                        'color' => 'Blue/White',
-                        'image_url' => 'assets/sneakers/sneakers11.avif',
-                        'sizes' => [
-                            ['size' => '42', 'stock_quantity' => 3],
-                            ['size' => '43', 'stock_quantity' => 5],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -91,16 +112,16 @@ class ProductCatalogSeeder extends Seeder
                     'Whether you are starting a running routine or adding extra mileage, Revolution 8 delivers comfort you can count on day after day.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 89.99,
-                        'color' => 'White/Pink',
-                        'image_url' => 'assets/sneakers/sneakers2.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        2,
+                        89.99,
+                        'White/Pink',
+                        [
                             ['size' => '37', 'stock_quantity' => 8],
                             ['size' => '38', 'stock_quantity' => 10],
                             ['size' => '39', 'stock_quantity' => 8],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -119,16 +140,28 @@ class ProductCatalogSeeder extends Seeder
                     'From circuit training to heavy sets, Metcon 10 supports the versatility you need to train harder with confidence.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 129.99,
-                        'color' => 'Volt/Black',
-                        'image_url' => 'assets/sneakers/sneakers3.avif',
-                        'sizes' => [
+                    $this->makeVariant(
+                        3,
+                        1,
+                        129.99,
+                        'Volt/Black',
+                        [
                             ['size' => '41', 'stock_quantity' => 6],
                             ['size' => '42', 'stock_quantity' => 7],
                             ['size' => '43', 'stock_quantity' => 5],
-                        ],
-                    ],
+                        ]
+                    ),
+                    $this->makeVariant(
+                        3,
+                        2,
+                        129.99,
+                        'Black/Orange',
+                        [
+                            ['size' => '41', 'stock_quantity' => 4],
+                            ['size' => '42', 'stock_quantity' => 6],
+                            ['size' => '43', 'stock_quantity' => 4],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -147,16 +180,16 @@ class ProductCatalogSeeder extends Seeder
                     'If you want a timeless sneaker that works with almost anything, Court Vision Low is a dependable lifestyle choice.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 99.99,
-                        'color' => 'White/Navy',
-                        'image_url' => 'assets/sneakers/sneakers4.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        4,
+                        99.99,
+                        'White/Navy',
+                        [
                             ['size' => '40', 'stock_quantity' => 9],
                             ['size' => '41', 'stock_quantity' => 9],
                             ['size' => '42', 'stock_quantity' => 7],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -175,16 +208,16 @@ class ProductCatalogSeeder extends Seeder
                     'Perfect for casual rotation, Blazer Mid 77 combines old-school character with practical all-day wearability.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 114.99,
-                        'color' => 'Sail/Orange',
-                        'image_url' => 'assets/sneakers/sneakers5.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        5,
+                        114.99,
+                        'Sail/Orange',
+                        [
                             ['size' => '37', 'stock_quantity' => 4],
                             ['size' => '38', 'stock_quantity' => 6],
                             ['size' => '39', 'stock_quantity' => 5],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -203,16 +236,16 @@ class ProductCatalogSeeder extends Seeder
                     'From possession play to final-third actions, Tiempo Legend 10 helps you stay sharp and in control through the full match.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 149.99,
-                        'color' => 'Blue/White',
-                        'image_url' => 'assets/sneakers/sneakers6.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        6,
+                        149.99,
+                        'Blue/White',
+                        [
                             ['size' => '42', 'stock_quantity' => 3],
                             ['size' => '43', 'stock_quantity' => 7],
                             ['size' => '44', 'stock_quantity' => 6],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -231,16 +264,28 @@ class ProductCatalogSeeder extends Seeder
                     'If your game depends on precision and tempo, Phantom GX Academy is built to help you create and finish chances.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 124.99,
-                        'color' => 'Purple/Black',
-                        'image_url' => 'assets/sneakers/sneakers7.avif',
-                        'sizes' => [
+                    $this->makeVariant(
+                        7,
+                        1,
+                        124.99,
+                        'Purple/Black',
+                        [
                             ['size' => '41', 'stock_quantity' => 4],
                             ['size' => '42', 'stock_quantity' => 6],
                             ['size' => '42.5', 'stock_quantity' => 4],
-                        ],
-                    ],
+                        ]
+                    ),
+                    $this->makeVariant(
+                        7,
+                        2,
+                        124.99,
+                        'White/Lime',
+                        [
+                            ['size' => '41', 'stock_quantity' => 3],
+                            ['size' => '42', 'stock_quantity' => 5],
+                            ['size' => '42.5', 'stock_quantity' => 3],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -259,16 +304,16 @@ class ProductCatalogSeeder extends Seeder
                     'From commuting to evening plans, Air Max Pulse gives you all-day comfort with standout Nike identity.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 159.99,
-                        'color' => 'Grey/Black',
-                        'image_url' => 'assets/sneakers/sneakers8.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        8,
+                        159.99,
+                        'Grey/Black',
+                        [
                             ['size' => '42', 'stock_quantity' => 4],
                             ['size' => '43', 'stock_quantity' => 5],
                             ['size' => '44', 'stock_quantity' => 5],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -287,16 +332,16 @@ class ProductCatalogSeeder extends Seeder
                     'From short runs to longer sessions, Structure 25 helps you stay focused on your pace while delivering dependable support.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 144.99,
-                        'color' => 'Coral/White',
-                        'image_url' => 'assets/sneakers/sneakers9.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        9,
+                        144.99,
+                        'Coral/White',
+                        [
                             ['size' => '38', 'stock_quantity' => 5],
                             ['size' => '39', 'stock_quantity' => 7],
                             ['size' => '40', 'stock_quantity' => 8],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -315,25 +360,16 @@ class ProductCatalogSeeder extends Seeder
                     'If you want a sneaker with iconic DNA and versatile wearability, Dunk Low Retro stays relevant season after season.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 119.99,
-                        'color' => 'Red/White',
-                        'image_url' => 'assets/sneakers/sneakers10.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        10,
+                        119.99,
+                        'Red/White',
+                        [
                             ['size' => '40', 'stock_quantity' => 7],
                             ['size' => '41', 'stock_quantity' => 8],
                             ['size' => '42', 'stock_quantity' => 7],
-                        ],
-                    ],
-                    [
-                        'price' => 119.99,
-                        'color' => 'Black/White',
-                        'image_url' => 'assets/sneakers/sneakers4.avif',
-                        'sizes' => [
-                            ['size' => '41', 'stock_quantity' => 5],
-                            ['size' => '42', 'stock_quantity' => 4],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -352,16 +388,16 @@ class ProductCatalogSeeder extends Seeder
                     'Whether you are building volume or recovering between harder workouts, React Infinity Run keeps each run consistent and comfortable.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 169.99,
-                        'color' => 'Blue/Volt',
-                        'image_url' => 'assets/sneakers/sneakers11.avif',
-                        'sizes' => [
+                    $this->makeSingleVariant(
+                        11,
+                        169.99,
+                        'Blue/Volt',
+                        [
                             ['size' => '43', 'stock_quantity' => 4],
                             ['size' => '44', 'stock_quantity' => 6],
                             ['size' => '45', 'stock_quantity' => 6],
-                        ],
-                    ],
+                        ]
+                    ),
                 ],
             ],
             [
@@ -380,16 +416,28 @@ class ProductCatalogSeeder extends Seeder
                     'From rolling forest routes to steep climbs, ZoomX Zegama 2 helps you move further with control and confidence.'
                 ),
                 'variants' => [
-                    [
-                        'price' => 179.99,
-                        'color' => 'Teal/Black',
-                        'image_url' => 'assets/sneakers/sneakers12.avif',
-                        'sizes' => [
+                    $this->makeVariant(
+                        12,
+                        1,
+                        179.99,
+                        'Teal/Black',
+                        [
                             ['size' => '38.5', 'stock_quantity' => 3],
                             ['size' => '39.5', 'stock_quantity' => 5],
                             ['size' => '40.5', 'stock_quantity' => 4],
-                        ],
-                    ],
+                        ]
+                    ),
+                    $this->makeVariant(
+                        12,
+                        2,
+                        179.99,
+                        'Orange/Black',
+                        [
+                            ['size' => '38.5', 'stock_quantity' => 2],
+                            ['size' => '39.5', 'stock_quantity' => 4],
+                            ['size' => '40.5', 'stock_quantity' => 3],
+                        ]
+                    ),
                 ],
             ],
         ];
@@ -405,19 +453,21 @@ class ProductCatalogSeeder extends Seeder
                     'updated_at' => $now,
                 ]);
 
-                foreach ($productData['variants'] as $index => $variantData) {
+                foreach ($productData['variants'] as $variantIndex => $variantData) {
                     $variantId = DB::table('product_variants')->insertGetId([
                         'product_id' => $productId,
                         'price' => $variantData['price'],
                         'color' => $variantData['color'],
                     ]);
 
-                    DB::table('product_images')->insert([
-                        'variant_id' => $variantId,
-                        'image_url' => $variantData['image_url'],
-                        'is_main' => $index === 0,
-                        'display_order' => 1,
-                    ]);
+                    foreach ($variantData['images'] as $imageIndex => $imageUrl) {
+                        DB::table('product_images')->insert([
+                            'variant_id' => $variantId,
+                            'image_url' => $imageUrl,
+                            'is_main' => $variantIndex === 0 && $imageIndex === 0,
+                            'display_order' => $imageIndex + 1,
+                        ]);
+                    }
 
                     $sizeRows = collect($variantData['sizes'])
                         ->map(fn (array $sizeData) => [

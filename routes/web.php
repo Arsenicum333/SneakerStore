@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::view('/catalog', 'all-products')->name('catalog');
-Route::view('/product', 'product')->name('product');
+Route::get('/catalog', [ProductController::class, 'index'])->name('catalog');
+Route::get('/product', [ProductController::class, 'showFirst'])->name('product');
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 Route::view('/bag', 'bag')->name('bag');
 Route::view('/favourites', 'favourites')->name('favourites');
 Route::view('/payment', 'payment')->name('payment');

@@ -15,15 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!User::query()->exists()) {
-            User::factory()->create([
-                'first_name' => 'Test',
-                'last_name' => 'Admin',
-                'email' => 'test@example.com',
-                'is_admin' => true,
-            ]);
-        }
-
         $this->call(ProductCatalogSeeder::class);
     }
 }

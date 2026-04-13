@@ -7,19 +7,60 @@ use App\Models\ProductVariant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
     public function index(): View
     {
-        $products = Product::query()
+        $realProducts = Product::query()
             ->with([
                 'variants' => fn ($query) => $query
                     ->with(['images', 'sizes'])
                     ->orderBy('id'),
             ])
-            ->latest('id')
-            ->paginate(12);
+            ->orderBy('id')
+            ->get();
+
+        if ($realProducts->isEmpty()) {
+            $products = new LengthAwarePaginator(
+                collect([]),
+                0,
+                12,
+                1,
+                ['path' => request()->url(), 'query' => request()->query()]
+            );
+            
+            return view('all-products', [
+                'products' => $products,
+            ]);
+        }
+
+
+        $totalNeeded = 36;
+        $virtualProducts = collect();
+        
+        while ($virtualProducts->count() < $totalNeeded) {
+            $virtualProducts = $virtualProducts->concat($realProducts);
+        }
+ 
+        $virtualProducts = $virtualProducts->take($totalNeeded);
+
+        $page = request()->get('page', 1);
+        $perPage = 12;
+
+        $currentPageItems = $virtualProducts->slice(($page - 1) * $perPage, $perPage)->values();
+
+        $products = new LengthAwarePaginator(
+            $currentPageItems,
+            $virtualProducts->count(),
+            $perPage,
+            $page,
+            [
+                'path' => request()->url(),
+                'query' => request()->query(),
+            ]
+        );
 
         return view('all-products', [
             'products' => $products,

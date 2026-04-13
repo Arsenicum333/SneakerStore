@@ -46,11 +46,10 @@ class ProductController extends Controller
             $query->where('sport', '!=', $request->sport_not);
         }
 
-        $realProducts = $query->orderBy('id')->get();
+        $realProducts = $query->get();
 
         $genders = Product::distinct()->pluck('gender')->filter();
         $sports = Product::distinct()->pluck('sport')->filter();
-
         $minPrice = ProductVariant::min('price') ?? 0;
         $maxPrice = ProductVariant::max('price') ?? 1000;
 
@@ -80,6 +79,26 @@ class ProductController extends Controller
         }
         
         $virtualProducts = $virtualProducts->take($totalNeeded);
+
+        $sort = $request->get('sort', 'default');
+
+        switch ($sort) {
+            case 'price_asc':
+                $virtualProducts = $virtualProducts->sortBy(function ($product) {
+                    return $product->variants->min('price');
+                })->values();
+                break;
+                
+            case 'price_desc':
+                $virtualProducts = $virtualProducts->sortByDesc(function ($product) {
+                    return $product->variants->min('price');
+                })->values();
+                break;
+                
+            default:
+                $virtualProducts = $virtualProducts;
+                break;
+        }
 
         $page = request()->get('page', 1);
         $perPage = 12;

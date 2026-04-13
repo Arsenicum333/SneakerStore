@@ -17,10 +17,33 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-end gap-1 ~mt-3/5">
-                    <span class="text-black ~text-sm/base">Sort By</span>
-                    <div class="flex items-center justify-center">
-                        <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
+                <div class="relative">
+                    <button onclick="toggleSortDropdown()" 
+                            class="flex items-center justify-end gap-1 ~mt-3/5">
+                        <span class="text-black ~text-sm/base">
+                            Sort By 
+                            @if(request('sort') == 'price_asc') (Price: Low to High)
+                            @elseif(request('sort') == 'price_desc') (Price: High to Low)
+                            @endif
+                        </span>
+                        <div class="flex items-center justify-center">
+                            <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
+                        </div>
+                    </button>
+                    
+                    <div id="sort-dropdown" class="absolute right-0 hidden bg-white shadow-lg rounded-md mt-2 py-2 z-10 min-w-48 border border-gray-200">
+                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'default'])) }}" 
+                        class="block px-4 py-2 hover:bg-gray-100 {{ request('sort') == 'default' || !request('sort') ? 'bg-gray-100 font-semibold' : '' }}">
+                            Default
+                        </a>
+                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}" 
+                        class="block px-4 py-2 hover:bg-gray-100 {{ request('sort') == 'price_asc' ? 'bg-gray-100 font-semibold' : '' }}">
+                            Price: Low to High
+                        </a>
+                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}" 
+                        class="block px-4 py-2 hover:bg-gray-100 {{ request('sort') == 'price_desc' ? 'bg-gray-100 font-semibold' : '' }}">
+                            Price: High to Low
+                        </a>
                     </div>
                 </div>
             </div>
@@ -133,6 +156,24 @@
                 buttonIcon.src = "{{ asset('assets/lucide/settings.svg') }}";
             }
         }
+
+        function toggleSortDropdown() {
+            const dropdown = document.getElementById('sort-dropdown');
+            if (dropdown) {
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('sort-dropdown');
+            const button = event.target.closest('button');
+            if (button && button.textContent.includes('Sort By')) {
+                return;
+            }
+            if (dropdown) {
+                dropdown.style.display = 'none';
+            }
+        });
     </script>
 </main>
 @endsection

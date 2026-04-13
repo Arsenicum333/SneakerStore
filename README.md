@@ -1,19 +1,59 @@
-# Sneaker Store
+# SneakerStore
+
+Laravel 13 + Tailwind + Vite.
 
 ## Requirements
 
-Make sure you have **Node.js (version 16 or higher)** installed.
+1. PHP 8.3+
+2. Composer 2+
+3. Node.js 20+ and npm
+4. Git
+5. Docker + Docker Compose
 
-## 1. Install dependencies (only once)
+### Version check:
 
 ```bash
+php -v
+composer -V
+node -v
+npm -v
+git --version
+```
+
+## First run
+
+Run in the project root:
+
+```bash
+composer install
 npm install
+copy .env.example .env
+docker compose up -d
+php artisan key:generate
+php artisan migrate
 ```
 
-## 2. Run Tailwind build
+## Database connection (PostgreSQL)
+
+This project uses PostgreSQL.
+
+### Connection settings (`.env`)
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=iken
+DB_USERNAME=user
+DB_PASSWORD=password
+```
+
+## Run in dev mode
+
+Start the app with one command:
 
 ```bash
-npm run dev
+composer run dev
 ```
 
-Keep this running while working on the project.
+This runs the Laravel server, queue listener, and Vite together. PostgreSQL should already be running with `docker compose up -d`.

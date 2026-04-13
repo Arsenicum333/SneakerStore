@@ -1,19 +1,20 @@
-/** @type {import('tailwindcss').Config} */
-const { default: fluid, extract, screens, fontSize } = require('fluid-tailwind')
+const fluid = require('fluid-tailwind');
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: {
-    files: [
-      "./*.html",
-      "./src/**/*.html",
+    content: {
+        files: [
+            "./resources/**/*.blade.php",
+            "./resources/**/*.js",
+        ],
+        extract: fluid.extract,
+    },
+    theme: {
+        screens: fluid.screens,
+        fontSize: fluid.fontSize,
+        extend: {},
+    },
+    plugins: [
+        fluid,
     ],
-    extract,
-  },
-  theme: {
-    screens,
-    extend: {},
-  },
-  plugins: [
-    fluid,
-  ],
-}
+};

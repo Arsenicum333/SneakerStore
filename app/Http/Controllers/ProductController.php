@@ -46,6 +46,11 @@ class ProductController extends Controller
             $query->where('sport', '!=', $request->sport_not);
         }
 
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+        
         $realProducts = $query->get();
 
         $genders = Product::distinct()->pluck('gender')->filter();

@@ -10,10 +10,10 @@
                 All
             </h1>
             <div class="flex items-center justify-end w-1/2 ~gap-5/10">
-                <div class="flex items-center justify-end gap-1 ~mt-3/5">
-                    <span class="text-black ~text-sm/base">Hide Filters</span>
+                <div class="flex items-center justify-end gap-1 ~mt-3/5 cursor-pointer" onclick="toggleFilters()">
+                    <span id="filters-btn-text" class="text-black ~text-sm/base">Hide Filters</span>
                     <div class="flex items-center justify-center">
-                        <img src="{{ asset('assets/lucide/settings.svg') }}" class="~w-4/5 ~h-4/5 block">
+                        <img id="filters-btn-icon" src="{{ asset('assets/lucide/settings.svg') }}" class="~w-4/5 ~h-4/5 block">
                     </div>
                 </div>
 
@@ -27,51 +27,62 @@
         </div>
 
         <div class="flex ~gap-4/8 ">
-            <aside class="hidden md:block w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start">
-                <div class="border-b-2 border-gray-200 pb-5">
-                    <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
-                        <span class="justify-start text-black ~text-sm/base font-semibold">Gender</span>
-                        <div class="flex items-center justify-end">
-                            <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
-                        </div>
-                    </div>
-                </div>
+            <aside id="filters-sidebar" class="hidden md:block w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start">
+                <form method="GET" action="{{ route('catalog') }}" id="filter-form">
 
-                <div class="border-b-2 border-gray-200 pb-5">
-                    <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
-                        <span class="justify-start text-black ~text-sm/base font-semibold">Shop by Price</span>
-                        <div class="flex items-center justify-end">
-                            <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
+                    <div class="border-b-2 border-gray-200 pb-5">
+                        <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
+                            <span class="justify-start text-black ~text-sm/base font-semibold">Gender</span>
+                        </div>
+                        <div class="mt-2 space-y-1">
+                            <label class="flex items-center gap-2">
+                                <input type="radio" name="gender" value="Men" {{ request('gender') == 'Men' ? 'checked' : '' }} onchange="this.form.submit()"> Men
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="radio" name="gender" value="Women" {{ request('gender') == 'Women' ? 'checked' : '' }} onchange="this.form.submit()"> Women
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="radio" name="gender" value="Unisex" {{ request('gender') == 'Unisex' ? 'checked' : '' }} onchange="this.form.submit()"> Unisex
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="radio" name="gender" value="" {{ !request('gender') ? 'checked' : '' }} onchange="this.form.submit()"> All
+                            </label>
                         </div>
                     </div>
-                </div>
 
-                <div class="border-b-2 border-gray-200 pb-5">
-                    <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
-                        <span class="justify-start text-black ~text-sm/base font-semibold">Size</span>
-                        <div class="flex items-center justify-end">
-                            <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
+                    <div class="border-b-2 border-gray-200 pb-5">
+                        <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
+                            <span class="justify-start text-black ~text-sm/base font-semibold">Price</span>
+                        </div>
+                        <div class="mt-2 flex gap-2 items-center">
+                            <input type="number" name="price_min" value="{{ request('price_min') }}" placeholder="Min" class="w-full border rounded p-1 ~text-xs" onchange="this.form.submit()">
+                            <span>-</span>
+                            <input type="number" name="price_max" value="{{ request('price_max') }}" placeholder="Max" class="w-full border rounded p-1 ~text-xs" onchange="this.form.submit()">
                         </div>
                     </div>
-                </div>
 
-                <div class="border-b-2 border-gray-200 pb-5">
-                    <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
-                        <span class="justify-start text-black ~text-sm/base font-semibold">Colour</span>
-                        <div class="flex items-center justify-end">
-                            <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
+                    <div class="border-b-2 border-gray-200 pb-5">
+                        <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
+                            <span class="justify-start text-black ~text-sm/base font-semibold">Sports</span>
+                        </div>
+                        <div class="mt-2 space-y-1">
+                            @foreach($sports as $sport)
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" name="sport[]" value="{{ $sport }}" 
+                                        {{ in_array($sport, (array)request('sport')) ? 'checked' : '' }}
+                                        onchange="this.form.submit()"> 
+                                    {{ $sport }}
+                                </label>
+                            @endforeach
                         </div>
                     </div>
-                </div>
 
-                <div class="border-b-2 border-gray-200 pb-5">
-                    <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
-                        <span class="justify-start text-black ~text-sm/base font-semibold">Sports</span>
-                        <div class="flex items-center justify-end">
-                            <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
-                        </div>
+                    <div class="mt-4">
+                        <a href="{{ route('catalog') }}" class="text-sm text-red-500 hover:underline">
+                            Clear all filters
+                        </a>
                     </div>
-                </div>
+                </form>
             </aside>
 
             <div class="flex-1 min-w-0">
@@ -105,5 +116,23 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        function toggleFilters() {
+            const sidebar = document.getElementById('filters-sidebar');
+            const buttonText = document.getElementById('filters-btn-text');
+            const buttonIcon = document.getElementById('filters-btn-icon');
+            
+            if (sidebar.style.display === 'none') {
+                sidebar.style.display = 'block';
+                buttonText.textContent = 'Hide Filters';
+                buttonIcon.src = "{{ asset('assets/lucide/settings.svg') }}";
+            } else {
+                sidebar.style.display = 'none';
+                buttonText.textContent = 'Show Filters';
+                buttonIcon.src = "{{ asset('assets/lucide/settings.svg') }}";
+            }
+        }
+    </script>
 </main>
 @endsection

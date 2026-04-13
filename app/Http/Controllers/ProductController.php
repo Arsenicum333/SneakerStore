@@ -11,16 +11,48 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $realProducts = Product::query()
+        $query = Product::query()
             ->with([
-                'variants' => fn ($query) => $query
+                'variants' => fn ($q) => $q
                     ->with(['images', 'sizes'])
                     ->orderBy('id'),
-            ])
-            ->orderBy('id')
-            ->get();
+            ]);
+        
+        if ($request->filled('gender')) {
+            $query->where('gender', $request->gender);
+        }
+        
+        if ($request->has('sport') && is_array($request->sport)) {
+            $query->whereIn('sport', $request->sport);
+        } elseif ($request->filled('sport')) {
+            $query->where('sport', $request->sport);
+        }
+
+        if ($request->filled('price_min')) {
+            $query->whereHas('variants', function ($q) use ($request) {
+                $q->where('price', '>=', (float) $request->price_min);
+            });
+        }
+
+        if ($request->filled('price_max')) {
+            $query->whereHas('variants', function ($q) use ($request) {
+                $q->where('price', '<=', (float) $request->price_max);
+            });
+        }
+
+        if ($request->filled('sport_not')) {
+            $query->where('sport', '!=', $request->sport_not);
+        }
+
+        $realProducts = $query->orderBy('id')->get();
+
+        $genders = Product::distinct()->pluck('gender')->filter();
+        $sports = Product::distinct()->pluck('sport')->filter();
+
+        $minPrice = ProductVariant::min('price') ?? 0;
+        $maxPrice = ProductVariant::max('price') ?? 1000;
 
         if ($realProducts->isEmpty()) {
             $products = new LengthAwarePaginator(
@@ -33,9 +65,12 @@ class ProductController extends Controller
             
             return view('all-products', [
                 'products' => $products,
+                'genders' => $genders,
+                'sports' => $sports,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
             ]);
         }
-
 
         $totalNeeded = 36;
         $virtualProducts = collect();
@@ -43,14 +78,13 @@ class ProductController extends Controller
         while ($virtualProducts->count() < $totalNeeded) {
             $virtualProducts = $virtualProducts->concat($realProducts);
         }
- 
+        
         $virtualProducts = $virtualProducts->take($totalNeeded);
 
         $page = request()->get('page', 1);
         $perPage = 12;
-
         $currentPageItems = $virtualProducts->slice(($page - 1) * $perPage, $perPage)->values();
-
+        
         $products = new LengthAwarePaginator(
             $currentPageItems,
             $virtualProducts->count(),
@@ -61,9 +95,13 @@ class ProductController extends Controller
                 'query' => request()->query(),
             ]
         );
-
+        
         return view('all-products', [
             'products' => $products,
+            'genders' => $genders,
+            'sports' => $sports,
+            'minPrice' => $minPrice,
+            'maxPrice' => $maxPrice,
         ]);
     }
 

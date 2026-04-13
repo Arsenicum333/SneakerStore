@@ -33,11 +33,30 @@
             <div class="hidden md:block flex-1"></div>
 
             <div class="flex left-1/2 ~gap-2/5 font-semibold ~text-sm/base">
-                <a href="/" class="hover:underline">New</a>
-                <a href="/catalog" class="hover:underline">All</a>
-                <a href="/catalog" class="hover:underline">Men</a>
-                <a href="/catalog" class="hover:underline">Women</a>
-                <a href="/catalog" class="hover:underline">Sport</a>
+                <a href="/" 
+                class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request()->routeIs('home') ? 'border-black' : 'border-transparent' }}">
+                    New
+                </a>
+                
+                <a href="{{ route('catalog') }}" 
+                class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request()->routeIs('catalog') && !request('gender') && !request('sport') && !request('sport_not') ? 'border-black' : 'border-transparent' }}">
+                    All
+                </a>
+                
+                <a href="{{ route('catalog', ['gender' => 'Men']) }}" 
+                class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request('gender') == 'Men' ? 'border-black' : 'border-transparent' }}">
+                    Men
+                </a>
+                
+                <a href="{{ route('catalog', ['gender' => 'Women']) }}" 
+                class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request('gender') == 'Women' ? 'border-black' : 'border-transparent' }}">
+                    Women
+                </a>
+                
+                <a href="{{ route('catalog', ['sport_not' => 'Lifestyle']) }}" 
+                class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request('sport_not') == 'Lifestyle' ? 'border-black' : 'border-transparent' }}">
+                    Sport
+                </a>
             </div>
 
             <div class="flex-1 flex items-center justify-end ~gap-1/3">

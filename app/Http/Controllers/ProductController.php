@@ -42,6 +42,10 @@ class ProductController extends Controller
             });
         }
 
+        if ($request->filled('sport_not')) {
+            $query->where('sport', '!=', $request->sport_not);
+        }
+
         $realProducts = $query->orderBy('id')->get();
 
         $genders = Product::distinct()->pluck('gender')->filter();

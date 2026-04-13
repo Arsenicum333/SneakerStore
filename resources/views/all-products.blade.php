@@ -10,10 +10,10 @@
                 All
             </h1>
             <div class="flex items-center justify-end w-1/2 ~gap-5/10">
-                <div class="flex items-center justify-end gap-1 ~mt-3/5">
-                    <span class="text-black ~text-sm/base">Hide Filters</span>
+                <div class="flex items-center justify-end gap-1 ~mt-3/5 cursor-pointer" onclick="toggleFilters()">
+                    <span id="filters-btn-text" class="text-black ~text-sm/base">Hide Filters</span>
                     <div class="flex items-center justify-center">
-                        <img src="{{ asset('assets/lucide/settings.svg') }}" class="~w-4/5 ~h-4/5 block">
+                        <img id="filters-btn-icon" src="{{ asset('assets/lucide/settings.svg') }}" class="~w-4/5 ~h-4/5 block">
                     </div>
                 </div>
 
@@ -27,7 +27,7 @@
         </div>
 
         <div class="flex ~gap-4/8 ">
-            <aside class="hidden md:block w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start">
+            <aside id="filters-sidebar" class="hidden md:block w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start">
                 <form method="GET" action="{{ route('catalog') }}" id="filter-form">
 
                     <div class="border-b-2 border-gray-200 pb-5">
@@ -116,5 +116,23 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        function toggleFilters() {
+            const sidebar = document.getElementById('filters-sidebar');
+            const buttonText = document.getElementById('filters-btn-text');
+            const buttonIcon = document.getElementById('filters-btn-icon');
+            
+            if (sidebar.style.display === 'none') {
+                sidebar.style.display = 'block';
+                buttonText.textContent = 'Hide Filters';
+                buttonIcon.src = "{{ asset('assets/lucide/settings.svg') }}";
+            } else {
+                sidebar.style.display = 'none';
+                buttonText.textContent = 'Show Filters';
+                buttonIcon.src = "{{ asset('assets/lucide/settings.svg') }}";
+            }
+        }
+    </script>
 </main>
 @endsection

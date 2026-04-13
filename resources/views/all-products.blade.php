@@ -7,7 +7,20 @@
     <div class="w-full ~p-4/6 mx-auto ~mt-3/5">
         <div class="flex items-center justify-center w-full ~mb-3/5">
             <h1 class="flex items-center ~text-xl/3xl font-bold justify-start w-1/2">
-                All
+                @php
+                    $gender = request('gender');
+                    $sportNot = request('sport_not');
+                    $title = 'All';
+                    
+                    if ($gender == 'Men') {
+                        $title = "Men's Shoes";
+                    } elseif ($gender == 'Women') {
+                        $title = "Women's Shoes";
+                    } elseif ($sportNot == 'Lifestyle') {
+                        $title = "Sport Shoes";
+                    }
+                @endphp
+                {{ $title }}
             </h1>
             <div class="flex items-center justify-end w-1/2 ~gap-5/10">
                 <div class="flex items-center justify-end gap-1 ~mt-3/5 cursor-pointer" onclick="toggleFilters()">

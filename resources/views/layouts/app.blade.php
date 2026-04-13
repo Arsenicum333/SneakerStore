@@ -60,12 +60,15 @@
             </div>
 
             <div class="flex-1 flex items-center justify-end ~gap-1/3">
-                <div class="rounded-full bg-gray-100 ~h-5/10 flex items-center ~pl-2/3 ~gap-1/2">
+                <form method="GET" action="{{ route('catalog') }}" class="rounded-full bg-gray-100 ~h-5/10 flex items-center ~pl-2/3 ~gap-1/2">
                     <div class="flex items-center justify-center">
                         <img src="{{ asset('assets/lucide/search.svg') }}" class="~w-4/5 ~h-4/5 block">
                     </div>
-                    <input type="text" placeholder="Search" class="outline-none ~text-sm/base ~w-12/24 text-gray-500 font-semibold bg-transparent">
-                </div>
+                    <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="outline-none ~text-sm/base ~w-12/24 text-gray-500 font-semibold bg-transparent">
+                    @if(request('search'))
+                        <a href="{{ route('catalog') }}" class="mr-2 text-gray-400 hover:text-gray-600">✕</a>
+                    @endif
+                </form>
 
                 <a href="/favourites" class="hover:bg-gray-300 p-2 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BagController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,8 @@ Route::post('/bag/items', [BagController::class, 'add'])->name('bag.items.add');
 Route::patch('/bag/items/{sizeId}', [BagController::class, 'update'])->name('bag.items.update');
 Route::delete('/bag/items/{sizeId}', [BagController::class, 'remove'])->name('bag.items.remove');
 Route::view('/favourites', 'favourites')->name('favourites');
-Route::view('/payment', 'payment')->name('payment');
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
+Route::post('/payment', [PaymentController::class, 'store'])->middleware('auth')->name('payment.perform');
 Route::view('/help', 'help')->name('help');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

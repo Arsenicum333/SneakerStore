@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'SneakerStore')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .search-input {
+            width: 100px;
+            transition: width 0.3s ease;
+        }
+        .search-input:focus {
+            width: 220px !important;
+        }
+        .search-input[value]:not([value=""]) {
+            width: 220px;
+        }
+    </style>
 </head>
 
 <body class="bg-white min-h-screen">
@@ -33,27 +45,27 @@
             <div class="hidden md:block flex-1"></div>
 
             <div class="flex left-1/2 ~gap-2/5 font-semibold ~text-sm/base">
-                <a href="/" 
+                <a href="/"
                 class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request()->routeIs('home') ? 'border-black' : 'border-transparent' }}">
                     New
                 </a>
-                
-                <a href="{{ route('catalog') }}" 
+
+                <a href="{{ route('catalog') }}"
                 class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request()->routeIs('catalog') && !request('gender') && !request('sport') && !request('sport_not') ? 'border-black' : 'border-transparent' }}">
                     All
                 </a>
-                
-                <a href="{{ route('catalog', ['gender' => 'Men']) }}" 
+
+                <a href="{{ route('catalog', ['gender' => 'Men']) }}"
                 class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request('gender') == 'Men' ? 'border-black' : 'border-transparent' }}">
                     Men
                 </a>
-                
-                <a href="{{ route('catalog', ['gender' => 'Women']) }}" 
+
+                <a href="{{ route('catalog', ['gender' => 'Women']) }}"
                 class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request('gender') == 'Women' ? 'border-black' : 'border-transparent' }}">
                     Women
                 </a>
-                
-                <a href="{{ route('catalog', ['sport_not' => 'Lifestyle']) }}" 
+
+                <a href="{{ route('catalog', ['sport_not' => 'Lifestyle']) }}"
                 class="hover:border-b-2 hover:border-gray-400 border-b-2 {{ request('sport_not') == 'Lifestyle' ? 'border-black' : 'border-transparent' }}">
                     Sport
                 </a>
@@ -64,7 +76,7 @@
                     <div class="flex items-center justify-center">
                         <img src="{{ asset('assets/lucide/search.svg') }}" class="~w-4/5 ~h-4/5 block">
                     </div>
-                    <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="outline-none ~text-sm/base ~w-12/24 text-gray-500 font-semibold bg-transparent">
+                    <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="search-input outline-none ~text-sm/base text-gray-500 font-semibold bg-transparent">
                     @if(request('search'))
                         <a href="{{ route('catalog') }}" class="mr-2 text-gray-400 hover:text-gray-600">✕</a>
                     @endif

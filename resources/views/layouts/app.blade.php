@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'SneakerStore')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .search-input {
+            width: 100px;
+            transition: width 0.3s ease;
+        }
+        .search-input:focus {
+            width: 220px !important;
+        }
+        .search-input[value]:not([value=""]) {
+            width: 220px;
+        }
+    </style>
 </head>
 
 <body class="bg-white min-h-screen">
@@ -64,7 +76,7 @@
                     <div class="flex items-center justify-center">
                         <img src="{{ asset('assets/lucide/search.svg') }}" class="~w-4/5 ~h-4/5 block">
                     </div>
-                    <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="outline-none ~text-sm/base ~w-12/24 text-gray-500 font-semibold bg-transparent">
+                    <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="search-input outline-none ~text-sm/base text-gray-500 font-semibold bg-transparent">
                     @if(request('search'))
                         <a href="{{ route('catalog') }}" class="mr-2 text-gray-400 hover:text-gray-600">✕</a>
                     @endif
@@ -108,6 +120,6 @@
             </div>
         </div>
     </footer>
-
+    
 </body>
 </html>

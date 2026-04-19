@@ -3,23 +3,34 @@
 @section('title', 'Product')
 
 @section('content')
-<main class="max-w-[1000px] mx-auto ~mt-5/8">
+<main class="max-w-[1000px] mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-[60%_40%]">
-        <div class="flex gap-4 ~p-4/6 md:sticky md:top-0 md:h-screen md:items-start">
+        <div class="flex gap-4 ~px-4/6 ~pt-4/6 md:sticky md:top-0 md:h-screen md:items-start" data-product-gallery>
             <div class="flex flex-col gap-2 w-14 md:w-16 shrink-0 md:max-h-[calc(100vh-2rem)] md:overflow-y-auto md:pr-1">
                 @foreach ($selectedVariant->images as $image)
-                    <button class="aspect-square border border-transparent rounded-md overflow-hidden hover:border-black focus:border-black">
+                    <button
+                        type="button"
+                        class="aspect-square border rounded-md overflow-hidden hover:border-black focus:border-black {{ $loop->first ? 'border-black' : 'border-transparent' }}"
+                        data-gallery-thumb
+                        data-full-src="{{ asset($image->image_url) }}"
+                        aria-label="Show image {{ $loop->iteration }}"
+                    >
                         <img src="{{ asset($image->image_url) }}" alt="{{ $product->name }}" class="w-full h-full object-cover rounded-md">
                     </button>
                 @endforeach
             </div>
 
             <div class="relative flex-1 max-h-[600px] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
-                <img src="{{ asset($selectedVariant->images->first()?->image_url ?? 'assets/sneakers/sneakers1.avif') }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                <img
+                    src="{{ asset($selectedVariant->images->first()?->image_url ?? 'assets/sneakers/sneakers1.avif') }}"
+                    alt="{{ $product->name }}"
+                    class="w-full h-full object-cover"
+                    data-gallery-main-image
+                >
             </div>
         </div>
 
-        <div class="flex flex-col ~gap-3/5 ~p-4/6">
+        <div class="flex flex-col ~gap-3/5 ~px-4/6 ~pt-4/6">
             <div class="mb-4">
                 <h1 class="~text-lg/xl font-semibold">{{ $product->name }}</h1>
                 <p class="text-gray-500 ~text-sm/base">{{ $product->gender }}'s {{ $product->sport }} Shoes</p>
@@ -141,46 +152,67 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const wrapper = document.querySelector('[data-quantity-control]');
-        if (!wrapper) {
-            return;
+        const gallery = document.querySelector('[data-product-gallery]');
+        const mainImage = gallery?.querySelector('[data-gallery-main-image]');
+        const thumbs = gallery ? Array.from(gallery.querySelectorAll('[data-gallery-thumb]')) : [];
+
+        if (gallery && mainImage && thumbs.length > 0) {
+            thumbs.forEach((thumb) => {
+                thumb.addEventListener('click', () => {
+                    const fullSrc = thumb.dataset.fullSrc;
+                    if (!fullSrc) {
+                        return;
+                    }
+
+                    mainImage.src = fullSrc;
+
+                    thumbs.forEach((item) => item.classList.remove('border-black'));
+                    thumbs.forEach((item) => item.classList.add('border-transparent'));
+
+                    thumb.classList.remove('border-transparent');
+                    thumb.classList.add('border-black');
+                });
+            });
         }
 
-        const input = wrapper.querySelector('[data-quantity-input]');
-        const min = 1;
-        const max = 99;
+        const wrapper = document.querySelector('[data-quantity-control]');
+        if (wrapper) {
+            const input = wrapper.querySelector('[data-quantity-input]');
+            const min = 1;
+            const max = 99;
 
-        const normalize = (value) => {
-            const numericValue = Number.parseInt(value, 10);
+            const normalize = (value) => {
+                const numericValue = Number.parseInt(value, 10);
 
-            if (Number.isNaN(numericValue)) {
-                return min;
-            }
+                if (Number.isNaN(numericValue)) {
+                    return min;
+                }
 
-            return Math.min(max, Math.max(min, numericValue));
-        };
+                return Math.min(max, Math.max(min, numericValue));
+            };
 
-        wrapper.addEventListener('click', (event) => {
-            const button = event.target.closest('button[data-quantity-action]');
-            if (!button) {
-                return;
-            }
+            wrapper.addEventListener('click', (event) => {
+                const button = event.target.closest('button[data-quantity-action]');
+                if (!button) {
+                    return;
+                }
 
-            const currentValue = normalize(input.value);
-            const nextValue = button.dataset.quantityAction === 'increase'
-                ? currentValue + 1
-                : currentValue - 1;
+                const currentValue = normalize(input.value);
+                const nextValue = button.dataset.quantityAction === 'increase'
+                    ? currentValue + 1
+                    : currentValue - 1;
 
-            input.value = normalize(nextValue);
-        });
+                input.value = normalize(nextValue);
+            });
 
-        input.addEventListener('input', () => {
-            input.value = input.value.replace(/[^0-9]/g, '');
-        });
+            input.addEventListener('input', () => {
+                input.value = input.value.replace(/[^0-9]/g, '');
+            });
 
-        input.addEventListener('blur', () => {
-            input.value = normalize(input.value);
-        });
+            input.addEventListener('blur', () => {
+                input.value = normalize(input.value);
+            });
+        }
 
         const successOverlay = document.getElementById('bag-success-overlay');
         const successCloseButton = document.getElementById('bag-success-close');

@@ -3,7 +3,7 @@
 @section('title', 'Favourites')
 
 @section('content')
-<main class="max-w-[1100px] mx-auto ~mt-5/8 px-4">
+<main class="max-w-[1100px] mx-auto px-4">
 
         <!-- Page Title -->
         <div class="~mb-5/8">
@@ -14,7 +14,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
                 <div class="relative flex flex-col bg-gray-100 rounded-lg">
-                    <img src="{{ asset('assets/sneakers/sneakers7.avif') }}" class="w-full h-full object-cover bg-gray-300 rounded-lg">
+                    <div class="w-full aspect-square bg-gray-300 rounded-t-lg"></div>
                     <button class="absolute top-4 right-4 ~w-6/8 ~h-6/8 bg-white rounded-full flex items-center justify-center shadow hover:bg-gray-100 transition">
                         <img src="{{ asset('assets/lucide/heart.svg') }}" class="w-4 h-4">
                     </button>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="relative flex flex-col bg-gray-100 rounded-lg">
-                    <img src="{{ asset('assets/sneakers/sneakers8.avif') }}" class="w-full h-full object-cover bg-gray-300 rounded-lg">
+                    <div class="w-full aspect-square bg-gray-300 rounded-t-lg"></div>
                     <button class="absolute top-4 right-4 ~w-6/8 ~h-6/8 bg-white rounded-full flex items-center justify-center shadow hover:bg-gray-100 transition">
                         <img src="{{ asset('assets/lucide/heart.svg') }}" class="w-4 h-4">
                     </button>
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="relative flex flex-col bg-gray-100 rounded-lg">
-                    <img src="{{ asset('assets/sneakers/sneakers12.avif') }}" class="w-full h-full object-cover bg-gray-300 rounded-lg">
+                    <div class="w-full aspect-square bg-gray-300 rounded-t-lg"></div>
                     <button class="absolute top-4 right-4 ~w-6/8 ~h-6/8 bg-white rounded-full flex items-center justify-center shadow hover:bg-gray-100 transition">
                         <img src="{{ asset('assets/lucide/heart.svg') }}" class="w-4 h-4">
                     </button>
@@ -69,7 +69,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
                 <a href="/product" class="flex flex-col bg-gray-100 rounded-lg">
-                    <img src="{{ asset('assets/sneakers/bagsneakers3.avif') }}" class="w-full h-full object-cover bg-gray-300 rounded-lg">
+                    <div class="w-full aspect-square bg-gray-300 rounded-t-lg"></div>
                     <div class="p-4">
                         <h3 class="font-semibold text-sm">Nike Dunk Low SE 'LNY'</h3>
                         <p class="text-gray-500 text-xs">Men's Shoes</p>
@@ -78,7 +78,7 @@
                 </a>
 
                 <a href="/product" class="flex flex-col bg-gray-100 rounded-lg">
-                    <img src="{{ asset('assets/sneakers/bagsneakers4.avif') }}" class="w-full h-full object-cover bg-gray-300 rounded-lg">
+                    <div class="w-full aspect-square bg-gray-300 rounded-t-lg"></div>
                     <div class="p-4">
                         <h3 class="font-semibold text-sm">Nike Dunk Low Retro</h3>
                         <p class="text-gray-500 text-xs">Men's Shoes</p>
@@ -87,7 +87,7 @@
                 </a>
 
                 <a href="/product" class="flex flex-col bg-gray-100 rounded-lg">
-                    <img src="{{ asset('assets/sneakers/bagsneakers5.avif') }}" class="w-full h-full object-cover bg-gray-300 rounded-lg">
+                    <div class="w-full aspect-square bg-gray-300 rounded-t-lg"></div>
                     <div class="p-4">
                         <h3 class="font-semibold text-sm">Nike Vomero Plus</h3>
                         <p class="text-gray-500 text-xs">Men's Road Running Shoes</p>

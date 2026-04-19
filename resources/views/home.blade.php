@@ -3,7 +3,7 @@
 @section('title', 'SneakerStore')
 
 @section('content')
-<main class="~p-0/6 mt-5 max-w-[1200px] mx-auto">
+<main class="~px-0/6 max-w-[1200px] mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 ~gap-2/5 ~mt-3/5 ~mb-3/5">
 
         <div class="md:col-span-2 relative" style="padding-bottom: 56%;">

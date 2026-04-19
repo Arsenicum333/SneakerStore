@@ -6,13 +6,15 @@ use App\Models\ProductVariantSize;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BagController extends Controller
 {
     public function index(): View
     {
-        $sessionItems = session('bag.items', []);
-        $sizeIds = array_map('intval', array_keys($sessionItems));
+        $storedItems = $this->getStoredItems();
+        $sizeIds = array_map('intval', array_keys($storedItems));
 
         $sizes = ProductVariantSize::query()
             ->whereIn('id', $sizeIds)
@@ -28,7 +30,7 @@ class BagController extends Controller
         $items = [];
         $subtotal = 0.0;
 
-        foreach ($sessionItems as $sizeId => $sessionItem) {
+        foreach ($storedItems as $sizeId => $sessionItem) {
             $size = $sizes->get((int) $sizeId);
 
             if (!$size) {
@@ -85,7 +87,7 @@ class BagController extends Controller
             ->whereHas('variant', fn ($query) => $query->where('product_id', $validated['product_id']))
             ->firstOrFail();
 
-        $items = session('bag.items', []);
+        $items = $this->getStoredItems();
         $sizeKey = (string) $size->id;
 
         $existingQuantity = (int) ($items[$sizeKey]['quantity'] ?? 0);
@@ -110,7 +112,7 @@ class BagController extends Controller
 
         $items[$sizeKey] = ['quantity' => $newQuantity];
 
-        session(['bag.items' => $items]);
+        $this->saveStoredItems($items);
 
         if ($addedQuantity < $requestedQuantity) {
             return redirect()->back()->with('bag_status', 'Only available quantity was added for this size.');
@@ -125,7 +127,7 @@ class BagController extends Controller
             'quantity' => ['required', 'integer', 'min:1', 'max:99'],
         ]);
 
-        $items = session('bag.items', []);
+        $items = $this->getStoredItems();
         $sizeKey = (string) $sizeId;
 
         if (!array_key_exists($sizeKey, $items)) {
@@ -136,7 +138,7 @@ class BagController extends Controller
 
         if (!$size) {
             unset($items[$sizeKey]);
-            session(['bag.items' => $items]);
+            $this->saveStoredItems($items);
 
             return redirect()->route('bag');
         }
@@ -147,7 +149,7 @@ class BagController extends Controller
 
         if ($stockQuantity === 0) {
             unset($items[$sizeKey]);
-            session(['bag.items' => $items]);
+            $this->saveStoredItems($items);
 
             return redirect()->route('bag')->with('bag_status', 'This size is out of stock and was removed from your bag.');
         }
@@ -155,23 +157,92 @@ class BagController extends Controller
         if ($newQuantity > $stockQuantity) {
             $newQuantity = $stockQuantity;
             $items[$sizeKey]['quantity'] = max(1, $newQuantity);
-            session(['bag.items' => $items]);
+            $this->saveStoredItems($items);
 
             return redirect()->route('bag')->with('bag_status', 'Quantity updated to the maximum available for this size.');
         }
 
         $items[$sizeKey]['quantity'] = max(1, $newQuantity);
-        session(['bag.items' => $items]);
+        $this->saveStoredItems($items);
 
         return redirect()->route('bag');
     }
 
     public function remove(int $sizeId): RedirectResponse
     {
-        $items = session('bag.items', []);
+        $items = $this->getStoredItems();
         unset($items[(string) $sizeId]);
-        session(['bag.items' => $items]);
+        $this->saveStoredItems($items);
 
         return redirect()->route('bag');
+    }
+
+    private function getStoredItems(): array
+    {
+        if (!Auth::check()) {
+            return session('bag.items', []);
+        }
+
+        $bagId = $this->getOrCreateUserBagId((int) Auth::id());
+
+        return DB::table('bag_items')
+            ->where('bag_id', $bagId)
+            ->get(['variant_size_id', 'quantity'])
+            ->mapWithKeys(fn ($row) => [(string) $row->variant_size_id => ['quantity' => (int) $row->quantity]])
+            ->all();
+    }
+
+    private function saveStoredItems(array $items): void
+    {
+        if (!Auth::check()) {
+            session(['bag.items' => $items]);
+
+            return;
+        }
+
+        $bagId = $this->getOrCreateUserBagId((int) Auth::id());
+
+        DB::table('bag_items')->where('bag_id', $bagId)->delete();
+
+        if ($items === []) {
+            return;
+        }
+
+        $rows = [];
+
+        foreach ($items as $sizeId => $item) {
+            $rows[] = [
+                'bag_id' => $bagId,
+                'variant_size_id' => (int) $sizeId,
+                'quantity' => max(1, min(99, (int) ($item['quantity'] ?? 1))),
+            ];
+        }
+
+        DB::table('bag_items')->insert($rows);
+    }
+
+    private function getOrCreateUserBagId(int $userId): int
+    {
+        $bagId = DB::table('bags')
+            ->where('user_id', $userId)
+            ->value('id');
+
+        if ($bagId) {
+            DB::table('bags')
+                ->where('id', $bagId)
+                ->update([
+                    'session_token' => session()->getId(),
+                    'updated_at' => now(),
+                ]);
+
+            return (int) $bagId;
+        }
+
+        return (int) DB::table('bags')->insertGetId([
+            'user_id' => $userId,
+            'session_token' => session()->getId(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

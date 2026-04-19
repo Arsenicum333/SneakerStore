@@ -3,7 +3,7 @@
 @section('title', 'Bag')
 
 @section('content')
-<main class="max-w-[1100px] mx-auto ~mt-5/8 px-4">
+<main class="max-w-[1100px] mx-auto px-4">
     <div class="~mb-5/8">
         <h1 class="text-3xl font-semibold">Bag</h1>
         @if (session('bag_status'))
@@ -20,9 +20,14 @@
         <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
             <div class="flex flex-col gap-6">
                 @foreach ($items as $item)
+                    @php
+                        $productUrl = route('product.show', ['product' => $item['product_id'], 'variant' => $item['variant_id']]);
+                    @endphp
                     <div class="flex gap-4">
                         <div class="flex flex-col items-center gap-1">
-                            <img src="{{ asset($item['image_url']) }}" alt="{{ $item['product_name'] }}" class="w-40 h-40 bg-gray-200 rounded-lg object-cover">
+                            <a href="{{ $productUrl }}" class="block">
+                                <img src="{{ asset($item['image_url']) }}" alt="{{ $item['product_name'] }}" class="w-40 h-40 bg-gray-200 rounded-lg object-cover">
+                            </a>
 
                             <div class="flex items-center gap-2 mt-2">
                                 <form action="{{ route('bag.items.remove', ['sizeId' => $item['size_id']]) }}" method="POST">
@@ -33,7 +38,7 @@
                                     </button>
                                 </form>
 
-                                <div class="border rounded-full flex items-center px-1">
+                                <div class="border rounded-full flex items-center">
                                     <form action="{{ route('bag.items.update', ['sizeId' => $item['size_id']]) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
@@ -74,10 +79,12 @@
 
                         <div class="flex-1 flex flex-col-reverse sm:flex-row sm:items-start gap-1 sm:gap-4">
                             <div class="flex-1 flex flex-col">
-                                <h2 class="font-semibold text-lg">{{ $item['product_name'] }}</h2>
-                                <p class="text-gray-500 text-base">{{ $item['gender'] }}'s {{ $item['sport'] }} Shoes</p>
-                                <p class="text-gray-500 text-base">{{ $item['color'] }}</p>
-                                <a href="{{ route('product.show', ['product' => $item['product_id'], 'variant' => $item['variant_id']]) }}" class="text-gray-500 text-lg font-semibold underline underline-offset-4 decoration-2">Size {{ $item['size'] }}</a>
+                                <a href="{{ $productUrl }}" class="block">
+                                    <h2 class="font-semibold text-lg">{{ $item['product_name'] }}</h2>
+                                    <p class="text-gray-500 text-base">{{ $item['gender'] }}'s {{ $item['sport'] }} Shoes</p>
+                                    <p class="text-gray-500 text-base">{{ $item['color'] }}</p>
+                                    <p class="text-gray-500 text-lg font-semibold">Size {{ $item['size'] }}</p>
+                                </a>
                             </div>
 
                             <div class="font-semibold text-lg whitespace-nowrap">
@@ -86,7 +93,9 @@
                         </div>
                     </div>
 
-                    <hr class="my-2">
+                    @if (! $loop->last)
+                        <hr class="my-2">
+                    @endif
                 @endforeach
             </div>
 
@@ -98,7 +107,7 @@
                 </div>
                 <div class="flex justify-between text-gray-500 gap-6">
                     <span>Estimated Delivery & Handling</span>
-                    <span>Free</span>
+                    <span>Calculated at checkout</span>
                 </div>
                 <hr class="my-2">
                 <div class="flex justify-between font-semibold text-lg gap-6">

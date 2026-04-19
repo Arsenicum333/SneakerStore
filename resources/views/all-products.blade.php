@@ -4,7 +4,7 @@
 
 @section('content')
 <main>
-    <div class="w-full ~p-4/6 mx-auto ~mt-3/5">
+    <div class="w-full ~px-4/6 mx-auto">
         <div class="flex items-center justify-center w-full ~mb-3/5">
             <h1 class="flex items-center ~text-xl/3xl font-bold justify-start w-1/2">
                 @php

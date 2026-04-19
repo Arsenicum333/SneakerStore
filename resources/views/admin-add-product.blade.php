@@ -3,7 +3,7 @@
 @section('title', 'Add Product')
 
 @section('content')
-<main class="max-w-[1000px] mx-auto ~mt-4/8 ~p-4/6">
+<main class="max-w-[1000px] mx-auto ~px-4/6">
 
         <div class="flex-1 flex flex-col ~gap-8/10">
             <h2 class="~text-lg/2xl font-bold text-gray-900 ~mb-3/5">Add New Product</h2>

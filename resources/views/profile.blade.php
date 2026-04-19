@@ -3,11 +3,7 @@
 @section('title', 'Profile')
 
 @section('content')
-<main class="max-w-[1200px] mx-auto ~mt-4/8 ~p-4/6">
-    @php
-        $user = auth()->user();
-    @endphp
-
+<main class="max-w-[1200px] mx-auto ~px-4/6">
         <div class="flex flex-col lg:flex-row ~gap-8/16">
             <div class="flex-1 flex flex-col ~gap-4/6">
                 <h1 class="~text-xl/3xl font-semibold">My profile</h1>
@@ -43,7 +39,7 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center ~gap-2/3">
                             <img src="{{ asset('assets/lucide/map.svg') }}" class="~w-4/5 ~h-4/5 block">
-                            <span class="~text-xs/sm text-gray-700">Vinohradiv, Maliovnica str.</span>
+                            <span class="~text-xs/sm text-gray-700">{{ $user->address ?: 'No address added yet' }}</span>
                         </div>
                         <a href="#" class="~text-xs/sm text-gray-700 font-medium flex items-center gap-0.5 hover:text-gray-900">
                             Edit
@@ -91,56 +87,38 @@
                 </div>
 
                 <div class="flex flex-col ~gap-4/8">
-                    <div class="flex flex-row ~gap-3/5">
-                        <div class="bg-gray-100 rounded-md flex-shrink-0">
-                                <img src="{{ asset('assets/sneakers/sneakers1.avif') }}" class="~w-16/40 ~h-16/40 block rounded-md">
-                        </div>
-                        <div class="flex flex-col ~gap-0.5/1">
-                                <div class="flex flex-col ~gap-0.5/1">
-                                    <h2 class="font-semibold text-base">Nike Air Force 1 '07 LV8</h2>
-                                    <p class="text-gray-500 text-base font-semibold">$119,99</p>
-                                </div>
-                                <div class="flex flex-col gap-0.5">
-                                    <p class="text-red-500 text-sm">On the way</p>
-                                    <p class="text-gray-500 text-sm">10 march, 2026</p>
-                                    <p class="text-gray-500 text-sm">№544672</p>
-                                </div>
-                        </div>
-                    </div>
-
-                     <div class="flex flex-row ~gap-3/5">
-                        <div class="bg-gray-100 rounded-md flex-shrink-0">
-                                <img src="{{ asset('assets/sneakers/sneakers4.avif') }}" class="~w-16/40 ~h-16/40 block rounded-md">
-                        </div>
-                        <div class="flex flex-col ~gap-0.5/1">
-                                <div class="flex flex-col ~gap-0.5/1">
-                                    <h2 class="font-semibold text-base">Nike Air Force 1 '07 LV8</h2>
-                                    <p class="text-gray-500 text-base font-semibold">$119,99</p>
-                                </div>
-                                <div class="flex flex-col gap-0.5">
-                                    <p class="text-green-500 text-sm">Delivered</p>
-                                    <p class="text-gray-500 text-sm">10 march, 2026</p>
-                                    <p class="text-gray-500 text-sm">№544672</p>
-                                </div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row ~gap-3/5">
-                        <div class="bg-gray-100 rounded-md flex-shrink-0">
-                                <img src="{{ asset('assets/sneakers/sneakers11.avif') }}" class="~w-16/40 ~h-16/40 block rounded-md">
-                        </div>
-                        <div class="flex flex-col ~gap-0.5/1">
+                    @forelse ($orders as $order)
+                        @php
+                            $statusNormalized = strtolower($order['status']);
+                            $statusLabel = match ($statusNormalized) {
+                                'pending' => 'On the way',
+                                'delivered' => 'Delivered',
+                                default => ucfirst($statusNormalized),
+                            };
+                            $statusColor = $statusNormalized === 'delivered' ? 'text-green-500' : 'text-red-500';
+                        @endphp
+                        <div class="flex flex-row ~gap-3/5">
+                            <a
+                                href="{{ $order['product_id'] && $order['variant_id'] ? route('product.show', ['product' => $order['product_id'], 'variant' => $order['variant_id']]) : '#' }}"
+                                class="bg-gray-100 rounded-md flex-shrink-0"
+                            >
+                                <img src="{{ asset($order['image_url']) }}" class="~w-16/40 ~h-16/40 block rounded-md object-cover" alt="{{ $order['product_name'] }}">
+                            </a>
                             <div class="flex flex-col ~gap-0.5/1">
-                                <h2 class="font-semibold text-base">Nike Air Force 1 '07 LV8</h2>
-                                <p class="text-gray-500 text-base font-semibold">$119,99</p>
-                            </div>
-                            <div class="flex flex-col gap-0.5">
-                                <p class="text-green-500 text-sm">Delivered</p>
-                                <p class="text-gray-500 text-sm">10 march, 2026</p>
-                                <p class="text-gray-500 text-sm">№544672</p>
+                                <div class="flex flex-col ~gap-0.5/1">
+                                    <h2 class="font-semibold text-base">{{ $order['product_name'] }}</h2>
+                                    <p class="text-gray-500 text-base font-semibold">{{ number_format($order['total_amount'], 2, ',', ' ') }} $</p>
+                                </div>
+                                <div class="flex flex-col gap-0.5">
+                                    <p class="{{ $statusColor }} text-sm">{{ $statusLabel }}</p>
+                                    <p class="text-gray-500 text-sm">{{ \Illuminate\Support\Carbon::parse($order['created_at'])->format('d F, Y') }}</p>
+                                    <p class="text-gray-500 text-sm">№{{ $order['id'] }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @empty
+                        <p class="text-sm text-gray-500">You don&apos;t have any orders yet.</p>
+                    @endforelse
                 </div>
             </div>
         </div>

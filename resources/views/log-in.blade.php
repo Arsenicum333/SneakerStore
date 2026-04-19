@@ -16,6 +16,12 @@
 
       <form action="{{ route('register') }}" method="POST" class="flex flex-col gap-7">
         @csrf
+                @php
+                        $authRedirect = old('redirect', $redirectTarget ?? request('redirect'));
+                @endphp
+                @if (!empty($authRedirect))
+                        <input type="hidden" name="redirect" value="{{ $authRedirect }}">
+                @endif
 
         @if($errors->any())
             <div class="p-4 rounded-lg bg-red-50 text-red-700 border border-red-200">
@@ -76,7 +82,7 @@
 
                 <div class="relative flex-1">
                     <input type="number" name="dob_day" id="Day" min="1" max="31" value="{{ old('dob_day') }}" placeholder="Day*"
-                        class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg text-center focus:border-black outline-none transition-all peer placeholder-transparent">
+                        class="no-spinner w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg text-center focus:border-black outline-none transition-all peer placeholder-transparent">
                     <label for="Day"
                         class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
                         Day*
@@ -85,7 +91,7 @@
 
                 <div class="relative flex-1">
                     <input type="number" name="dob_month" id="Month" min="1" max="12" value="{{ old('dob_month') }}" placeholder="Month*"
-                        class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg text-center focus:border-black outline-none transition-all peer placeholder-transparent">
+                        class="no-spinner w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg text-center focus:border-black outline-none transition-all peer placeholder-transparent">
                     <label for="Month"
                         class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
                         Month*
@@ -94,7 +100,7 @@
 
                 <div class="relative flex-1">
                     <input type="number" name="dob_year" id="Year" min="1900" max="2026" value="{{ old('dob_year') }}" placeholder="Year*"
-                        class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg text-center focus:border-black outline-none transition-all peer placeholder-transparent">
+                        class="no-spinner w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg text-center focus:border-black outline-none transition-all peer placeholder-transparent">
                     <label for="Year"
                         class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
                         Year*
@@ -138,6 +144,16 @@
             Create Account
           </button>
         </div>
+
+                <p class="text-sm text-gray-500 text-center">
+                        Already have an account?
+                        <a
+                                href="{{ route('login', !empty($authRedirect) ? ['redirect' => $authRedirect] : []) }}"
+                                class="underline font-medium text-gray-700 hover:text-black"
+                        >
+                                Sign In
+                        </a>
+                </p>
       </form>
 
     </div>

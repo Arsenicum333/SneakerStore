@@ -144,6 +144,16 @@
             Create Account
           </button>
         </div>
+
+                <p class="text-sm text-gray-500 text-center">
+                        Already have an account?
+                        <a
+                                href="{{ route('login', !empty($authRedirect) ? ['redirect' => $authRedirect] : []) }}"
+                                class="underline font-medium text-gray-700 hover:text-black"
+                        >
+                                Sign In
+                        </a>
+                </p>
       </form>
 
     </div>

@@ -57,6 +57,16 @@
             Sign In
           </button>
         </div>
+
+        <p class="text-sm text-gray-500 text-center">
+          Don&apos;t have an account?
+          <a
+            href="{{ route('register', !empty($authRedirect) ? ['redirect' => $authRedirect] : []) }}"
+            class="underline font-medium text-gray-700 hover:text-black"
+          >
+            Join Us
+          </a>
+        </p>
       </form>
 
     </div>

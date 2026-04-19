@@ -3,7 +3,7 @@
 @section('title', 'Profile')
 
 @section('content')
-<main class="max-w-[1200px] mx-auto ~mt-4/8 ~p-4/6">
+<main class="max-w-[1200px] mx-auto ~px-4/6">
         <div class="flex flex-col lg:flex-row ~gap-8/16">
             <div class="flex-1 flex flex-col ~gap-4/6">
                 <h1 class="~text-xl/3xl font-semibold">My profile</h1>

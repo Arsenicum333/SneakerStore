@@ -3,7 +3,7 @@
 @section('title', 'Bag')
 
 @section('content')
-<main class="max-w-[1100px] mx-auto ~mt-5/8 px-4">
+<main class="max-w-[1100px] mx-auto px-4">
     <div class="~mb-5/8">
         <h1 class="text-3xl font-semibold">Bag</h1>
         @if (session('bag_status'))
@@ -93,7 +93,9 @@
                         </div>
                     </div>
 
-                    <hr class="my-2">
+                    @if (! $loop->last)
+                        <hr class="my-2">
+                    @endif
                 @endforeach
             </div>
 

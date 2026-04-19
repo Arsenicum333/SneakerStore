@@ -3,7 +3,7 @@
 @section('title', 'Payment')
 
 @section('content')
-<main class="max-w-[1200px] mx-auto ~p-4/6 ~mt-4/8">
+<main class="max-w-[1200px] mx-auto ~px-4/6">
     @if (session('payment_success'))
         <div class="mb-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <h2 class="text-lg font-bold text-gray-900">Payment successful</h2>

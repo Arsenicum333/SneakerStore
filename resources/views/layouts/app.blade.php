@@ -102,9 +102,11 @@
         </div>
     </header>
 
-    @yield('content')
+    <div class="pt-8">
+        @yield('content')
+    </div>
 
-    <footer>
+    <footer class="mt-12">
         <div class="~p-4/6 max-w-[1200px] mx-auto">
             <hr class="border-t-1 md:border-t-2 border-gray-300">
             <div class="flex items-center justify-start w-full">

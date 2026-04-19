@@ -11,7 +11,7 @@
                     $gender = request('gender');
                     $sportNot = request('sport_not');
                     $title = 'All';
-                    
+
                     if ($gender == 'Men') {
                         $title = "Men's Shoes";
                     } elseif ($gender == 'Women') {
@@ -31,10 +31,10 @@
                 </div>
 
                 <div class="relative">
-                    <button onclick="toggleSortDropdown()" 
+                    <button onclick="toggleSortDropdown()"
                             class="flex items-center justify-end gap-1 ~mt-3/5">
                         <span class="text-black ~text-sm/base">
-                            Sort By 
+                            Sort By
                             @if(request('sort') == 'price_asc') (Price: Low to High)
                             @elseif(request('sort') == 'price_desc') (Price: High to Low)
                             @endif
@@ -43,17 +43,17 @@
                             <img src="{{ asset('assets/lucide/arrow.svg') }}" class="~w-4/5 ~h-4/5 block">
                         </div>
                     </button>
-                    
+
                     <div id="sort-dropdown" class="absolute right-0 hidden bg-white shadow-lg rounded-md mt-2 py-2 z-10 min-w-48 border border-gray-200">
-                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'default'])) }}" 
+                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'default'])) }}"
                         class="block px-4 py-2 hover:bg-gray-100 {{ request('sort') == 'default' || !request('sort') ? 'bg-gray-100 font-semibold' : '' }}">
                             Default
                         </a>
-                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}" 
+                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}"
                         class="block px-4 py-2 hover:bg-gray-100 {{ request('sort') == 'price_asc' ? 'bg-gray-100 font-semibold' : '' }}">
                             Price: Low to High
                         </a>
-                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}" 
+                        <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}"
                         class="block px-4 py-2 hover:bg-gray-100 {{ request('sort') == 'price_desc' ? 'bg-gray-100 font-semibold' : '' }}">
                             Price: High to Low
                         </a>
@@ -104,9 +104,9 @@
                         <div class="mt-2 space-y-1">
                             @foreach($sports as $sport)
                                 <label class="flex items-center gap-2">
-                                    <input type="checkbox" name="sport[]" value="{{ $sport }}" 
+                                    <input type="checkbox" name="sport[]" value="{{ $sport }}"
                                         {{ in_array($sport, (array)request('sport')) ? 'checked' : '' }}
-                                        onchange="this.form.submit()"> 
+                                        onchange="this.form.submit()">
                                     {{ $sport }}
                                 </label>
                             @endforeach
@@ -152,13 +152,13 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         function toggleFilters() {
             const sidebar = document.getElementById('filters-sidebar');
             const buttonText = document.getElementById('filters-btn-text');
             const buttonIcon = document.getElementById('filters-btn-icon');
-            
+
             if (sidebar.style.display === 'none') {
                 sidebar.style.display = 'block';
                 buttonText.textContent = 'Hide Filters';

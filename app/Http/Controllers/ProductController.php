@@ -19,11 +19,11 @@ class ProductController extends Controller
                     ->with(['images', 'sizes'])
                     ->orderBy('id'),
             ]);
-        
+
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }
-        
+
         if ($request->has('sport') && is_array($request->sport)) {
             $query->whereIn('sport', $request->sport);
         } elseif ($request->filled('sport')) {
@@ -50,7 +50,7 @@ class ProductController extends Controller
             $search = $request->search;
             $query->where('name', 'LIKE', "%{$search}%");
         }
-        
+
         $realProducts = $query->get();
 
         $genders = Product::distinct()->pluck('gender')->filter();
@@ -66,7 +66,7 @@ class ProductController extends Controller
                 1,
                 ['path' => request()->url(), 'query' => request()->query()]
             );
-            
+
             return view('all-products', [
                 'products' => $products,
                 'genders' => $genders,
@@ -78,11 +78,11 @@ class ProductController extends Controller
 
         $totalNeeded = 36;
         $virtualProducts = collect();
-        
+
         while ($virtualProducts->count() < $totalNeeded) {
             $virtualProducts = $virtualProducts->concat($realProducts);
         }
-        
+
         $virtualProducts = $virtualProducts->take($totalNeeded);
 
         $sort = $request->get('sort', 'default');
@@ -93,13 +93,13 @@ class ProductController extends Controller
                     return $product->variants->min('price');
                 })->values();
                 break;
-                
+
             case 'price_desc':
                 $virtualProducts = $virtualProducts->sortByDesc(function ($product) {
                     return $product->variants->min('price');
                 })->values();
                 break;
-                
+
             default:
                 $virtualProducts = $virtualProducts;
                 break;
@@ -108,7 +108,7 @@ class ProductController extends Controller
         $page = request()->get('page', 1);
         $perPage = 12;
         $currentPageItems = $virtualProducts->slice(($page - 1) * $perPage, $perPage)->values();
-        
+
         $products = new LengthAwarePaginator(
             $currentPageItems,
             $virtualProducts->count(),
@@ -119,7 +119,7 @@ class ProductController extends Controller
                 'query' => request()->query(),
             ]
         );
-        
+
         return view('all-products', [
             'products' => $products,
             'genders' => $genders,

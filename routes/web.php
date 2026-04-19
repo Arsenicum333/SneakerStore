@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BagController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,7 @@ Route::get('/logout', function () {
     return view('log-out');
 })->middleware('auth')->name('logout.confirm');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout.perform');
-Route::view('/profile', 'profile')->middleware('auth')->name('profile');
+Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth')->name('profile');
 
 Route::view('/admin/products', 'admin-product')->name('admin.products');
 Route::view('/admin/products/create', 'admin-add-product')->name('admin.products.create');

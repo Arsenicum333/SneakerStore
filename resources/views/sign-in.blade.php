@@ -18,6 +18,12 @@
 
       <form action="{{ route('login') }}" method="POST" class="flex flex-col gap-7">
         @csrf
+        @php
+          $authRedirect = old('redirect', $redirectTarget ?? request('redirect'));
+        @endphp
+        @if (!empty($authRedirect))
+          <input type="hidden" name="redirect" value="{{ $authRedirect }}">
+        @endif
 
         @if($errors->any())
             <div class="p-4 rounded-lg bg-red-50 text-red-700 border border-red-200">

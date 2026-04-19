@@ -28,7 +28,7 @@
                     @if (! $isAuthenticated)
                         <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
                             You can review the order here, but you need to sign in before placing it.
-                            <a href="{{ route('login') }}" class="font-semibold underline underline-offset-4">Sign in</a>
+                            <a href="{{ route('login', ['redirect' => route('payment')]) }}" class="font-semibold underline underline-offset-4">Sign in</a>
                         </div>
                     @endif
 
@@ -68,7 +68,7 @@
                         <div class="flex flex-col ~gap-2/3">
                             <label class="flex items-center justify-between w-full border border-gray-200 rounded-md ~px-3/4 ~py-2/3 cursor-pointer hover:border-gray-900">
                                 <div class="flex items-center ~gap-2/3">
-                                    <input type="radio" name="shipping_method" value="extra_fast" checked class="accent-gray-900 ~w-3/4 ~h-3/4">
+                                    <input type="radio" name="shipping_method" value="extra_fast" {{ old('shipping_method', 'extra_fast') === 'extra_fast' ? 'checked' : '' }} class="accent-gray-900 ~w-3/4 ~h-3/4" data-shipping-fee="19.99">
                                     <span class="~text-xs/sm text-gray-900 font-medium">Extra Fast</span>
                                 </div>
                                 <span class="~text-xs/sm text-gray-900 font-semibold">19,99 $</span>
@@ -76,11 +76,12 @@
 
                             <label class="flex items-center justify-between w-full border border-gray-200 rounded-md ~px-3/4 ~py-2/3 cursor-pointer hover:border-gray-900">
                                 <div class="flex items-center ~gap-2/3">
-                                    <input type="radio" name="shipping_method" value="nova_poshta" class="accent-gray-900 ~w-3/4 ~h-3/4">
+                                    <input type="radio" name="shipping_method" value="nova_poshta" {{ old('shipping_method') === 'nova_poshta' ? 'checked' : '' }} class="accent-gray-900 ~w-3/4 ~h-3/4" data-shipping-fee="0">
                                     <span class="~text-xs/sm text-gray-900 font-medium">Nova Poshta</span>
                                 </div>
                                 <span class="~text-xs/sm text-gray-500 font-semibold">Free</span>
                             </label>
+                            @error('shipping_method')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                     </div>
 
@@ -88,40 +89,45 @@
                         <h2 class="~text-lg/2xl font-bold text-gray-900 ~mb-3/5">Payment</h2>
                         <div class="flex flex-col ~gap-2/3">
                             <label class="flex items-center ~gap-2/3 w-full border border-gray-200 rounded-md ~px-3/4 ~py-2/3 cursor-pointer hover:border-gray-900">
-                                <input type="radio" name="payment_method" value="card" checked class="accent-gray-900 ~w-3/4 ~h-3/4">
+                                <input type="radio" name="payment_method" value="card" {{ old('payment_method', 'card') === 'card' ? 'checked' : '' }} class="accent-gray-900 ~w-3/4 ~h-3/4">
                                 <img src="{{ asset('assets/lucide/credit-card.svg') }}" class="~w-4/5 ~h-4/5" alt="Card">
                                 <span class="~text-xs/sm text-gray-900 font-medium">Credit or Debit Card</span>
                             </label>
 
                             <label class="flex items-center ~gap-2/3 w-full border border-gray-200 rounded-md ~px-3/4 ~py-2/3 cursor-pointer hover:border-gray-900">
-                                <input type="radio" name="payment_method" value="paypal" class="accent-gray-900 ~w-3/4 ~h-3/4">
+                                <input type="radio" name="payment_method" value="paypal" {{ old('payment_method') === 'paypal' ? 'checked' : '' }} class="accent-gray-900 ~w-3/4 ~h-3/4">
                                 <span class="~text-xs/sm text-gray-900 font-medium">PayPal</span>
                             </label>
 
                             <label class="flex items-center ~gap-2/3 w-full border border-gray-200 rounded-md ~px-3/4 ~py-2/3 cursor-pointer hover:border-gray-900">
-                                <input type="radio" name="payment_method" value="google_pay" class="accent-gray-900 ~w-3/4 ~h-3/4">
+                                <input type="radio" name="payment_method" value="google_pay" {{ old('payment_method') === 'google_pay' ? 'checked' : '' }} class="accent-gray-900 ~w-3/4 ~h-3/4">
                                 <span class="~text-xs/sm text-gray-900 font-medium">Google Pay</span>
                             </label>
+                            @error('payment_method')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
 
                             <p class="~text-xs/sm text-gray-400 ~mt-1/2">Enter your payment details</p>
 
                             <div class="relative flex-1">
                                 <input type="text" name="card_name" value="{{ old('card_name') }}" placeholder="Name on Card*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="card_name" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Name on Card*</label>
+                                @error('card_name')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                             <div class="relative flex-1">
                                 <input type="text" name="card_number" value="{{ old('card_number') }}" placeholder="Card Number*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="card_number" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Card Number*</label>
+                                @error('card_number')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
 
                             <div class="flex ~gap-2/3">
                                 <div class="relative flex-1 w-1/2">
                                     <input type="text" name="card_expiry" value="{{ old('card_expiry') }}" placeholder="MM/YY*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                     <label for="card_expiry" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">MM/YY*</label>
+                                    @error('card_expiry')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
                                 <div class="relative flex-1 w-1/2">
                                     <input type="text" name="card_cvv" value="{{ old('card_cvv') }}" placeholder="Security Code*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                     <label for="card_cvv" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Security Code*</label>
+                                    @error('card_cvv')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
                             </div>
 
@@ -140,14 +146,14 @@
                     </div>
                     <div class="flex justify-between ~text-xs/sm text-gray-500 ~mb-3/5">
                         <span>Estimated Delivery & Handling</span>
-                        <span>19,99 $</span>
+                        <span id="shipping-fee-label">{{ number_format($shippingFee, 2, ',', ' ') }} $</span>
                     </div>
 
                     <hr class="border-gray-200 ~mb-3/5">
 
                     <div class="flex justify-between ~text-xs/sm font-bold text-gray-900 ~mb-5/8">
                         <span>Total</span>
-                        <span>{{ number_format($subtotal + $shippingFee, 2, ',', ' ') }} $</span>
+                        <span id="payment-total-label">{{ number_format($subtotal + $shippingFee, 2, ',', ' ') }} $</span>
                     </div>
 
                     <hr class="border-gray-200 ~mb-4/6">
@@ -173,4 +179,39 @@
             </div>
         </form>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const subtotal = {{ json_encode((float) $subtotal) }};
+            const shippingFeeLabel = document.getElementById('shipping-fee-label');
+            const totalLabel = document.getElementById('payment-total-label');
+            const shippingInputs = document.querySelectorAll('input[name="shipping_method"]');
+
+            if (!shippingFeeLabel || !totalLabel || shippingInputs.length === 0) {
+                return;
+            }
+
+            const formatPrice = (value) => {
+                return value
+                    .toFixed(2)
+                    .replace('.', ',')
+                    + ' $';
+            };
+
+            const updateSummary = () => {
+                const selected = document.querySelector('input[name="shipping_method"]:checked');
+                const fee = selected ? Number.parseFloat(selected.dataset.shippingFee || '0') : 0;
+                const normalizedFee = Number.isNaN(fee) ? 0 : fee;
+
+                shippingFeeLabel.textContent = formatPrice(normalizedFee);
+                totalLabel.textContent = formatPrice(subtotal + normalizedFee);
+            };
+
+            shippingInputs.forEach((input) => {
+                input.addEventListener('change', updateSummary);
+            });
+
+            updateSummary();
+        });
+    </script>
 @endsection

@@ -98,7 +98,7 @@
                 </div>
                 <div class="flex justify-between text-gray-500 gap-6">
                     <span>Estimated Delivery & Handling</span>
-                    <span>Free</span>
+-                    <span>Calculated at checkout</span>
                 </div>
                 <hr class="my-2">
                 <div class="flex justify-between font-semibold text-lg gap-6">

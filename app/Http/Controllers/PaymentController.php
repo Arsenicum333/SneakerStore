@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RuntimeException;
 
 class PaymentController extends Controller
 {
@@ -57,46 +58,60 @@ class PaymentController extends Controller
             'google_pay' => 'Google Pay',
         ][$validated['payment_method']];
 
-        $orderId = DB::transaction(function () use ($validated, $items, $totalAmount, $paymentMethodLabel) {
-            $orderId = DB::table('orders')->insertGetId([
-                'user_id' => Auth::id(),
-                'session_token' => session()->getId(),
-                'total_amount' => $totalAmount,
-                'status' => 'pending',
-                'payment_method' => $paymentMethodLabel,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            DB::table('shipping_details')->insert([
-                'order_id' => $orderId,
-                'first_name' => $validated['first_name'],
-                'last_name' => $validated['last_name'],
-                'address' => $validated['address'],
-                'phone_number' => $validated['phone_number'],
-                'shipping_method' => $validated['shipping_method'] === 'extra_fast' ? 'Extra Fast' : 'Nova Poshta',
-            ]);
-
-            foreach ($items as $item) {
-                DB::table('order_items')->insert([
-                    'order_id' => $orderId,
-                    'variant_size_id' => $item['size_id'],
-                    'quantity' => $item['quantity'],
-                    'price_at_time' => $item['price'],
+        try {
+            $orderId = DB::transaction(function () use ($validated, $items, $totalAmount, $paymentMethodLabel) {
+                $orderId = DB::table('orders')->insertGetId([
+                    'user_id' => Auth::id(),
+                    'session_token' => session()->getId(),
+                    'total_amount' => $totalAmount,
+                    'status' => 'pending',
+                    'payment_method' => $paymentMethodLabel,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
-            }
 
-            DB::table('order_histories')->insert([
-                'order_id' => $orderId,
-                'status' => 'pending',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+                DB::table('shipping_details')->insert([
+                    'order_id' => $orderId,
+                    'email' => $validated['email'],
+                    'first_name' => $validated['first_name'],
+                    'last_name' => $validated['last_name'],
+                    'address' => $validated['address'],
+                    'phone_number' => $validated['phone_number'],
+                    'shipping_method' => $validated['shipping_method'] === 'extra_fast' ? 'Extra Fast' : 'Nova Poshta',
+                ]);
 
-            return $orderId;
-        });
+                foreach ($items as $item) {
+                    $stockUpdated = DB::table('product_variant_sizes')
+                        ->where('id', $item['size_id'])
+                        ->where('stock_quantity', '>=', $item['quantity'])
+                        ->decrement('stock_quantity', $item['quantity']);
 
-        session()->forget('bag.items');
+                    if ($stockUpdated === 0) {
+                        throw new RuntimeException('Insufficient stock for one or more items.');
+                    }
+
+                    DB::table('order_items')->insert([
+                        'order_id' => $orderId,
+                        'variant_size_id' => $item['size_id'],
+                        'quantity' => $item['quantity'],
+                        'price_at_time' => $item['price'],
+                    ]);
+                }
+
+                DB::table('order_histories')->insert([
+                    'order_id' => $orderId,
+                    'status' => 'pending',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                return $orderId;
+            });
+        } catch (RuntimeException $exception) {
+            return redirect()->route('bag')->with('bag_status', 'Some items are no longer available in the requested quantity.');
+        }
+
+        $this->clearStoredItems();
 
         return redirect()
             ->route('payment')
@@ -107,8 +122,8 @@ class PaymentController extends Controller
 
     private function resolveBagItems(): array
     {
-        $sessionItems = session('bag.items', []);
-        $sizeIds = array_map('intval', array_keys($sessionItems));
+        $storedItems = $this->getStoredItems();
+        $sizeIds = array_map('intval', array_keys($storedItems));
 
         $sizes = ProductVariantSize::query()
             ->whereIn('id', $sizeIds)
@@ -124,7 +139,7 @@ class PaymentController extends Controller
         $items = [];
         $subtotal = 0.0;
 
-        foreach ($sessionItems as $sizeId => $sessionItem) {
+        foreach ($storedItems as $sizeId => $sessionItem) {
             $size = $sizes->get((int) $sizeId);
 
             if (!$size) {
@@ -161,5 +176,57 @@ class PaymentController extends Controller
         }
 
         return [$items, $subtotal];
+    }
+
+    private function getStoredItems(): array
+    {
+        if (!Auth::check()) {
+            return session('bag.items', []);
+        }
+
+        $bagId = $this->getOrCreateUserBagId((int) Auth::id());
+
+        return DB::table('bag_items')
+            ->where('bag_id', $bagId)
+            ->get(['variant_size_id', 'quantity'])
+            ->mapWithKeys(fn ($row) => [(string) $row->variant_size_id => ['quantity' => (int) $row->quantity]])
+            ->all();
+    }
+
+    private function clearStoredItems(): void
+    {
+        if (!Auth::check()) {
+            session()->forget('bag.items');
+
+            return;
+        }
+
+        $bagId = $this->getOrCreateUserBagId((int) Auth::id());
+        DB::table('bag_items')->where('bag_id', $bagId)->delete();
+    }
+
+    private function getOrCreateUserBagId(int $userId): int
+    {
+        $bagId = DB::table('bags')
+            ->where('user_id', $userId)
+            ->value('id');
+
+        if ($bagId) {
+            DB::table('bags')
+                ->where('id', $bagId)
+                ->update([
+                    'session_token' => session()->getId(),
+                    'updated_at' => now(),
+                ]);
+
+            return (int) $bagId;
+        }
+
+        return (int) DB::table('bags')->insertGetId([
+            'user_id' => $userId,
+            'session_token' => session()->getId(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

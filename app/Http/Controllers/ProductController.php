@@ -42,6 +42,22 @@ class ProductController extends Controller
             });
         }
 
+        if ($request->has('color') && is_array($request->color)) {
+            $colors = $request->color;
+            $query->whereHas('variants', function ($q) use ($colors) {
+                foreach ($colors as $color) {
+                    $q->where('color', 'LIKE', "%{$color}%");
+                }
+            });
+        }
+
+        if ($request->has('size') && is_array($request->size)) {
+            $sizes = $request->size;
+            $query->whereHas('variants.sizes', function ($q) use ($sizes) {
+                $q->whereIn('size', $sizes);
+            });
+        }
+
         if ($request->filled('sport_not')) {
             $query->where('sport', '!=', $request->sport_not);
         }
@@ -55,6 +71,7 @@ class ProductController extends Controller
 
         $genders = Product::distinct()->pluck('gender')->filter();
         $sports = Product::distinct()->pluck('sport')->filter();
+        $colors = ProductVariant::distinct()->pluck('color')->filter()->sort();
         $minPrice = ProductVariant::min('price') ?? 0;
         $maxPrice = ProductVariant::max('price') ?? 1000;
 
@@ -71,47 +88,39 @@ class ProductController extends Controller
                 'products' => $products,
                 'genders' => $genders,
                 'sports' => $sports,
+                'colors' => $colors,
                 'minPrice' => $minPrice,
                 'maxPrice' => $maxPrice,
             ]);
         }
 
-        $totalNeeded = 36;
-        $virtualProducts = collect();
-
-        while ($virtualProducts->count() < $totalNeeded) {
-            $virtualProducts = $virtualProducts->concat($realProducts);
-        }
-
-        $virtualProducts = $virtualProducts->take($totalNeeded);
-
         $sort = $request->get('sort', 'default');
 
         switch ($sort) {
             case 'price_asc':
-                $virtualProducts = $virtualProducts->sortBy(function ($product) {
+                $realProducts = $realProducts->sortBy(function ($product) {
                     return $product->variants->min('price');
                 })->values();
                 break;
 
             case 'price_desc':
-                $virtualProducts = $virtualProducts->sortByDesc(function ($product) {
+                $realProducts = $realProducts->sortByDesc(function ($product) {
                     return $product->variants->min('price');
                 })->values();
                 break;
 
             default:
-                $virtualProducts = $virtualProducts;
+                $realProducts = $realProducts->sortBy('id')->values();
                 break;
         }
 
         $page = request()->get('page', 1);
         $perPage = 12;
-        $currentPageItems = $virtualProducts->slice(($page - 1) * $perPage, $perPage)->values();
+        $currentPageItems = $realProducts->slice(($page - 1) * $perPage, $perPage)->values();
 
         $products = new LengthAwarePaginator(
             $currentPageItems,
-            $virtualProducts->count(),
+            $realProducts->count(),
             $perPage,
             $page,
             [
@@ -124,6 +133,7 @@ class ProductController extends Controller
             'products' => $products,
             'genders' => $genders,
             'sports' => $sports,
+            'colors' => $colors,
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
         ]);

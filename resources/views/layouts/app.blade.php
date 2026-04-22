@@ -16,6 +16,19 @@
         .search-input[value]:not([value=""]) {
             width: 220px;
         }
+
+        .size-button {
+            transition: all 0.2s ease;
+        }
+        .size-button:hover {
+            transform: scale(1.05);
+            border-color: #000;
+        }
+        .size-checkbox:checked + .size-button {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+        }
     </style>
 </head>
 

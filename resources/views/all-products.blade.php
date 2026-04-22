@@ -19,6 +19,9 @@
                     } elseif ($sportNot == 'Lifestyle') {
                         $title = "Sport Shoes";
                     }
+
+                    $colors = ['Red', 'Blue', 'Green', 'Black', 'White', 'Gray', 'Pink', 'Brown', 'Orange'];
+                    $selectedColors = (array) request('color');
                 @endphp
                 {{ $title }}
             </h1>
@@ -63,7 +66,7 @@
         </div>
 
         <div class="flex ~gap-4/8 ">
-            <aside id="filters-sidebar" class="hidden md:block w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start">
+            <aside id="filters-sidebar" class="hidden md:block w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start max-h-screen overflow-y-auto">
                 <form method="GET" action="{{ route('catalog') }}" id="filter-form">
 
                     <div class="border-b-2 border-gray-200 pb-5">
@@ -94,6 +97,49 @@
                             <input type="number" name="price_min" value="{{ request('price_min') }}" placeholder="Min" class="w-full border rounded p-1 ~text-xs" onchange="this.form.submit()">
                             <span>-</span>
                             <input type="number" name="price_max" value="{{ request('price_max') }}" placeholder="Max" class="w-full border rounded p-1 ~text-xs" onchange="this.form.submit()">
+                        </div>
+                    </div>
+
+                    <div class="border-b-2 border-gray-200 pb-5">
+                        <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
+                            <span class="justify-start text-black ~text-sm/base font-semibold">Size</span>
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            @php
+                                $sizes = ['37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44', '44.5', '45'];
+                                $selectedSizes = (array) request('size');
+                            @endphp
+                            
+                            @foreach($sizes as $size)
+                                <label class="size-label">
+                                    <input type="checkbox" name="size[]" value="{{ $size }}"
+                                        class="size-checkbox hidden"
+                                        {{ in_array($size, $selectedSizes) ? 'checked' : '' }}
+                                        onchange="this.form.submit()">
+                                    <div class="size-button {{ in_array($size, $selectedSizes) ? 'bg-black text-white border-black' : 'bg-white text-black border-gray-300' }} 
+                                                w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border hover:border-black cursor-pointer transition-all">
+                                        {{ $size }}
+                                    </div>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="border-b-2 border-gray-200 pb-5">
+                        <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
+                            <span class="justify-start text-black ~text-sm/base font-semibold">Colour</span>
+                        </div>
+                        <div class="mt-2 space-y-1">
+                            @foreach($colors as $color)
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" name="color[]" value="{{ $color }}"
+                                        {{ in_array($color, $selectedColors) ? 'checked' : '' }}
+                                        onchange="this.form.submit()">
+                                    <span class="w-3 h-3 rounded-full inline-block"
+                                        style="background-color: {{ strtolower($color) }};"></span>
+                                    {{ $color }}
+                                </label>
+                            @endforeach
                         </div>
                     </div>
 

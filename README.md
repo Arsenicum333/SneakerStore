@@ -58,6 +58,8 @@ composer run dev
 
 ## Update database
 
+```bash
 php artisan db:seed --class=ProductCatalogSeeder
+```
 
 This runs the Laravel server, queue listener, and Vite together. PostgreSQL should already be running with `docker compose up -d`.

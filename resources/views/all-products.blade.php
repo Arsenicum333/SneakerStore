@@ -104,7 +104,7 @@
                         <div class="flex items-center justify-between w-full gap-1 ~mt-3/5">
                             <span class="justify-start text-black ~text-sm/base font-semibold">Size</span>
                         </div>
-                        <div class="mt-2 ml-1 flex flex-wrap gap-3">
+                        <div class="mt-2 flex flex-wrap gap-2">
                             @php
                                 $sizes = ['37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44', '44.5', '45'];
                                 $selectedSizes = (array) request('size');

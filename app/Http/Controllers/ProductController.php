@@ -72,8 +72,8 @@ class ProductController extends Controller
         }
 
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where('name', 'LIKE', "%{$search}%");
+            $search = strtolower($request->search);
+            $query->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]);
         }
 
         $realProducts = $query->get();

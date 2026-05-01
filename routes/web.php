@@ -6,6 +6,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FavouriteController;
 
 Route::get('/', function () {
     return view('home');
@@ -18,7 +19,9 @@ Route::get('/bag', [BagController::class, 'index'])->name('bag');
 Route::post('/bag/items', [BagController::class, 'add'])->name('bag.items.add');
 Route::patch('/bag/items/{sizeId}', [BagController::class, 'update'])->name('bag.items.update');
 Route::delete('/bag/items/{sizeId}', [BagController::class, 'remove'])->name('bag.items.remove');
-Route::view('/favourites', 'favourites')->name('favourites');
+Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites');
+Route::post('/favourites/toggle', [FavouriteController::class, 'toggle'])->name('favourites.toggle');
+Route::delete('/favourites/{variantId}', [FavouriteController::class, 'remove'])->name('favourites.remove');
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
 Route::post('/payment', [PaymentController::class, 'store'])->middleware('auth')->name('payment.perform');
 Route::view('/help', 'help')->name('help');

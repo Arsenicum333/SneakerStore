@@ -111,10 +111,14 @@
                 </button>
             </form>
 
-            <button class="w-full border py-4 rounded-full font-semibold transition flex items-center justify-center gap-2 hover:border-black">
-                Favourite
-                <img src="{{ asset('assets/lucide/heart.svg') }}" class="~w-4/5 ~h-4/5" alt="Favourite">
-            </button>
+            <form action="{{ route('favourites.toggle') }}" method="POST">
+                @csrf
+                <input type="hidden" name="variant_id" value="{{ $selectedVariant->id }}">
+                <button type="submit" class="w-full border py-4 rounded-full font-semibold transition flex items-center justify-center gap-2 hover:border-black">
+                    Favourite
+                    <img src="{{ asset('assets/lucide/heart.svg') }}" class="~w-4/5 ~h-4/5" alt="Favourite">
+                </button>
+            </form>
 
             <div class="text-gray-600 text-sm mt-6 flex flex-col gap-4 leading-relaxed">
                 @foreach ($descriptionParagraphs as $paragraph)
@@ -144,6 +148,23 @@
                 </button>
                 <a href="{{ route('bag') }}" class="inline-flex items-center justify-center rounded-full bg-black px-5 py-2 font-semibold text-white hover:bg-zinc-800 transition-colors duration-200">
                     Open Bag
+                </a>
+            </div>
+        </div>
+    </div>
+@endif
+
+@if (session('favourite_status'))
+    <div id="fav-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+        <div class="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+            <h3 class="text-lg font-bold text-gray-900">Favourites Update</h3>
+            <p class="mt-2 text-sm text-gray-500">{{ session('favourite_status') }}</p>
+            <div class="mt-5 flex items-center justify-center gap-3">
+                <button type="button" id="fav-close" class="inline-flex items-center justify-center rounded-full border border-gray-300 px-5 py-2 font-semibold text-gray-700 hover:border-black hover:text-black transition-colors duration-200">
+                    Continue Shopping
+                </button>
+                <a href="{{ route('favourites') }}" class="inline-flex items-center justify-center rounded-full bg-black px-5 py-2 font-semibold text-white hover:bg-zinc-800 transition-colors duration-200">
+                    Open Favourites
                 </a>
             </div>
         </div>
@@ -227,6 +248,17 @@
                 if (event.target === successOverlay) {
                     closeOverlay();
                 }
+            });
+        }
+
+        const favOverlay = document.getElementById('fav-overlay');
+        const favClose = document.getElementById('fav-close');
+
+        if (favOverlay && favClose) {
+            const closeFav = () => favOverlay.classList.add('hidden');
+            favClose.addEventListener('click', closeFav);
+            favOverlay.addEventListener('click', (e) => {
+                if (e.target === favOverlay) closeFav();
             });
         }
     });

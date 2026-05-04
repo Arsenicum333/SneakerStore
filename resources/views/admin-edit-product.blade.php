@@ -96,7 +96,6 @@
                 </label>
             </div>
 
-            <!-- Existing photos -->
             @if ($variant?->images->isNotEmpty())
                 <div>
                     <p class="~text-xs/sm text-gray-400 ~mb-1/2">Current Photos</p>
@@ -110,7 +109,6 @@
                 </div>
             @endif
 
-            <!-- Add new photos -->
             <div>
                 <p class="~text-xs/sm text-gray-400 ~mb-1/2">Add New Photos</p>
                 <div class="grid grid-cols-3 ~gap-2/3">
@@ -128,24 +126,40 @@
                 </div>
             </div>
 
-            <div class="flex ~gap-3/5 ~mt-2/4">
-                <button type="submit" class="flex-1 bg-black text-white ~py-3/4 rounded-full font-semibold ~text-sm/base hover:bg-zinc-800 transition-colors duration-200">
+            <div class="flex gap-4 mt-4">
+                <button type="submit" class="flex-1 bg-black text-white py-3 rounded-full">
                     Save Changes
                 </button>
-
-                <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="flex-1">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                        class="w-1/2 border-2 border-red-400 text-red-400 ~py-3/4 rounded-full font-semibold ~text-sm/base hover:border-red-600 hover:text-red-600 transition-colors duration-200"
-                        onclick="return confirm('Delete {{ $product->name }}?')">
-                        Delete Product
-                    </button>
-                </form>
             </div>
+            </form>
 
-        </div>
-    </form>
+            <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="mt-4">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                    class="w-full border-2 border-red-400 text-red-400 py-3 rounded-full"
+                    onclick="return confirm('Delete {{ $product->name }}?')">
+                    Delete Product
+                </button>
+            </form>
+
+        <script>
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+                input.addEventListener('change', function () {
+                    const label = this.closest('label');
+
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            label.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover rounded-lg">`;
+                        };
+
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            });
+            </script>
 
 </main>
 @endsection

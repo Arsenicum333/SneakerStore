@@ -5,145 +5,181 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantSize;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class AdminProductController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        $products = Product::query()
-            ->with([
-                'variants.images' => fn($q) => $q->orderByDesc('is_main')->orderBy('display_order'),
-                'variants.sizes',
-            ])
-            ->latest()
-            ->get();
-
-        return view('admin-product', ['products' => $products]);
+        $products = Product::with('variants.sizes', 'variants.images')->get();
+        return view('admin-product', compact('products'));
     }
 
-    public function create(): View
+    public function create()
     {
         return view('admin-add-product');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+        $photos = $request->file('photos') ?? [];
+        $validPhotos = array_filter($photos, fn($p) => $p && $p->isValid());
+
+        if (count($validPhotos) < 2) {
+            return back()->withErrors(['photos' => 'Please upload at least 2 photos'])->withInput();
+        }
+
         $validated = $request->validate([
-            'name'          => ['required', 'string', 'max:50'],
-            'gender'        => ['required', 'string', 'max:20'],
-            'sport'         => ['required', 'string', 'max:20'],
-            'description'   => ['required', 'string', 'min:250'],
-            'color'         => ['required', 'string', 'max:20'],
-            'price'         => ['required', 'numeric', 'min:0'],
-            'sizes'         => ['required', 'array', 'min:1'],
-            'sizes.*'       => ['required', 'string', 'max:8'],
-            'stock.*'       => ['required', 'integer', 'min:0'],
-            'photos'        => ['required', 'array', 'min:2'],
-            'photos.*'      => ['required', 'image'],
+            'name' => 'required|string|max:255',
+            'color' => 'required|string|max:100',
+            'gender' => 'required|string|max:50',
+            'sport' => 'nullable|string|max:100',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|string|min:10',
+            'sizes' => 'array',
+            'sizes.*' => 'string',
+            'stock' => 'array',
         ]);
 
         $product = Product::create([
-            'name'        => $validated['name'],
-            'gender'      => $validated['gender'],
-            'sport'       => $validated['sport'],
+            'name' => $validated['name'],
+            'gender' => $validated['gender'],
+            'sport' => $validated['sport'],
             'description' => $validated['description'],
         ]);
 
-        $variant = $product->variants()->create([
+        $variant = ProductVariant::create([
+            'product_id' => $product->id,
             'color' => $validated['color'],
             'price' => $validated['price'],
         ]);
 
-        foreach ($validated['sizes'] as $index => $size) {
-            $variant->sizes()->create([
-                'size'           => $size,
-                'stock_quantity' => (int) ($request->input('stock')[$index] ?? 0),
+        foreach ($validated['sizes'] ?? [] as $size) {
+            ProductVariantSize::create([
+                'variant_id' => $variant->id,
+                'size' => $size,
+                'stock_quantity' => $validated['stock'][$size] ?? 0,
             ]);
         }
 
-        foreach ($request->file('photos') as $i => $photo) {
-            $path = $photo->store('sneakers', 'public');
-            DB::table('product_images')->insert([
-                'variant_id'    => $variant->id,
-                'image_url'     => 'storage/' . $path,
-                'is_main'       => $i === 0,
-                'display_order' => $i,
+        foreach ($validPhotos as $index => $photo) {
+            $filename = time() . '_' . $index . '_' . Str::random(10) . '.' . $photo->getClientOriginalExtension();
+            $path = $photo->storeAs('products', $filename, 'public');
+
+            ProductImage::create([
+                'variant_id' => $variant->id,
+                'image_url' => Storage::url($path),
+                'is_main' => $index === 0,
+                'display_order' => $index,
             ]);
         }
 
-        return redirect()->route('admin-product')->with('status', 'Product created.');
+        return redirect()->route('admin.products')->with('success', 'Product created!');
     }
 
-    public function edit(Product $product): View
+    public function edit(Product $product)
     {
-        $product->load([
-            'variants.images' => fn($q) => $q->orderByDesc('is_main')->orderBy('display_order'),
-            'variants.sizes',
-        ]);
-
-        return view('admin-edit-product', ['product' => $product]);
+        return view('admin-edit-product', compact('product'));
     }
 
-    public function update(Request $request, Product $product): RedirectResponse
+    public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
-            'name'        => ['required', 'string', 'max:50'],
-            'gender'      => ['required', 'string', 'max:20'],
-            'sport'       => ['required', 'string', 'max:20'],
-            'description' => ['required', 'string', 'min:250'],
-            'color'       => ['required', 'string', 'max:20'],
-            'price'       => ['required', 'numeric', 'min:0'],
-            'sizes'       => ['required', 'array', 'min:1'],
-            'sizes.*'     => ['required', 'string', 'max:8'],
-            'stock.*'     => ['required', 'integer', 'min:0'],
-            'photos.*'    => ['nullable', 'image'],
+            'name' => 'required|string|max:255',
+            'color' => 'required|string|max:100',
+            'gender' => 'required|string|max:50',
+            'sport' => 'nullable|string|max:100',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|string|min:10',
+            'sizes' => 'array',
+            'sizes.*' => 'string',
+            'stock' => 'array',
+            'stock.*' => 'integer|min:0',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048'
         ]);
 
         $product->update([
-            'name'        => $validated['name'],
-            'gender'      => $validated['gender'],
-            'sport'       => $validated['sport'],
+            'name' => $validated['name'],
+            'gender' => $validated['gender'],
+            'sport' => $validated['sport'],
             'description' => $validated['description'],
         ]);
 
-        $variant = $product->variants->first();
-        $variant->update([
-            'color' => $validated['color'],
-            'price' => $validated['price'],
-        ]);
+        $variant = $product->variants()->first();
 
-        $variant->sizes()->delete();
-        foreach ($validated['sizes'] as $index => $size) {
-            $variant->sizes()->create([
-                'size'           => $size,
-                'stock_quantity' => (int) ($request->input('stock')[$index] ?? 0),
+        if (!$variant) {
+            $variant = ProductVariant::create([
+                'product_id' => $product->id,
+                'color' => $validated['color'],
+                'price' => $validated['price'],
+            ]);
+        } else {
+            $variant->update([
+                'color' => $validated['color'],
+                'price' => $validated['price'],
             ]);
         }
 
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $i => $photo) {
-                $path = $photo->store('sneakers', 'public');
-                DB::table('product_images')->insert([
-                    'variant_id'    => $variant->id,
-                    'image_url'     => 'storage/' . $path,
-                    'is_main'       => false,
-                    'display_order' => DB::table('product_images')->where('variant_id', $variant->id)->max('display_order') + 1,
+        // sizes
+        $existingSizes = $variant->sizes->keyBy('size');
+
+        foreach ($validated['sizes'] ?? [] as $size) {
+            if ($existingSizes->has($size)) {
+                $existingSizes[$size]->update([
+                    'stock_quantity' => $validated['stock'][$size] ?? 0,
+                ]);
+            } else {
+                ProductVariantSize::create([
+                    'variant_id' => $variant->id,
+                    'size' => $size,
+                    'stock_quantity' => $validated['stock'][$size] ?? 0,
                 ]);
             }
         }
 
-        return redirect()->route('admin-product')->with('status', 'Product updated.');
+        foreach ($existingSizes as $size => $model) {
+            if (!in_array($size, $validated['sizes'] ?? [])) {
+                $model->delete();
+            }
+        }
+
+        // photos
+        $photos = $request->file('photos') ?? [];
+        $validPhotos = array_filter($photos, fn($p) => $p && $p->isValid());
+
+        foreach ($validPhotos as $index => $photo) {
+            $filename = time() . '_' . $index . '_' . Str::random(10) . '.' . $photo->getClientOriginalExtension();
+            $path = $photo->storeAs('products', $filename, 'public');
+
+            ProductImage::create([
+                'variant_id' => $variant->id,
+                'image_url' => Storage::url($path),
+                'is_main' => $variant->images()->count() === 0 && $index === 0,
+                'display_order' => $variant->images()->count() + $index,
+            ]);
+        }
+
+        return redirect()->route('admin.products')->with('success', 'Product updated!');
     }
 
-    public function destroy(Product $product): RedirectResponse
+    public function destroy(Product $product)
     {
+        foreach ($product->variants as $variant) {
+            foreach ($variant->images as $image) {
+                $path = str_replace('/storage/', '', $image->image_url);
+                Storage::disk('public')->delete($path);
+                $image->delete();
+            }
+            $variant->sizes()->delete();
+            $variant->delete();
+        }
+        
         $product->delete();
-
-        return redirect()->route('admin-product')->with('status', 'Product deleted.');
+        
+        return redirect()->route('admin.products')->with('success', 'Product deleted!');
     }
 }

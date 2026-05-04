@@ -93,7 +93,7 @@ class ProductController extends Controller
                 ['path' => request()->url(), 'query' => request()->query()]
             );
 
-            return view('all-products', [
+            return view('catalog', [
                 'products' => $products,
                 'genders' => $genders,
                 'sports' => $sports,
@@ -138,7 +138,7 @@ class ProductController extends Controller
             ]
         );
 
-        return view('all-products', [
+        return view('catalog', [
             'products' => $products,
             'genders' => $genders,
             'sports' => $sports,

@@ -7,7 +7,7 @@
     <div class="flex flex-col lg:flex-row ~gap-8/16">
         <div class="flex-1 flex flex-col ~gap-4/6">
             <h1 class="~text-xl/3xl font-semibold">My profile</h1>
-            
+
             <div class="flex items-center ~gap-3/5">
                 <div class="~w-14/20 ~h-14/20 rounded-full bg-gray-200 flex-shrink-0"></div>
 
@@ -142,36 +142,36 @@ document.addEventListener('DOMContentLoaded', function() {
             showEditForm(field);
         });
     });
-    
+
     document.querySelectorAll('.save-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const field = this.dataset.field;
             saveField(field);
         });
     });
-    
+
     document.querySelectorAll('.cancel-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const field = this.closest('[id$="-edit"]')?.id?.replace('-edit', '');
             if (field) hideEditForm(field);
         });
     });
-    
+
     function showEditForm(field) {
         document.getElementById(`${field}-display`)?.classList.add('hidden');
         document.getElementById(`${field}-edit`)?.classList.remove('hidden');
     }
-    
+
     function hideEditForm(field) {
         document.getElementById(`${field}-display`)?.classList.remove('hidden');
         document.getElementById(`${field}-edit`)?.classList.add('hidden');
     }
-    
+
     function saveField(field) {
         let formData = new FormData();
         formData.append('_token', '{{ csrf_token() }}');
         formData.append('_method', 'PUT');
-        
+
         if (field === 'name') {
             formData.append('first_name', document.getElementById('first_name').value);
             formData.append('last_name', document.getElementById('last_name').value);
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (field === 'dob') {
             formData.append('date_of_birth', document.getElementById('date_of_birth').value);
         }
-        
+
         fetch('{{ route("profile.update") }}', {
             method: 'POST',
             body: formData,
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showMessage('Error updating profile', 'error');
         });
     }
-    
+
     function showMessage(msg, type) {
         let div = document.createElement('div');
         div.className = `fixed top-4 right-4 px-4 py-2 rounded shadow-lg z-50 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`;

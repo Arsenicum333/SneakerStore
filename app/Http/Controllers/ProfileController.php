@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
 {
     public function index(): View
     {
         $user = Auth::user();
+
+        if ($user->is_admin) {
+            return view('admin-profile', compact('user'));
+        }
 
         $orders = DB::table('orders')
             ->where('user_id', (int) $user->id)
@@ -52,5 +60,84 @@ class ProfileController extends Controller
             'user' => $user,
             'orders' => $orders,
         ]);
+    }
+
+    public function adminIndex(): View
+    {
+        $user = Auth::user();
+
+        return view('admin-profile', [
+            'user' => $user,
+        ]);
+    }
+
+    public function editAdmin()
+    {
+        $user = Auth::user();
+        return view('admin-profile-edit', compact('user'));
+    }
+
+    public function updateAdmin(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'email'      => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'current_password' => 'nullable|required_with:password|current_password',
+            'password'   => ['nullable', 'confirmed', Password::defaults()],
+        ]);
+
+        $user->first_name = $validated['first_name'];
+        $user->last_name  = $validated['last_name'];
+        $user->email      = $validated['email'];
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.profile')->with('success', 'Profile updated successfully.');
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        
+        $validated = $request->validate([
+            'first_name' => ['sometimes', 'string', 'max:255'],
+            'last_name' => ['sometimes', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'date_of_birth' => ['nullable', 'date'],
+        ]);
+        
+        if ($request->has('first_name')) {
+            $user->first_name = $validated['first_name'];
+        }
+        if ($request->has('last_name')) {
+            $user->last_name = $validated['last_name'];
+        }
+        if ($request->has('address')) {
+            $user->address = $validated['address'];
+        }
+        if ($request->has('date_of_birth')) {
+            $user->date_of_birth = $validated['date_of_birth'];
+        }
+        
+        $user->save();
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'address' => $user->address,
+                'date_of_birth' => $user->date_of_birth?->format('Y - m - d'),
+            ]);
+        }
+        
+        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
 }

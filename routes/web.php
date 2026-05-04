@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\BagController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FavouriteController;
 
 Route::get('/', function () {
     return view('home');
@@ -18,7 +20,9 @@ Route::get('/bag', [BagController::class, 'index'])->name('bag');
 Route::post('/bag/items', [BagController::class, 'add'])->name('bag.items.add');
 Route::patch('/bag/items/{sizeId}', [BagController::class, 'update'])->name('bag.items.update');
 Route::delete('/bag/items/{sizeId}', [BagController::class, 'remove'])->name('bag.items.remove');
-Route::view('/favourites', 'favourites')->name('favourites');
+Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites');
+Route::post('/favourites/toggle', [FavouriteController::class, 'toggle'])->name('favourites.toggle');
+Route::delete('/favourites/{variantId}', [FavouriteController::class, 'remove'])->name('favourites.remove');
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
 Route::post('/payment', [PaymentController::class, 'store'])->middleware('auth')->name('payment.perform');
 Route::view('/help', 'help')->name('help');
@@ -32,8 +36,14 @@ Route::get('/logout', function () {
 })->middleware('auth')->name('logout.confirm');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout.perform');
 Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth')->name('profile');
+Route::put('/profile', [ProfileController::class, 'update'])->middleware('auth')->name('profile.update');
 
-Route::view('/admin/products', 'admin-product')->name('admin.products');
-Route::view('/admin/products/create', 'admin-add-product')->name('admin.products.create');
-Route::view('/admin/products/edit', 'admin-edit-product')->name('admin.products.edit');
-Route::view('/admin/profile', 'admin-profile')->name('admin.profile');
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/products', [AdminProductController::class, 'index'])->name('products');
+    Route::get('/profile', [ProfileController::class, 'adminIndex'])->name('profile');
+    Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+    Route::patch('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+});

@@ -21,7 +21,14 @@ class ProductController extends Controller
             ]);
 
         if ($request->filled('gender')) {
-            $query->where('gender', $request->gender);
+            $gender = $request->gender;
+            if ($gender === 'Men') {
+                $query->whereIn('gender', ['Men', 'Unisex']);
+            } elseif ($gender === 'Women') {
+                $query->whereIn('gender', ['Women', 'Unisex']);
+            } else {
+                $query->where('gender', $gender);
+            }
         }
 
         if ($request->has('sport') && is_array($request->sport)) {
@@ -45,9 +52,11 @@ class ProductController extends Controller
         if ($request->has('color') && is_array($request->color)) {
             $colors = $request->color;
             $query->whereHas('variants', function ($q) use ($colors) {
-                foreach ($colors as $color) {
-                    $q->where('color', 'LIKE', "%{$color}%");
-                }
+                $q->where(function ($subQuery) use ($colors) {
+                    foreach ($colors as $color) {
+                        $subQuery->orWhere('color', 'LIKE', "%{$color}%");
+                    }
+                });
             });
         }
 
@@ -63,8 +72,8 @@ class ProductController extends Controller
         }
 
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where('name', 'LIKE', "%{$search}%");
+            $search = strtolower($request->search);
+            $query->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]);
         }
 
         $realProducts = $query->get();

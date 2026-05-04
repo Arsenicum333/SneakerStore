@@ -57,7 +57,7 @@
             <form action="{{ route('bag.items.add') }}" method="POST" class="flex flex-col gap-4">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <input type="hidden" name="variant_id" value="{{ $selectedVariant->id }}">
+                <input type="hidden" name="variant_size_id" value="{{ $selectedVariant->id }}">
 
                 <div class="my-2">
                     <p class="font-semibold ~text-sm/base mb-2">Select Size</p>
@@ -113,7 +113,7 @@
 
             <form action="{{ route('favourites.toggle') }}" method="POST">
                 @csrf
-                <input type="hidden" name="variant_id" value="{{ $selectedVariant->id }}">
+                <input type="hidden" name="variant_size_id" value="{{ $selectedVariant->id }}">
                 <button type="submit" class="w-full border py-4 rounded-full font-semibold transition flex items-center justify-center gap-2 hover:border-black">
                     Favourite
                     <img src="{{ asset('assets/lucide/heart.svg') }}" class="~w-4/5 ~h-4/5" alt="Favourite">

@@ -28,7 +28,7 @@ class FavouriteController extends Controller
             ->get();
 
         $items = $variants->map(fn($variant) => [
-            'variant_id'   => $variant->id,
+            'variant_size_id'   => $variant->id,
             'product_id'   => $variant->product->id,
             'product_name' => $variant->product->name,
             'gender'       => $variant->product->gender,
@@ -65,10 +65,10 @@ class FavouriteController extends Controller
     public function toggle(Request $request): RedirectResponse
     {
         $request->validate([
-            'variant_id' => ['required', 'integer', 'exists:product_variants,id'],
+            'variant_size_id' => ['required', 'integer', 'exists:product_variants,id'],
         ]);
 
-        $variantId = (int) $request->input('variant_id');
+        $variantId = (int) $request->input('variant_size_id');
         $items = $this->getStoredItems();
 
         if (in_array($variantId, $items)) {
@@ -101,7 +101,7 @@ class FavouriteController extends Controller
 
         return DB::table('favourite_items')
             ->where('favourite_id', $favouriteId)
-            ->pluck('variant_id')
+            ->pluck('variant_size_id')
             ->map(fn($id) => (int) $id)
             ->all();
     }
@@ -123,7 +123,7 @@ class FavouriteController extends Controller
 
         $rows = array_map(fn($variantId) => [
             'favourite_id' => $favouriteId,
-            'variant_id'   => $variantId,
+            'variant_size_id'   => $variantId,
         ], $items);
 
         DB::table('favourite_items')->insert($rows);

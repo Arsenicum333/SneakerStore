@@ -36,6 +36,7 @@ Route::get('/logout', function () {
 })->middleware('auth')->name('logout.confirm');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout.perform');
 Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth')->name('profile');
+Route::put('/profile', [ProfileController::class, 'update'])->middleware('auth')->name('profile.update');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/products', [AdminProductController::class, 'index'])->name('products');

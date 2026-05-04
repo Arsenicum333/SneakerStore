@@ -21,6 +21,7 @@
                 <img src="{{ asset('assets/lucide/letter.svg') }}" class="~w-4/5 ~h-4/5 block">
                 <span class="~text-xs/sm text-gray-700">{{ $user->email }}</span>
             </div>
+            <span class="~text-xs/sm text-gray-400 italic">Cannot edit password</span>
         </div>
 
         <div class="border-b-2 border-gray-200 pb-5">
@@ -28,6 +29,7 @@
                 <img src="{{ asset('assets/lucide/lock.svg') }}" class="~w-4/5 ~h-4/5 block">
                 <span class="~text-xs/sm text-gray-700 tracking-widest">••••••••</span>
             </div>
+            <span class="~text-xs/sm text-gray-400 italic">Cannot edit password</span>
         </div>
 
         <div class="flex w-full ~gap-4/8">

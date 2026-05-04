@@ -72,7 +72,6 @@ class AuthController extends Controller
         ]);
 
         $dateOfBirth = sprintf('%04d-%02d-%02d', $validated['dob_year'], $validated['dob_month'], $validated['dob_day']);
-        $isFirstUser = !User::query()->exists();
 
         $user = User::create([
             'first_name' => $validated['first_name'],
@@ -80,7 +79,7 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password_hash' => Hash::make($validated['password']),
             'date_of_birth' => $dateOfBirth,
-            'is_admin' => $isFirstUser,
+            'is_admin' => false,
         ]);
 
         Auth::login($user);

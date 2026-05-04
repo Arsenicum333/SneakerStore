@@ -105,14 +105,14 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        
+
         $validated = $request->validate([
             'first_name' => ['sometimes', 'string', 'max:255'],
             'last_name' => ['sometimes', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:500'],
             'date_of_birth' => ['nullable', 'date'],
         ]);
-        
+
         if ($request->has('first_name')) {
             $user->first_name = $validated['first_name'];
         }
@@ -125,9 +125,9 @@ class ProfileController extends Controller
         if ($request->has('date_of_birth')) {
             $user->date_of_birth = $validated['date_of_birth'];
         }
-        
+
         $user->save();
-        
+
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
@@ -137,7 +137,7 @@ class ProfileController extends Controller
                 'date_of_birth' => $user->date_of_birth?->format('Y - m - d'),
             ]);
         }
-        
+
         return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
 }

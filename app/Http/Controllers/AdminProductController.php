@@ -177,9 +177,9 @@ class AdminProductController extends Controller
             $variant->sizes()->delete();
             $variant->delete();
         }
-        
+
         $product->delete();
-        
+
         return redirect()->route('admin.products')->with('success', 'Product deleted!');
     }
 }

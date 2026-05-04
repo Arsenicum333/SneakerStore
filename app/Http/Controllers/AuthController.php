@@ -26,15 +26,20 @@ class AuthController extends Controller
             'redirect' => ['nullable', 'string'],
         ]);
 
-        $credentials = Arr::only($validated, ['email', 'password']);
+        $user = User::where('email', $validated['email'])->first();
 
-        if (!Auth::attempt($credentials)) {
+        if (!$user || !Hash::check($validated['password'], $user->password_hash)) {
             return back()->withErrors(['email' => 'Wrong email or password'])->onlyInput(['email', 'redirect']);
         }
 
+        Auth::login($user);
         $request->session()->regenerate();
 
         $this->mergeSessionBagIntoUserBag((int) Auth::id());
+
+        if ($user->is_admin) {
+            return redirect()->route('admin.products');
+        }
 
         $redirect = $this->sanitizeRedirect((string) $request->input('redirect', ''))
             ?? $this->sanitizeRedirect((string) $request->session()->pull('auth.redirect', ''));
@@ -79,12 +84,15 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-
         $request->session()->regenerate();
 
         $this->mergeSessionBagIntoUserBag((int) $user->id);
 
-        $redirect = $this->sanitizeRedirect((string) $validated['redirect'])
+        if ($user->is_admin) {
+            return redirect()->route('admin.products');
+        }
+
+        $redirect = $this->sanitizeRedirect((string) ($validated['redirect'] ?? ''))
             ?? $this->sanitizeRedirect((string) $request->session()->pull('auth.redirect', ''));
 
         if ($redirect !== null) {

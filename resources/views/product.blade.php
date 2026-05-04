@@ -57,7 +57,7 @@
             <form action="{{ route('bag.items.add') }}" method="POST" class="flex flex-col gap-4">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <input type="hidden" name="variant_id" value="{{ $selectedVariant->id }}">
+                <input type="hidden" name="variant_size_id" value="{{ $selectedVariant->id }}">
 
                 <div class="my-2">
                     <p class="font-semibold ~text-sm/base mb-2">Select Size</p>
@@ -113,7 +113,7 @@
 
             <form action="{{ route('favourites.toggle') }}" method="POST">
                 @csrf
-                <input type="hidden" name="variant_id" value="{{ $selectedVariant->id }}">
+                <input type="hidden" name="variant_size_id" value="{{ $selectedVariant->id }}">
                 <button type="submit" class="w-full border py-4 rounded-full font-semibold transition flex items-center justify-center gap-2 hover:border-black">
                     Favourite
                     <img src="{{ asset('assets/lucide/heart.svg') }}" class="~w-4/5 ~h-4/5" alt="Favourite">
@@ -156,7 +156,7 @@
 
 @if (session('favourite_status'))
     <div id="fav-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-        <div class="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+        <div class="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-2xl">
             <h3 class="text-lg font-bold text-gray-900">Favourites Update</h3>
             <p class="mt-2 text-sm text-gray-500">{{ session('favourite_status') }}</p>
             <div class="mt-5 flex items-center justify-center gap-3">

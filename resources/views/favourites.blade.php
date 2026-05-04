@@ -10,8 +10,11 @@
     </div>
 
     <section>
-        @if ($items->isEmpty())
-            <p class="text-gray-400 text-sm">No favourites yet.</p>
+        @if (count($items) === 0)
+            <div class="p-6">
+                <p class="text-gray-600">No items in favourites yet.</p>
+                <a href="{{ route('catalog') }}" class="inline-block mt-4 bg-black text-white px-5 py-3 rounded-full font-semibold hover:bg-zinc-800 transition-colors">Go to Catalog</a>
+            </div>
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 @foreach ($items as $item)
@@ -20,7 +23,7 @@
                             <img src="{{ asset($item['image_url']) }}" class="w-full aspect-square object-cover rounded-t-lg">
                         </a>
 
-                        <form action="{{ route('favourites.remove', $item['variant_id']) }}" method="POST">
+                        <form action="{{ route('favourites.remove', $item['variant_size_id']) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="absolute top-4 right-4 ~w-6/8 ~h-6/8 bg-white rounded-full flex items-center justify-center shadow hover:bg-gray-100 transition">

@@ -213,6 +213,20 @@ class AuthController extends Controller
             return null;
         }
 
+        $parsedRedirect = parse_url($redirect);
+
+        if ($parsedRedirect === false) {
+            return null;
+        }
+
+        if (array_key_exists('scheme', $parsedRedirect) || array_key_exists('host', $parsedRedirect)) {
+            return null;
+        }
+
+        if (str_starts_with($redirect, '//')) {
+            return null;
+        }
+
         $path = (string) (parse_url($redirect, PHP_URL_PATH) ?? '/');
         $disallowedPaths = ['/login', '/register', '/logout'];
 

@@ -94,7 +94,7 @@ class ProfileController extends Controller
         $user->email      = $validated['email'];
 
         if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
+            $user->password_hash = Hash::make($validated['password']);
         }
 
         $user->save();

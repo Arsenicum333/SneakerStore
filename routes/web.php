@@ -28,9 +28,9 @@ Route::post('/payment', [PaymentController::class, 'store'])->middleware('auth')
 Route::view('/help', 'help')->name('help');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1');
 Route::get('/logout', function () {
     return view('log-out');
 })->middleware('auth')->name('logout.confirm');

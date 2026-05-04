@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\BagController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -36,7 +37,12 @@ Route::get('/logout', function () {
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout.perform');
 Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth')->name('profile');
 
-Route::view('/admin/products', 'admin-product')->name('admin.products');
-Route::view('/admin/products/create', 'admin-add-product')->name('admin.products.create');
-Route::view('/admin/products/edit', 'admin-edit-product')->name('admin.products.edit');
-Route::view('/admin/profile', 'admin-profile')->name('admin.profile');
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/products', [AdminProductController::class, 'index'])->name('products');
+    Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+    Route::patch('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+    Route::view('/profile', 'admin-profile')->name('profile');
+});

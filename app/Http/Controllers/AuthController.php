@@ -84,7 +84,7 @@ class AuthController extends Controller
 
         $this->mergeSessionBagIntoUserBag((int) $user->id);
 
-        $redirect = $this->sanitizeRedirect((string) $validated['redirect'])
+        $redirect = $this->sanitizeRedirect((string) ($validated['redirect'] ?? ''))
             ?? $this->sanitizeRedirect((string) $request->session()->pull('auth.redirect', ''));
 
         if ($redirect !== null) {

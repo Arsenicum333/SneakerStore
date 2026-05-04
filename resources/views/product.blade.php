@@ -156,7 +156,7 @@
 
 @if (session('favourite_status'))
     <div id="fav-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-        <div class="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+        <div class="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-2xl">
             <h3 class="text-lg font-bold text-gray-900">Favourites Update</h3>
             <p class="mt-2 text-sm text-gray-500">{{ session('favourite_status') }}</p>
             <div class="mt-5 flex items-center justify-center gap-3">

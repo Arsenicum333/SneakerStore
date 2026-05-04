@@ -79,7 +79,7 @@ class FavouriteController extends Controller
 
         $this->saveStoredItems($items);
 
-        return redirect()->back()->with('favourite_status', 'Updated.');
+        return redirect()->back()->with('favourite_status', 'Product added to favourites.');
     }
 
     public function remove(int $variantId): RedirectResponse

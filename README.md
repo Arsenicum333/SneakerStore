@@ -30,7 +30,7 @@ npm install
 copy .env.example .env
 docker compose up -d
 php artisan key:generate
-php artisan migrate
+php artisan migrate --seed
 ```
 
 ## Database connection (PostgreSQL)
@@ -50,16 +50,8 @@ DB_PASSWORD=password
 
 ## Run in dev mode
 
-Start the app with one command:
+Start the app with next command:
 
 ```bash
 composer run dev
 ```
-
-## Update database
-
-```bash
-php artisan db:seed --class=ProductCatalogSeeder
-```
-
-This runs the Laravel server, queue listener, and Vite together. PostgreSQL should already be running with `docker compose up -d`.

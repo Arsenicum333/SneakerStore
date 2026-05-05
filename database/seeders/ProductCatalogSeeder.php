@@ -61,10 +61,6 @@ class ProductCatalogSeeder extends Seeder
      */
     public function run(): void
     {
-        //if (DB::table('products')->exists()) {
-         //   return;
-        //}
-
         $now = now();
 
         $products = [
@@ -1098,11 +1094,11 @@ class ProductCatalogSeeder extends Seeder
         DB::transaction(function () use ($products, $now): void {
             foreach ($products as $productData) {
                 $existingProduct = DB::table('products')->where('name', $productData['name'])->first();
-                
+
                 if ($existingProduct) {
                     continue;
                 }
-                
+
                 $productId = DB::table('products')->insertGetId([
                     'name' => $productData['name'],
                     'gender' => $productData['gender'],

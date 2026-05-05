@@ -7,7 +7,6 @@ use App\Models\ProductVariant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
@@ -76,69 +75,31 @@ class ProductController extends Controller
             $query->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]);
         }
 
-        $realProducts = $query->get();
-
         $genders = Product::distinct()->pluck('gender')->filter();
         $sports = Product::distinct()->pluck('sport')->filter();
         $colors = ProductVariant::distinct()->pluck('color')->filter()->sort();
         $minPrice = ProductVariant::min('price') ?? 0;
         $maxPrice = ProductVariant::max('price') ?? 1000;
 
-        if ($realProducts->isEmpty()) {
-            $products = new LengthAwarePaginator(
-                collect([]),
-                0,
-                12,
-                1,
-                ['path' => request()->url(), 'query' => request()->query()]
-            );
-
-            return view('all-products', [
-                'products' => $products,
-                'genders' => $genders,
-                'sports' => $sports,
-                'colors' => $colors,
-                'minPrice' => $minPrice,
-                'maxPrice' => $maxPrice,
-            ]);
-        }
-
         $sort = $request->get('sort', 'default');
 
         switch ($sort) {
             case 'price_asc':
-                $realProducts = $realProducts->sortBy(function ($product) {
-                    return $product->variants->min('price');
-                })->values();
+                $query->withMin('variants', 'price')->orderBy('variants_min_price');
                 break;
 
             case 'price_desc':
-                $realProducts = $realProducts->sortByDesc(function ($product) {
-                    return $product->variants->min('price');
-                })->values();
+                $query->withMin('variants', 'price')->orderByDesc('variants_min_price');
                 break;
 
             default:
-                $realProducts = $realProducts->sortBy('id')->values();
+                $query->orderBy('id');
                 break;
         }
 
-        $page = request()->get('page', 1);
-        $perPage = 12;
-        $currentPageItems = $realProducts->slice(($page - 1) * $perPage, $perPage)->values();
+        $products = $query->paginate(12)->withQueryString();
 
-        $products = new LengthAwarePaginator(
-            $currentPageItems,
-            $realProducts->count(),
-            $perPage,
-            $page,
-            [
-                'path' => request()->url(),
-                'query' => request()->query(),
-            ]
-        );
-
-        return view('all-products', [
+        return view('catalog', [
             'products' => $products,
             'genders' => $genders,
             'sports' => $sports,

@@ -9,17 +9,17 @@
             <h1 class="~text-xl/3xl font-semibold">My profile</h1>
 
             <div class="flex items-center ~gap-3/5">
-                <div class="~w-14/20 ~h-14/20 rounded-full bg-gray-200 flex-shrink-0"></div>
-
-                <div class="relative">
-                    <button class="absolute -top-1 -right-5 text-gray-400 hover:text-gray-700 edit-trigger" data-field="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                        </svg>
-                    </button>
-                    <p class="~text-lg/2xl font-bold text-gray-900" id="name-display">{{ $user->first_name }} {{ $user->last_name }}</p>
-                    <div class="hidden" id="name-edit">
+                <div>
+                    <div class="inline-flex items-center gap-2">
+                        <p class="~text-lg/2xl font-bold text-gray-900 inline-block" id="name-display">{{ $user->first_name }} {{ $user->last_name }}</p>
+                        <button class="text-gray-400 hover:text-gray-700 edit-trigger" data-field="name" aria-label="Edit name">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="hidden mt-2" id="name-edit">
                         <input type="text" id="first_name" value="{{ $user->first_name }}" placeholder="First Name" class="border rounded px-2 py-1 ~text-sm">
                         <input type="text" id="last_name" value="{{ $user->last_name }}" placeholder="Last Name" class="border rounded px-2 py-1 ~text-sm">
                         <button class="save-btn text-gray-400 hover:text-gray-600 ml-1" data-field="name">✓</button>

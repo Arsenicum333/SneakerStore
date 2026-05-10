@@ -182,4 +182,15 @@ class AdminProductController extends Controller
 
         return redirect()->route('admin.products')->with('success', 'Product deleted!');
     }
+
+    public function destroyImage(ProductImage $productImage)
+    {
+        $productId = $productImage->variant->product_id;
+
+        $path = str_replace('/storage/', '', $productImage->image_url);
+        Storage::disk('public')->delete($path);
+        $productImage->delete();
+
+        return redirect()->route('admin.products.edit', $productId)->with('status', 'Image deleted.');
+    }
 }

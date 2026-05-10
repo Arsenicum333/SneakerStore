@@ -6,6 +6,7 @@ use App\Models\ProductVariantSize;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
@@ -30,18 +31,47 @@ class PaymentController extends Controller
             return redirect()->route('login')->with('bag_status', 'Please sign in to place an order.');
         }
 
+        $request->merge([
+            'email' => trim((string) $request->input('email', '')),
+            'first_name' => trim((string) $request->input('first_name', '')),
+            'last_name' => trim((string) $request->input('last_name', '')),
+            'address' => trim((string) $request->input('address', '')),
+            'phone_number' => trim((string) $request->input('phone_number', '')),
+            'card_name' => trim((string) $request->input('card_name', '')),
+            'card_number' => preg_replace('/\D+/', '', (string) $request->input('card_number', '')),
+            'card_expiry' => str_replace(' ', '', (string) $request->input('card_expiry', '')),
+            'card_cvv' => preg_replace('/\D+/', '', (string) $request->input('card_cvv', '')),
+        ]);
+
         $validated = $request->validate([
             'email' => ['required', 'email', 'max:255'],
-            'first_name' => ['required', 'string', 'max:20'],
-            'last_name' => ['required', 'string', 'max:20'],
-            'address' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:13'],
+            'first_name' => ['required', 'string', 'min:2', 'max:20', "regex:/^[\p{L}\p{M}'\-\s]+$/u"],
+            'last_name' => ['required', 'string', 'min:2', 'max:20', "regex:/^[\p{L}\p{M}'\-\s]+$/u"],
+            'address' => ['required', 'string', 'min:5', 'max:255'],
+            'phone_number' => ['required', 'string', 'regex:/^\+?[0-9\s\-\(\)]{10,20}$/'],
             'shipping_method' => ['required', 'in:extra_fast,nova_poshta'],
             'payment_method' => ['required', 'in:card,paypal,google_pay'],
-            'card_name' => ['required_if:payment_method,card', 'nullable', 'string', 'max:255'],
-            'card_number' => ['required_if:payment_method,card', 'nullable', 'string', 'max:25'],
-            'card_expiry' => ['required_if:payment_method,card', 'nullable', 'string', 'max:5'],
-            'card_cvv' => ['required_if:payment_method,card', 'nullable', 'string', 'max:4'],
+            'card_name' => ['exclude_unless:payment_method,card', 'required', 'string', 'min:2', 'max:255', "regex:/^[\p{L}\p{M}'\-\s]+$/u"],
+            'card_number' => ['exclude_unless:payment_method,card', 'required', 'digits_between:12,19'],
+            'card_expiry' => [
+                'exclude_unless:payment_method,card',
+                'required',
+                'regex:/^(0[1-9]|1[0-2])\/\d{2}$/',
+                function (string $attribute, mixed $value, \Closure $fail): void {
+                    if (!is_string($value) || !preg_match('/^(0[1-9]|1[0-2])\/(\d{2})$/', $value, $matches)) {
+                        return;
+                    }
+
+                    $expiryMonth = (int) $matches[1];
+                    $expiryYear = 2000 + (int) $matches[2];
+                    $expiresAt = Carbon::create($expiryYear, $expiryMonth, 1)->endOfMonth()->endOfDay();
+
+                    if ($expiresAt->isPast()) {
+                        $fail('The card expiry date is invalid.');
+                    }
+                },
+            ],
+            'card_cvv' => ['exclude_unless:payment_method,card', 'required', 'digits_between:3,4'],
         ]);
 
         [$items, $subtotal] = $this->resolveBagItems();

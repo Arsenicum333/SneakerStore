@@ -55,7 +55,7 @@
                         <img src="{{ asset('assets/lucide/map.svg') }}" class="~w-4/5 ~h-4/5 block">
                         <span class="~text-xs/sm text-gray-700" id="address-display">{{ $user->address ?: 'No address added yet' }}</span>
                         <div class="hidden" id="address-edit">
-                            <input type="text" id="address" value="{{ $user->address }}" class="border rounded px-2 py-1 ~text-sm w-64">
+                            <input type="text" id="address" value="{{ $user->address }}" class="border rounded px-2 py-1 ~text-sm w-full max-w-xs">
                             <button class="save-btn text-gray-400 hover:text-gray-600 ml-1" data-field="address">✓</button>
                             <button class="cancel-btn text-gray-400 hover:text-gray-600">✕</button>
                         </div>

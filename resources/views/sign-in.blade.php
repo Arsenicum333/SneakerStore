@@ -4,7 +4,7 @@
 
 @section('content')
 <main>
-<div class="flex flex-col items-start justify-start max-w-[500px] mx-auto min-h-screen px-6 pt-16 gap-8">
+<div class="flex flex-col items-start justify-start max-w-[500px] mx-auto min-h-screen ~px-4/6 ~pt-8/16 gap-8">
 
     <header>
       <h1 class="~text-2xl/3xl font-medium mb-4">

@@ -36,27 +36,27 @@
                         <h2 class="~text-lg/2xl font-bold text-gray-900 ~mb-3/5">Delivery</h2>
                         <div class="flex flex-col ~gap-3/4">
                             <div class="relative">
-                                <input type="email" name="email" value="{{ auth()->user()?->email ?? old('email') }}" placeholder="Email*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                <input type="email" name="email" value="{{ auth()->user()?->email ?? old('email') }}" placeholder="Email*" required maxlength="255" autocomplete="email" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="email" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Email*</label>
                                 @error('email')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                             <div class="relative flex-1">
-                                <input type="text" name="first_name" value="{{ old('first_name', auth()->user()?->first_name ?? '') }}" placeholder="First Name*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                <input type="text" name="first_name" value="{{ old('first_name', auth()->user()?->first_name ?? '') }}" placeholder="First Name*" required minlength="2" maxlength="20" autocomplete="given-name" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="first_name" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">First Name*</label>
                                 @error('first_name')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                             <div class="relative flex-1">
-                                <input type="text" name="last_name" value="{{ old('last_name', auth()->user()?->last_name ?? '') }}" placeholder="Last Name*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                <input type="text" name="last_name" value="{{ old('last_name', auth()->user()?->last_name ?? '') }}" placeholder="Last Name*" required minlength="2" maxlength="20" autocomplete="family-name" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="last_name" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Last Name*</label>
                                 @error('last_name')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                             <div class="relative flex-1">
-                                <input type="text" name="address" value="{{ old('address', auth()->user()?->address ?? '') }}" placeholder="Your Address*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                <input type="text" name="address" value="{{ old('address', auth()->user()?->address ?? '') }}" placeholder="Your Address*" required minlength="5" maxlength="255" autocomplete="street-address" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="address" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Your Address*</label>
                                 @error('address')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                             <div class="relative flex-1">
-                                <input type="text" name="phone_number" value="{{ old('phone_number') }}" placeholder="Your Phone Number*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                <input type="text" name="phone_number" value="{{ old('phone_number') }}" placeholder="Your Phone Number*" required maxlength="20" inputmode="tel" autocomplete="tel" pattern="\+?[0-9\s\-\(\)]{10,20}" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="phone_number" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Your Phone Number*</label>
                                 @error('phone_number')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
@@ -68,7 +68,7 @@
                         <div class="flex flex-col ~gap-2/3">
                             <label class="flex items-center justify-between w-full border border-gray-200 rounded-md ~px-3/4 ~py-2/3 cursor-pointer hover:border-gray-900">
                                 <div class="flex items-center ~gap-2/3">
-                                    <input type="radio" name="shipping_method" value="extra_fast" {{ old('shipping_method', 'extra_fast') === 'extra_fast' ? 'checked' : '' }} class="accent-gray-900 ~w-3/4 ~h-3/4" data-shipping-fee="19.99">
+                                    <input type="radio" name="shipping_method" value="extra_fast" {{ old('shipping_method', 'extra_fast') === 'extra_fast' ? 'checked' : '' }} required class="accent-gray-900 ~w-3/4 ~h-3/4" data-shipping-fee="19.99">
                                     <span class="~text-xs/sm text-gray-900 font-medium">Extra Fast</span>
                                 </div>
                                 <span class="~text-xs/sm text-gray-900 font-semibold">19,99 $</span>
@@ -89,7 +89,7 @@
                         <h2 class="~text-lg/2xl font-bold text-gray-900 ~mb-3/5">Payment</h2>
                         <div class="flex flex-col ~gap-2/3">
                             <label class="flex items-center ~gap-2/3 w-full border border-gray-200 rounded-md ~px-3/4 ~py-2/3 cursor-pointer hover:border-gray-900">
-                                <input type="radio" name="payment_method" value="card" {{ old('payment_method', 'card') === 'card' ? 'checked' : '' }} class="accent-gray-900 ~w-3/4 ~h-3/4">
+                                <input type="radio" name="payment_method" value="card" {{ old('payment_method', 'card') === 'card' ? 'checked' : '' }} required class="accent-gray-900 ~w-3/4 ~h-3/4">
                                 <img src="{{ asset('assets/lucide/credit-card.svg') }}" class="~w-4/5 ~h-4/5" alt="Card">
                                 <span class="~text-xs/sm text-gray-900 font-medium">Credit or Debit Card</span>
                             </label>
@@ -108,24 +108,24 @@
                             <p class="~text-xs/sm text-gray-400 ~mt-1/2">Enter your payment details</p>
 
                             <div class="relative flex-1">
-                                <input type="text" name="card_name" value="{{ old('card_name') }}" placeholder="Name on Card*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                <input type="text" name="card_name" value="{{ old('card_name') }}" placeholder="Name on Card*" data-card-field minlength="2" maxlength="255" autocomplete="cc-name" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="card_name" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Name on Card*</label>
                                 @error('card_name')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
                             <div class="relative flex-1">
-                                <input type="text" name="card_number" value="{{ old('card_number') }}" placeholder="Card Number*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                <input type="text" name="card_number" value="{{ old('card_number') }}" placeholder="Card Number*" data-card-field inputmode="numeric" autocomplete="cc-number" pattern="[0-9]{12,19}" minlength="12" maxlength="19" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                 <label for="card_number" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Card Number*</label>
                                 @error('card_number')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             </div>
 
                             <div class="flex ~gap-2/3">
                                 <div class="relative flex-1 w-1/2">
-                                    <input type="text" name="card_expiry" value="{{ old('card_expiry') }}" placeholder="MM/YY*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                    <input type="text" name="card_expiry" value="{{ old('card_expiry') }}" placeholder="MM/YY*" data-card-field inputmode="numeric" autocomplete="cc-exp" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" minlength="5" maxlength="5" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                     <label for="card_expiry" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">MM/YY*</label>
                                     @error('card_expiry')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
                                 <div class="relative flex-1 w-1/2">
-                                    <input type="text" name="card_cvv" value="{{ old('card_cvv') }}" placeholder="Security Code*" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
+                                    <input type="text" name="card_cvv" value="{{ old('card_cvv') }}" placeholder="Security Code*" data-card-field inputmode="numeric" autocomplete="cc-csc" pattern="[0-9]{3,4}" minlength="3" maxlength="4" class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
                                     <label for="card_cvv" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">Security Code*</label>
                                     @error('card_cvv')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                                 </div>
@@ -186,6 +186,8 @@
             const shippingFeeLabel = document.getElementById('shipping-fee-label');
             const totalLabel = document.getElementById('payment-total-label');
             const shippingInputs = document.querySelectorAll('input[name="shipping_method"]');
+            const paymentMethodInputs = document.querySelectorAll('input[name="payment_method"]');
+            const cardInputs = document.querySelectorAll('[data-card-field]');
 
             if (!shippingFeeLabel || !totalLabel || shippingInputs.length === 0) {
                 return;
@@ -211,7 +213,22 @@
                 input.addEventListener('change', updateSummary);
             });
 
+            const toggleCardValidation = () => {
+                const selected = document.querySelector('input[name="payment_method"]:checked');
+                const isCard = selected?.value === 'card';
+
+                cardInputs.forEach((input) => {
+                    input.required = isCard;
+                    input.disabled = !isCard;
+                });
+            };
+
+            paymentMethodInputs.forEach((input) => {
+                input.addEventListener('change', toggleCardValidation);
+            });
+
             updateSummary();
+            toggleCardValidation();
         });
     </script>
 @endsection

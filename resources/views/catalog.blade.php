@@ -5,8 +5,8 @@
 @section('content')
 <main>
     <div class="w-full ~px-4/6 mx-auto">
-        <div class="flex items-center justify-center w-full ~mb-3/5">
-            <h1 class="flex items-center ~text-xl/3xl font-bold justify-start w-1/2">
+        <div class="flex items-center justify-between w-full ~mb-3/5 flex-wrap ~gap-2/3">
+            <h1 class="~text-xl/3xl font-bold">
                 @php
                     $gender = request('gender');
                     $sportNot = request('sport_not');
@@ -25,7 +25,7 @@
                 @endphp
                 {{ $title }}
             </h1>
-            <div class="flex items-center justify-end w-1/2 ~gap-5/10">
+            <div class="flex items-center justify-end ~gap-3/10 flex-shrink-0">
                 <div class="flex items-center justify-end gap-1 ~mt-3/5 cursor-pointer" onclick="toggleFilters()">
                     <span id="filters-btn-text" class="text-black ~text-sm/base">Hide Filters</span>
                     <div class="flex items-center justify-center">
@@ -47,7 +47,7 @@
                         </div>
                     </button>
 
-                    <div id="sort-dropdown" class="absolute right-0 hidden bg-white shadow-lg rounded-md mt-2 py-2 z-10 min-w-48 border border-gray-200">
+                    <div id="sort-dropdown" class="absolute right-0 hidden bg-white shadow-lg rounded-md mt-2 py-2 z-10 min-w-[10rem] border border-gray-200">
                         <a href="{{ route('catalog', array_merge(request()->except('sort'), ['sort' => 'default'])) }}"
                         class="block px-4 py-2 hover:bg-gray-100 {{ request('sort') == 'default' || !request('sort') ? 'bg-gray-100 font-semibold' : '' }}">
                             Default
@@ -66,7 +66,7 @@
         </div>
 
         <div class="flex ~gap-4/8 ">
-            <aside id="filters-sidebar" class="hidden md:block w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start max-h-screen overflow-y-auto">
+            <aside id="filters-sidebar" class="hidden w-44 flex-shrink-0 ~text-xs/sm sticky top-0 self-start max-h-screen overflow-y-auto">
                 <form method="GET" action="{{ route('catalog') }}" id="filter-form">
 
                     <div class="border-b-2 border-gray-200 pb-5">
@@ -200,26 +200,31 @@
     </div>
 
     <script>
-        function toggleFilters() {
-            const sidebar = document.getElementById('filters-sidebar');
-            const buttonText = document.getElementById('filters-btn-text');
-            const buttonIcon = document.getElementById('filters-btn-icon');
+        const filtersSidebar = document.getElementById('filters-sidebar');
+        const filtersBtnText = document.getElementById('filters-btn-text');
 
-            if (sidebar.style.display === 'none') {
-                sidebar.style.display = 'block';
-                buttonText.textContent = 'Hide Filters';
-                buttonIcon.src = "{{ asset('assets/lucide/settings.svg') }}";
+        function initFilters() {
+            if (window.innerWidth >= 768) {
+                filtersSidebar.classList.remove('hidden');
+                filtersBtnText.textContent = 'Hide Filters';
             } else {
-                sidebar.style.display = 'none';
-                buttonText.textContent = 'Show Filters';
-                buttonIcon.src = "{{ asset('assets/lucide/settings.svg') }}";
+                filtersSidebar.classList.add('hidden');
+                filtersBtnText.textContent = 'Show Filters';
             }
         }
+
+        function toggleFilters() {
+            filtersSidebar.classList.toggle('hidden');
+            filtersBtnText.textContent = filtersSidebar.classList.contains('hidden') ? 'Show Filters' : 'Hide Filters';
+        }
+
+        document.addEventListener('DOMContentLoaded', initFilters);
+        window.addEventListener('resize', initFilters);
 
         function toggleSortDropdown() {
             const dropdown = document.getElementById('sort-dropdown');
             if (dropdown) {
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                dropdown.classList.toggle('hidden');
             }
         }
 
@@ -230,7 +235,7 @@
                 return;
             }
             if (dropdown) {
-                dropdown.style.display = 'none';
+                dropdown.classList.add('hidden');
             }
         });
     </script>

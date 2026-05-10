@@ -57,7 +57,7 @@
             <form action="{{ route('bag.items.add') }}" method="POST" class="flex flex-col gap-4">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <input type="hidden" name="variant_size_id" value="{{ $selectedVariant->id }}">
+                <input type="hidden" name="variant_id" value="{{ $selectedVariant->id }}">
 
                 <div class="my-2">
                     <p class="font-semibold ~text-sm/base mb-2">Select Size</p>

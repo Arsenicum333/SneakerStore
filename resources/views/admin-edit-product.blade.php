@@ -39,27 +39,36 @@
             </div>
 
             <div class="relative">
-                <input type="text" id="colour" name="color" value="{{ old('color', $variant?->color) }}" placeholder="Colour*"
-                    class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
-                <label for="colour" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
-                    Colour Name*
-                </label>
+                <select id="colour" name="color"
+                    class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all appearance-none bg-white">
+                    <option value="" disabled>Colour*</option>
+                    @foreach(['Red','Blue','Green','Black','White','Gray','Pink','Brown','Orange','Yellow','Purple'] as $c)
+                        <option value="{{ $c }}" {{ old('color', $variant?->color) === $c ? 'selected' : '' }}>{{ $c }}</option>
+                    @endforeach
+                </select>
+                <label for="colour" class="absolute left-4 -top-2.5 bg-white px-1 text-xs text-gray-500">Colour*</label>
             </div>
 
             <div class="flex ~gap-2/3 w-full">
                 <div class="relative flex-1">
-                    <input type="text" id="gender" name="gender" value="{{ old('gender', $product->gender) }}" placeholder="Gender*"
-                        class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
-                    <label for="gender" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
-                        Gender*
-                    </label>
+                    <select id="gender" name="gender"
+                        class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all appearance-none bg-white">
+                        <option value="" disabled>Gender*</option>
+                        @foreach(['Men','Women','Unisex'] as $g)
+                            <option value="{{ $g }}" {{ old('gender', $product->gender) === $g ? 'selected' : '' }}>{{ $g }}</option>
+                        @endforeach
+                    </select>
+                    <label for="gender" class="absolute left-4 -top-2.5 bg-white px-1 text-xs text-gray-500">Gender*</label>
                 </div>
                 <div class="relative flex-1">
-                    <input type="text" id="sport" name="sport" value="{{ old('sport', $product->sport) }}" placeholder="Sport*"
-                        class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all peer placeholder-transparent">
-                    <label for="sport" class="absolute left-4 ~-top-2/2.5 bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-xs">
-                        Sport
-                    </label>
+                    <select id="sport" name="sport"
+                        class="w-full px-4 ~py-3/3.5 border-2 border-gray-300 rounded-lg ~text-base/lg focus:border-black outline-none transition-all appearance-none bg-white">
+                        <option value="" disabled>Sport</option>
+                        @foreach(['Lifestyle','Running','Basketball','Football','Training','Soccer','Gym'] as $s)
+                            <option value="{{ $s }}" {{ old('sport', $product->sport) === $s ? 'selected' : '' }}>{{ $s }}</option>
+                        @endforeach
+                    </select>
+                    <label for="sport" class="absolute left-4 -top-2.5 bg-white px-1 text-xs text-gray-500">Sport</label>
                 </div>
             </div>
 
@@ -101,8 +110,15 @@
                     <p class="~text-xs/sm text-gray-400 ~mb-1/2">Current Photos</p>
                     <div class="grid grid-cols-2 sm:grid-cols-3 ~gap-2/3">
                         @foreach ($variant->images as $image)
-                            <div class="aspect-square rounded-lg overflow-hidden border-2 border-gray-200">
+                            <div class="relative aspect-square rounded-lg overflow-hidden border-2 border-gray-200">
                                 <img src="{{ asset($image->image_url) }}" class="w-full h-full object-cover">
+                                <button type="button"
+                                        onclick="deleteImage({{ $image->id }})"
+                                        class="absolute top-1 right-1 bg-white text-red-500 rounded-full p-1.5 shadow hover:bg-red-50 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    </svg>
+                                </button>
                             </div>
                         @endforeach
                     </div>
@@ -162,4 +178,19 @@
             </script>
 
 </main>
+
+<form id="delete-image-form" method="POST" action="">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
+function deleteImage(id) {
+    if (!confirm('Видалити це фото?')) return;
+    const form = document.getElementById('delete-image-form');
+    form.action = '/admin/images/' + id;
+    form.submit();
+}
+</script>
+
 @endsection

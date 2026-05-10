@@ -5,8 +5,8 @@
 @section('content')
 <main class="max-w-[1000px] mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-[60%_40%]">
-        <div class="flex gap-4 ~px-4/6 ~pt-4/6 md:sticky md:top-0 md:h-screen md:items-start" data-product-gallery>
-            <div class="flex flex-col gap-2 w-14 md:w-16 shrink-0 md:max-h-[calc(100vh-2rem)] md:overflow-y-auto md:pr-1">
+        <div class="flex gap-2 sm:gap-4 ~px-2/6 ~pt-4/6 md:sticky md:top-0 md:h-screen md:items-start" data-product-gallery>
+            <div class="flex flex-col gap-2 ~w-10/16 shrink-0 md:max-h-[calc(100vh-2rem)] md:overflow-y-auto md:pr-1">
                 @foreach ($selectedVariant->images as $image)
                     <button
                         type="button"
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col ~gap-3/5 ~px-4/6 ~pt-4/6">
+        <div class="flex flex-col ~gap-3/5 ~px-2/6 ~pt-4/6">
             <div class="mb-4">
                 <h1 class="~text-lg/xl font-semibold">{{ $product->name }}</h1>
                 <p class="text-gray-500 ~text-sm/base">{{ $product->gender }}'s {{ $product->sport }} Shoes</p>
@@ -62,7 +62,7 @@
                 <div class="my-2">
                     <p class="font-semibold ~text-sm/base mb-2">Select Size</p>
 
-                    <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         @foreach ($selectedVariant->sizes as $size)
                             <label class="block cursor-pointer">
                                 <input

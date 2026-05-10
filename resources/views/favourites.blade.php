@@ -3,10 +3,10 @@
 @section('title', 'Favourites')
 
 @section('content')
-<main class="max-w-[1100px] mx-auto px-4 ~mt-4/8">
+<main class="max-w-[1100px] mx-auto ~px-4/6 ~mt-4/8">
 
     <div class="~mb-5/8">
-        <h1 class="text-3xl font-semibold">Favourites</h1>
+        <h1 class="~text-xl/3xl font-semibold">Favourites</h1>
     </div>
 
     <section>
@@ -43,8 +43,8 @@
     </section>
 
     <section class="mt-24">
-        <div class="flex items-center w-full">
-            <h2 class="font-semibold text-3xl mb-4 w-1/2">Find Your Next Favourite</h2>
+        <div class="w-full">
+            <h2 class="font-semibold ~text-xl/3xl ~mb-3/5">Find Your Next Favourite</h2>
         </div>
 
         @if ($recommended->isNotEmpty())

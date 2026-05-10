@@ -89,7 +89,7 @@
 
             <div>
                 <p class="~text-xs/sm text-gray-400 ~mb-1/2">Photos (min 2)</p>
-                <div class="grid grid-cols-4 ~gap-2/3" id="photos-container">
+                <div class="grid grid-cols-2 sm:grid-cols-4 ~gap-2/3" id="photos-container">
                     <label class="photo-label aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-900 transition-colors group">
                         <input type="file" name="photos[]" accept="image/*" class="hidden photo-input" onchange="previewImage(this)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 group-hover:text-gray-600 transition-colors mb-1">

@@ -99,7 +99,7 @@
             @if ($variant?->images->isNotEmpty())
                 <div>
                     <p class="~text-xs/sm text-gray-400 ~mb-1/2">Current Photos</p>
-                    <div class="grid grid-cols-3 ~gap-2/3">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 ~gap-2/3">
                         @foreach ($variant->images as $image)
                             <div class="aspect-square rounded-lg overflow-hidden border-2 border-gray-200">
                                 <img src="{{ asset($image->image_url) }}" class="w-full h-full object-cover">
@@ -111,7 +111,7 @@
 
             <div>
                 <p class="~text-xs/sm text-gray-400 ~mb-1/2">Add New Photos</p>
-                <div class="grid grid-cols-3 ~gap-2/3">
+                <div class="grid grid-cols-2 sm:grid-cols-3 ~gap-2/3">
                     @for ($i = 0; $i < 3; $i++)
                         <label class="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-900 transition-colors group">
                             <input type="file" name="photos[]" accept="image/*" class="hidden">

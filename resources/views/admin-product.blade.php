@@ -26,7 +26,7 @@
                     $imageUrl = $firstVariant?->images->first()?->image_url ?? 'assets/sneakers/sneakers1_1.avif';
                 @endphp
 
-                <div class="flex items-center ~gap-3/5 ~py-3/5">
+                <div class="flex items-center flex-wrap ~gap-3/5 ~py-3/5">
 
                     <div class="~w-14/20 ~h-14/20 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
                         <img src="{{ asset($imageUrl) }}" class="w-full h-full object-cover">

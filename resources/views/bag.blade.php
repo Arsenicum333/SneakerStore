@@ -3,9 +3,9 @@
 @section('title', 'Bag')
 
 @section('content')
-<main class="max-w-[1100px] mx-auto px-4">
+<main class="max-w-[1100px] mx-auto ~px-4/6">
     <div class="~mb-5/8">
-        <h1 class="text-3xl font-semibold">Bag</h1>
+        <h1 class="~text-xl/3xl font-semibold">Bag</h1>
         @if (session('bag_status'))
             <p class="text-sm text-green-700 mt-2">{{ session('bag_status') }}</p>
         @endif
@@ -26,7 +26,7 @@
                     <div class="flex gap-4">
                         <div class="flex flex-col items-center gap-1">
                             <a href="{{ $productUrl }}" class="block">
-                                <img src="{{ asset($item['image_url']) }}" alt="{{ $item['product_name'] }}" class="w-40 h-40 bg-gray-200 rounded-lg object-cover">
+                                <img src="{{ asset($item['image_url']) }}" alt="{{ $item['product_name'] }}" class="~w-24/40 ~h-24/40 bg-gray-200 rounded-lg object-cover">
                             </a>
 
                             <div class="flex items-center gap-2 mt-2">
@@ -80,14 +80,14 @@
                         <div class="flex-1 flex flex-col-reverse sm:flex-row sm:items-start gap-1 sm:gap-4">
                             <div class="flex-1 flex flex-col">
                                 <a href="{{ $productUrl }}" class="block">
-                                    <h2 class="font-semibold text-lg">{{ $item['product_name'] }}</h2>
-                                    <p class="text-gray-500 text-base">{{ $item['gender'] }}'s {{ $item['sport'] }} Shoes</p>
-                                    <p class="text-gray-500 text-base">{{ $item['color'] }}</p>
-                                    <p class="text-gray-500 text-lg font-semibold">Size {{ $item['size'] }}</p>
+                                    <h2 class="font-semibold ~text-base/lg">{{ $item['product_name'] }}</h2>
+                                    <p class="text-gray-500 ~text-sm/base">{{ $item['gender'] }}'s {{ $item['sport'] }} Shoes</p>
+                                    <p class="text-gray-500 ~text-sm/base">{{ $item['color'] }}</p>
+                                    <p class="text-gray-500 ~text-base/lg font-semibold">Size {{ $item['size'] }}</p>
                                 </a>
                             </div>
 
-                            <div class="font-semibold text-lg whitespace-nowrap">
+                            <div class="font-semibold ~text-base/lg whitespace-nowrap">
                                 {{ number_format($item['line_total'], 2, ',', ' ') }} $
                             </div>
                         </div>
@@ -99,8 +99,8 @@
                 @endforeach
             </div>
 
-            <div class="border p-6 rounded-lg flex flex-col gap-4 h-fit">
-                <h2 class="font-semibold text-2xl mb-4">Summary</h2>
+            <div class="border ~p-4/6 rounded-lg flex flex-col gap-4 h-fit">
+                <h2 class="font-semibold ~text-xl/2xl mb-4">Summary</h2>
                 <div class="flex justify-between text-gray-500 gap-6">
                     <span>Subtotal</span>
                     <span>{{ number_format($subtotal, 2, ',', ' ') }} $</span>

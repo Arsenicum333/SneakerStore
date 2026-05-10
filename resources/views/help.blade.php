@@ -6,13 +6,13 @@
 <main>
 <div class="max-w-[1200px] mx-auto ~px-4/6 ~pb-8/12">
 
-        <h1 class="~text-2xl/4xl font-bold ~mb-1/3 px-4">Quick Assists</h1>
-        <h2 class="~text-base/xl font-normal ~mb-3/6 px-4 ~pb-4/6">Answers to our most frequently asked questions.</h2>
+        <h1 class="~text-2xl/4xl font-bold ~mb-1/3">Quick Assists</h1>
+        <h2 class="~text-base/xl font-normal ~mb-3/6 ~pb-4/6">Answers to our most frequently asked questions.</h2>
         <hr class="border-t-1 md:border-t-2 border-gray-300">
 
         <div class="grid grid-cols-1 md:grid-cols-3 ~gap-4/8 ~py-4/6">
 
-            <div class="bg-gray-50 ~p-4/6 rounded-lg">
+            <div class="bg-gray-50 ~p-3/6 rounded-lg">
                 <h2 class="text-2xl font-bold mb-4">Returns</h2>
                 <div class="space-y-4 text-gray-600">
                     <div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-50 p-6 rounded-lg">
+            <div class="bg-gray-50 ~p-3/6 rounded-lg">
                 <h2 class="text-2xl font-bold mb-4">Orders & Payment</h2>
                 <div class="space-y-4 text-gray-600">
                     <div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-50 p-6 rounded-lg">
+            <div class="bg-gray-50 ~p-3/6 rounded-lg">
                 <h2 class="text-2xl font-bold mb-4">Dispatch & Delivery</h2>
                 <div class="space-y-4 text-gray-600">
                     <div>
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-50 p-6 rounded-lg">
+            <div class="bg-gray-50 ~p-3/6 rounded-lg">
                 <h2 class="text-2xl font-bold mb-4">Shopping</h2>
                 <div class="space-y-4 text-gray-600">
                     <div>
@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-50 p-6 rounded-lg">
+            <div class="bg-gray-50 ~p-3/6 rounded-lg">
                 <h2 class="text-2xl font-bold mb-4">Iken Membership & Apps</h2>
                 <div class="space-y-4 text-gray-600">
                     <div>
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-50 p-6 rounded-lg">
+            <div class="bg-gray-50 ~p-3/6 rounded-lg">
                 <h2 class="text-2xl font-bold mb-4">Company Info</h2>
                 <div class="space-y-4 text-gray-600">
                     <div>

@@ -1,15 +1,57 @@
-# Sneaker Store
+# SneakerStore
 
-## 1. Download Tailwind CLI
+Laravel 13 + Tailwind + Vite.
+
+## Requirements
+
+1. PHP 8.3+
+2. Composer 2+
+3. Node.js 20+ and npm
+4. Git
+5. Docker + Docker Compose
+
+### Version check:
+
+```bash
+php -v
+composer -V
+node -v
+npm -v
+git --version
+```
+
+## First run
 
 Run in the project root:
 
-```powershell
-curl -L -o tailwind.exe https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-windows-x64.exe
+```bash
+composer install
+npm install
+copy .env.example .env
+docker compose up -d
+php artisan key:generate
+php artisan migrate --seed
 ```
 
-## 2. Run Tailwind to build CSS
+## Database connection (PostgreSQL)
 
-```powershell
-.\tailwind.exe -i ./src/styles.css -o ./dist/styles.css --watch
+This project uses PostgreSQL.
+
+### Connection settings (`.env`)
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=iken
+DB_USERNAME=user
+DB_PASSWORD=password
+```
+
+## Run in dev mode
+
+Start the app with next command:
+
+```bash
+composer run dev
 ```

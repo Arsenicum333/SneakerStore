@@ -42,6 +42,7 @@ class AdminProductController extends Controller
             'sizes' => 'array',
             'sizes.*' => 'string',
             'stock' => 'array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp,gif,avif|max:2048',
         ]);
 
         $product = Product::create([
@@ -99,7 +100,7 @@ class AdminProductController extends Controller
             'stock' => 'array',
             'stock.*' => 'integer|min:0',
             'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048'
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp,gif,avif|max:2048'
         ]);
 
         $product->update([
